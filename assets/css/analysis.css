@@ -116,6 +116,7 @@
   height: 100%;
   background: var(--accent-color);
   transition: width 0.2s ease;
+  z-index: 1;
 }
 
 .aia-metric-card:hover {
@@ -154,6 +155,8 @@
   background: var(--accent-color);
   color: #ffffff;
   box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.15);
+  position: relative;
+  z-index: 2;
 }
 
 .aia-metric-content {

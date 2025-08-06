@@ -16,6 +16,9 @@ $summary = $inventory_analysis ? $inventory_analysis->get_inventory_summary() : 
 ?>
 
 <div class="wrap aia-dashboard-light">
+    <!-- Skip Link for Accessibility -->
+    <a href="#aia-main-content" class="aia-sr-only aia-skip-link"><?php _e('Skip to main content', 'ai-inventory-agent'); ?></a>
+    
     <!-- Professional Header -->
     <div class="aia-dashboard-header">
         <div class="aia-dashboard-title-section">
@@ -70,7 +73,7 @@ $summary = $inventory_analysis ? $inventory_analysis->get_inventory_summary() : 
     <?php endif; ?>
 
     <!-- Key Metrics Grid -->
-    <div class="aia-metrics-section">
+    <main id="aia-main-content" class="aia-metrics-section">
         <div class="aia-section-header">
             <h2 class="aia-section-title"><?php esc_html_e('Key Metrics', 'ai-inventory-agent'); ?></h2>
             <p class="aia-section-description"><?php esc_html_e('Real-time overview of your inventory status', 'ai-inventory-agent'); ?></p>
