@@ -13,8 +13,8 @@ if (!defined('ABSPATH')) {
 $settings = get_option('aia_settings', []);
 ?>
 
-<div class="aia-dashboard">
-    <div class="aia-dashboard-container">
+<div class="wrap aia-settings-light">
+    <div class="aia-settings-container">
         <!-- Minimal Settings Header -->
         <div class="aia-settings-header">
             <div class="aia-settings-header-content">

@@ -21,6 +21,12 @@
   box-sizing: border-box;
 }
 
+.aia-chat-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
 /* Minimal Chat Header Styles */
 .aia-chat-header {
     background: #10b981;

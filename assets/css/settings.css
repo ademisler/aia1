@@ -23,6 +23,12 @@
     box-sizing: border-box;
 }
 
+.aia-settings-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
 /* Minimal Settings Header Styles */
 .aia-settings-header {
     background: #6366f1;
