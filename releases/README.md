@@ -1,9 +1,9 @@
 # AI Inventory Agent - Releases
 
-## Latest Version: 1.0.6
+## Latest Version: 1.0.7
 
 ### Download
-- [ai-inventory-agent-v1.0.6.zip](ai-inventory-agent-v1.0.6.zip) - Latest stable release
+- [ai-inventory-agent-v1.0.7.zip](ai-inventory-agent-v1.0.7.zip) - Latest stable release
 
 ### Installation
 1. Download the latest ZIP file
@@ -15,6 +15,15 @@
 Older versions are available in the [archive](archive/) folder.
 
 ### Version History
+
+#### v1.0.7 (2025-01-08) - CRITICAL DUPLICATE ID & AUTHORIZATION FIXES
+- **FIXED**: Complete resolution of duplicate HTML ID errors in browser console
+- **FIXED**: WordPress Settings API conflicts with custom templates causing DOM errors
+- **FIXED**: Authorization issues with non-existent 'configure_aia' capability
+- **FIXED**: Template context problems where plugin instance was undefined
+- **IMPROVED**: Gemini API key validation with comprehensive error messages
+- **IMPROVED**: Better debugging information for API connection failures
+- All admin pages now work without DOM validation errors or permission issues
 
 #### v1.0.6 (2025-01-08) - CRITICAL JAVASCRIPT & API FIXES
 - **FIXED**: DOM validation errors with duplicate HTML IDs in admin forms

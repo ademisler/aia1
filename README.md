@@ -329,6 +329,12 @@ The plugin is fully translatable:
 
 ## 📝 Changelog
 
+### Version 1.0.7
+- **CRITICAL DUPLICATE ID & AUTHORIZATION FIXES**: Complete resolution of DOM validation and permission errors
+- Fixed WordPress Settings API conflicts causing duplicate HTML ID errors
+- Fixed authorization issues with non-existent capabilities and template context problems
+- Enhanced Gemini API key validation with comprehensive error messages and debugging
+
 ### Version 1.0.6
 - **CRITICAL JAVASCRIPT & API FIXES**: Fixed DOM validation errors and JavaScript issues
 - Fixed "aia_ajax is not defined" error preventing API connection tests

@@ -11,7 +11,8 @@ if (!defined('ABSPATH')) {
 }
 
 // Get inventory analysis data
-$inventory_analysis = $this->plugin->get_module_manager()->get_module('inventory_analysis');
+$plugin_instance = \AIA\Core\Plugin::get_instance();
+$inventory_analysis = $plugin_instance ? $plugin_instance->get_module_manager()->get_module('inventory_analysis') : null;
 $summary = $inventory_analysis ? $inventory_analysis->get_inventory_summary() : [];
 ?>
 

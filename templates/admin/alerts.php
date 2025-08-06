@@ -11,8 +11,9 @@ if (!defined('ABSPATH')) {
 }
 
 // Get notifications module
-$notifications_module = $this->plugin->get_module_manager()->get_module('notifications');
-$inventory_analysis = $this->plugin->get_module_manager()->get_module('inventory_analysis');
+$plugin_instance = \AIA\Core\Plugin::get_instance();
+$notifications_module = $plugin_instance ? $plugin_instance->get_module_manager()->get_module('notifications') : null;
+$inventory_analysis = $plugin_instance ? $plugin_instance->get_module_manager()->get_module('inventory_analysis') : null;
 
 // Get current alerts
 $low_stock_products = [];

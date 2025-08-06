@@ -5,6 +5,47 @@ All notable changes to AI Inventory Agent will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.7] - 2025-01-08
+
+### 🚨 Critical Duplicate ID & Authorization Fixes
+
+#### Fixed
+- **Complete Duplicate HTML ID Resolution**
+  - Fixed WordPress Settings API forms creating duplicate IDs with custom templates
+  - Renamed all WordPress Settings API field IDs with 'settings_' prefix to avoid conflicts
+  - Settings page now uses only WordPress Settings API (removed duplicate manual forms)
+  - No more DOM validation errors in browser console
+
+- **Authorization/Permission Issues**
+  - Fixed non-existent 'configure_aia' capability causing permission errors
+  - Changed to standard 'manage_options' capability for settings access
+  - Fixed template context issues where $this->plugin was undefined
+  - All admin templates now properly access plugin instance via Plugin::get_instance()
+
+- **Enhanced API Key Validation**
+  - Added comprehensive Gemini API key format validation
+  - Improved error messages for specific HTTP status codes (400, 401, 403, 429)
+  - Added debugging information for API connection failures
+  - Better error handling for empty or invalid API keys
+
+#### Technical Details
+- **AdminInterface.php**: 
+  - Renamed all WordPress Settings API field IDs: ai_provider → settings_ai_provider, etc.
+  - Fixed permission check from 'configure_aia' to 'manage_options'
+- **templates/admin/*.php**: 
+  - Fixed plugin instance access from $this->plugin to Plugin::get_instance()
+  - Added null checks for safe module access
+- **GeminiProvider.php**: 
+  - Enhanced error handling with specific status code messages
+  - Added API key length validation and debugging info
+- **settings.php**: 
+  - Simplified to use only WordPress Settings API (removed duplicate manual forms)
+  - Eliminated all duplicate form field rendering
+
+#### New Features
+- **Comprehensive API Debugging**: Detailed error messages with API key validation info
+- **Better Error Messages**: User-friendly messages for common API authentication issues
+
 ## [1.0.6] - 2025-01-08
 
 ### 🚨 Critical JavaScript & API Fixes

@@ -158,8 +158,28 @@ class GeminiProvider {
         
         if ($status_code !== 200) {
             $error_data = json_decode($response_body, true);
-            $error_message = $error_data['error']['message'] ?? 'Unknown error';
-            throw new \Exception("Gemini API returned status {$status_code}: {$error_message}");
+            $error_message = 'Unknown error';
+            
+            if (isset($error_data['error']['message'])) {
+                $error_message = $error_data['error']['message'];
+            } elseif (isset($error_data['error'])) {
+                $error_message = is_string($error_data['error']) ? $error_data['error'] : json_encode($error_data['error']);
+            } else {
+                $error_message = $response_body;
+            }
+            
+            // Add specific error messages for common issues
+            if ($status_code === 400) {
+                $error_message = "Bad Request: {$error_message}. Please check your API key and request format.";
+            } elseif ($status_code === 401) {
+                $error_message = "Authentication failed: Invalid API key. Please check your Gemini API key.";
+            } elseif ($status_code === 403) {
+                $error_message = "Access forbidden: {$error_message}. Please check your API key permissions.";
+            } elseif ($status_code === 429) {
+                $error_message = "Rate limit exceeded: {$error_message}. Please try again later.";
+            }
+            
+            throw new \Exception("Gemini API Error ({$status_code}): {$error_message}");
         }
         
         $decoded_response = json_decode($response_body, true);
@@ -192,6 +212,15 @@ class GeminiProvider {
      */
     public function test_connection() {
         try {
+            // Validate API key format
+            if (empty($this->api_key)) {
+                throw new \Exception('API key is empty');
+            }
+            
+            if (strlen($this->api_key) < 20) {
+                throw new \Exception('API key seems too short. Please check your Gemini API key.');
+            }
+            
             $test_conversation = [
                 [
                     'role' => 'user',
@@ -208,13 +237,22 @@ class GeminiProvider {
                 'success' => true,
                 'message' => 'Connection successful! Model: ' . $response['model'],
                 'model' => $response['model'],
-                'response' => $response['content']
+                'response' => $response['content'],
+                'api_key_length' => strlen($this->api_key)
             ];
             
         } catch (\Exception $e) {
+            // Add debugging information
+            $debug_info = [
+                'api_key_length' => strlen($this->api_key),
+                'api_key_starts_with' => substr($this->api_key, 0, 10) . '...',
+                'endpoint' => $this->api_endpoint . $this->default_model . ':generateContent'
+            ];
+            
             return [
                 'success' => false,
-                'message' => 'Connection failed: ' . $e->getMessage()
+                'message' => 'Connection failed: ' . $e->getMessage(),
+                'debug' => $debug_info
             ];
         }
     }

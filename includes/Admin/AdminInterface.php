@@ -318,7 +318,7 @@ class AdminInterface {
         $settings = $this->plugin->get_setting();
         $current_provider = $settings['ai_provider'] ?? 'openai';
         
-        echo '<select name="aia_settings[ai_provider]" id="ai_provider">';
+        echo '<select name="aia_settings[ai_provider]" id="settings_ai_provider">';
         echo '<option value="openai"' . selected($current_provider, 'openai', false) . '>OpenAI (GPT)</option>';
         echo '<option value="gemini"' . selected($current_provider, 'gemini', false) . '>Google Gemini</option>';
         echo '</select>';
@@ -332,8 +332,8 @@ class AdminInterface {
         $settings = $this->plugin->get_setting();
         $api_key = $settings['api_key'] ?? '';
         
-        echo '<input type="password" name="aia_settings[api_key]" id="api_key" value="' . esc_attr($api_key) . '" class="regular-text" />';
-        echo '<button type="button" id="test_api_connection" class="button button-secondary" style="margin-left: 10px;">' . __('Test Connection', 'ai-inventory-agent') . '</button>';
+        echo '<input type="password" name="aia_settings[api_key]" id="settings_api_key" value="' . esc_attr($api_key) . '" class="regular-text" />';
+        echo '<button type="button" id="settings_test_api_connection" class="button button-secondary" style="margin-left: 10px;">' . __('Test Connection', 'ai-inventory-agent') . '</button>';
         echo '<p class="description">' . __('Enter your AI provider API key. This is required for AI features to work.', 'ai-inventory-agent') . '</p>';
         echo '<div id="api_test_result" style="margin-top: 10px;"></div>';
     }
@@ -345,7 +345,7 @@ class AdminInterface {
         $settings = $this->plugin->get_setting();
         $system_prompt = $settings['system_prompt'] ?? 'You are an AI inventory management assistant. Help users manage their WooCommerce store inventory efficiently.';
         
-        echo '<textarea name="aia_settings[system_prompt]" id="system_prompt" rows="4" cols="50" class="large-text">' . esc_textarea($system_prompt) . '</textarea>';
+        echo '<textarea name="aia_settings[system_prompt]" id="settings_system_prompt" rows="4" cols="50" class="large-text">' . esc_textarea($system_prompt) . '</textarea>';
         echo '<p class="description">' . __('This prompt defines how the AI assistant behaves. You can customize it to match your store\'s needs.', 'ai-inventory-agent') . '</p>';
     }
     
@@ -356,7 +356,7 @@ class AdminInterface {
         $settings = $this->plugin->get_setting();
         $threshold = $settings['low_stock_threshold'] ?? 5;
         
-        echo '<input type="number" name="aia_settings[low_stock_threshold]" id="low_stock_threshold" value="' . esc_attr($threshold) . '" min="0" class="small-text" />';
+        echo '<input type="number" name="aia_settings[low_stock_threshold]" id="settings_low_stock_threshold" value="' . esc_attr($threshold) . '" min="0" class="small-text" />';
         echo '<p class="description">' . __('Products with stock at or below this level will be flagged as low stock.', 'ai-inventory-agent') . '</p>';
     }
     
@@ -367,7 +367,7 @@ class AdminInterface {
         $settings = $this->plugin->get_setting();
         $threshold = $settings['critical_stock_threshold'] ?? 1;
         
-        echo '<input type="number" name="aia_settings[critical_stock_threshold]" id="critical_stock_threshold" value="' . esc_attr($threshold) . '" min="0" class="small-text" />';
+        echo '<input type="number" name="aia_settings[critical_stock_threshold]" id="settings_critical_stock_threshold" value="' . esc_attr($threshold) . '" min="0" class="small-text" />';
         echo '<p class="description">' . __('Products with stock at or below this level will be flagged as out of stock.', 'ai-inventory-agent') . '</p>';
     }
     
@@ -378,7 +378,7 @@ class AdminInterface {
         $settings = $this->plugin->get_setting();
         $email = $settings['notification_email'] ?? get_option('admin_email');
         
-        echo '<input type="email" name="aia_settings[notification_email]" id="notification_email" value="' . esc_attr($email) . '" class="regular-text" />';
+        echo '<input type="email" name="aia_settings[notification_email]" id="settings_notification_email" value="' . esc_attr($email) . '" class="regular-text" />';
         echo '<p class="description">' . __('Email address where notifications will be sent.', 'ai-inventory-agent') . '</p>';
     }
     
@@ -490,7 +490,7 @@ class AdminInterface {
     public function handle_save_settings() {
         check_ajax_referer('aia_ajax_nonce', 'nonce');
         
-        if (!current_user_can('configure_aia')) {
+        if (!current_user_can('manage_options')) {
             wp_send_json_error(__('Insufficient permissions.', 'ai-inventory-agent'));
         }
         

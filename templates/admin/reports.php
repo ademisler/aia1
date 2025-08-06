@@ -11,8 +11,9 @@ if (!defined('ABSPATH')) {
 }
 
 // Get reports module
-$reports_module = $this->plugin->get_module_manager()->get_module('reporting');
-$inventory_analysis = $this->plugin->get_module_manager()->get_module('inventory_analysis');
+$plugin_instance = \AIA\Core\Plugin::get_instance();
+$reports_module = $plugin_instance ? $plugin_instance->get_module_manager()->get_module('reporting') : null;
+$inventory_analysis = $plugin_instance ? $plugin_instance->get_module_manager()->get_module('inventory_analysis') : null;
 
 // Get summary data for quick stats
 $summary = [];
