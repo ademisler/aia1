@@ -6,6 +6,53 @@
  * @version 2.0.0
  */
 
+/* ===== CSS Variables ===== */
+:root {
+  --aia-color-primary-50: #eff6ff;
+  --aia-color-primary-100: #dbeafe;
+  --aia-color-primary-200: #bfdbfe;
+  --aia-color-primary-400: #60a5fa;
+  --aia-color-primary-500: #3b82f6;
+  --aia-color-primary-600: #2563eb;
+  
+  --aia-color-success-50: #f0fdf4;
+  --aia-color-success-200: #bbf7d0;
+  --aia-color-success-500: #22c55e;
+  --aia-color-success-600: #16a34a;
+  --aia-color-success-700: #15803d;
+  
+  --aia-color-warning-50: #fffbeb;
+  --aia-color-warning-200: #fed7aa;
+  --aia-color-warning-500: #f59e0b;
+  --aia-color-warning-600: #d97706;
+  --aia-color-warning-700: #b45309;
+  
+  --aia-color-info-50: #f0f9ff;
+  --aia-color-info-200: #bae6fd;
+  --aia-color-info-500: #0ea5e9;
+  --aia-color-info-600: #0284c7;
+  --aia-color-info-700: #0369a1;
+  
+  --aia-color-error-500: #ef4444;
+  --aia-color-error-700: #b91c1c;
+  
+  --aia-color-background-primary: #ffffff;
+  --aia-color-background-secondary: #f9fafb;
+  --aia-color-background-subtle: #f3f4f6;
+  
+  --aia-color-text-primary: #111827;
+  --aia-color-text-secondary: #6b7280;
+  --aia-color-text-tertiary: #9ca3af;
+  
+  --aia-color-border-light: #e5e7eb;
+  --aia-color-border-medium: #d1d5db;
+  
+  --aia-radius-lg: 12px;
+  --aia-radius-full: 9999px;
+  
+  --aia-shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
 /* ===== REPORTS PAGE BASE ===== */
 .aia-reports-light {
     background: var(--aia-color-background-subtle);
@@ -481,10 +528,14 @@
     background: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(4px);
     z-index: 10000;
-    display: flex;
+    display: none;
     align-items: center;
     justify-content: center;
     opacity: 0;
+}
+
+.aia-modal[aria-hidden="false"] {
+    display: flex;
     animation: aia-modal-fade-in 0.2s ease-out forwards;
 }
 
@@ -627,6 +678,11 @@
 .aia-notification--error {
     border-left: 4px solid var(--aia-color-error-500);
     color: var(--aia-color-error-700);
+}
+
+/* ===== BODY MODAL OPEN ===== */
+body.aia-modal-open {
+    overflow: hidden;
 }
 
 /* ===== ANIMATIONS ===== */

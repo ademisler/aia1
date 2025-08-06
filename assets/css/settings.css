@@ -86,6 +86,31 @@
     gap: 1.5rem;
 }
 
+/* ===== WIDGET BASE ===== */
+.aia-widget {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-bottom: 2rem;
+}
+
+.aia-widget:last-child {
+    margin-bottom: 0;
+}
+
+.aia-widget-header {
+    padding: 2rem 2rem 1.5rem 2rem;
+    border-bottom: 1px solid #f3f4f6;
+    background: #fafbfc;
+}
+
+.aia-widget-content {
+    padding: 2rem;
+}
+
 /* ===== SETTINGS SECTIONS ===== */
 .aia-settings-section {
     margin-bottom: 2rem;
@@ -93,6 +118,23 @@
 
 .aia-widget-header-content {
     flex: 1;
+}
+
+.aia-widget-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 20px;
+    font-weight: 700;
+    color: #111827;
+    margin: 0 0 8px 0;
+    line-height: 1.3;
+}
+
+.aia-widget-title .aia-icon {
+    color: #3b82f6;
+    width: 24px;
+    height: 24px;
 }
 
 .aia-widget-subtitle {
@@ -260,6 +302,11 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.aia-form-group:last-child {
+    margin-bottom: 0;
 }
 
 .aia-form-row {
@@ -386,7 +433,7 @@
 
 /* ===== TOGGLE SWITCHES ===== */
 .aia-form-group--toggle {
-    margin: 1rem 0;
+    margin-bottom: 1.5rem;
 }
 
 .aia-toggle-label {

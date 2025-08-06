@@ -102,7 +102,7 @@
   display: flex;
   align-items: center;
   gap: 20px;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.2s ease;
   position: relative;
   overflow: hidden;
 }
@@ -115,12 +115,12 @@
   width: 4px;
   height: 100%;
   background: var(--accent-color);
-  transition: width 0.3s ease;
+  transition: width 0.2s ease;
 }
 
 .aia-metric-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.08);
 }
 
 .aia-metric-card:hover::before {

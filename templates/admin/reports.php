@@ -458,6 +458,11 @@ jQuery(document).ready(function($) {
         $('body').removeClass('aia-modal-open');
     };
     
+    // Close modal on overlay click
+    $('.aia-modal-overlay').on('click', function() {
+        closeReportModal();
+    });
+    
     // Notification system
     function showNotification(message, type) {
         var notification = $('<div class="aia-notification aia-notification--' + type + '">' + message + '</div>');

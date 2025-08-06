@@ -53,7 +53,10 @@
          * Initialize chat functionality
          */
         initChat: function() {
-            if (!$('.aia-chat-container').length) return;
+            if (!$('.aia-chat-container').length) {
+                console.log('Chat container not found');
+                return;
+            }
 
             this.chat = {
                 container: $('.aia-chat-container'),
@@ -64,6 +67,14 @@
                 sessionId: this.generateSessionId(),
                 isLoading: false
             };
+
+            console.log('Chat initialized:', {
+                container: this.chat.container.length,
+                messages: this.chat.messages.length,
+                form: this.chat.form.length,
+                input: this.chat.input.length,
+                sendBtn: this.chat.sendBtn.length
+            });
 
             this.bindChatEvents();
             this.loadChatHistory();
@@ -111,21 +122,25 @@
          * Send chat message
          */
         sendMessage: function() {
+            console.log('sendMessage called');
             if (this.chat.isLoading) return;
 
             var message = this.chat.input.val().trim();
+            console.log('Message to send:', message);
             if (!message) return;
 
             this.chat.isLoading = true;
             this.chat.sendBtn.prop('disabled', true);
 
             // Add user message to chat
+            console.log('Adding user message to chat');
             this.addChatMessage('user', message);
             this.chat.input.val('');
             this.chat.input[0].style.height = 'auto';
 
             // Show loading indicator
             var loadingId = this.addLoadingMessage();
+            console.log('Loading message ID:', loadingId);
 
             // Send AJAX request
             $.ajax({
@@ -175,8 +190,11 @@
          * Add message to chat
          */
         addChatMessage: function(type, content) {
+            console.log('addChatMessage called:', type, content);
             var time = new Date().toLocaleTimeString();
             var messageClass = type === 'user' ? 'aia-message aia-message--user' : 'aia-message aia-message--ai';
+            
+            console.log('Message container length:', this.chat.messages.length);
             
             var messageHtml = `
                 <div class="${messageClass}">
