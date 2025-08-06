@@ -58,6 +58,14 @@
     background: var(--aia-color-background-subtle);
     min-height: 100vh;
     font-family: var(--aia-font-family-primary);
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.aia-reports-light *,
+.aia-reports-light *::before,
+.aia-reports-light *::after {
+    box-sizing: border-box;
 }
 
 /* ===== PAGE HEADER ===== */
@@ -67,16 +75,19 @@
     padding: 2rem 0;
     margin-bottom: 2rem;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: 2rem;
+    width: 100%;
 }
 
 .aia-reports-title-section {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    flex: 1;
+    min-width: 0;
 }
 
 .aia-reports-main-title {
@@ -108,6 +119,7 @@
     gap: 0.75rem;
     align-items: center;
     flex-shrink: 0;
+    width: auto;
 }
 
 /* ===== METRICS SECTION ===== */
@@ -136,8 +148,9 @@
 
 .aia-metrics-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 1.5rem;
+    width: 100%;
 }
 
 .aia-metric-card {
@@ -151,6 +164,7 @@
     transition: all var(--aia-transition-fast) var(--aia-easing-smooth);
     position: relative;
     overflow: hidden;
+    width: 100%;
 }
 
 .aia-metric-card::before {
@@ -215,12 +229,15 @@
     grid-template-columns: 2fr 1fr;
     gap: 2rem;
     align-items: start;
+    width: 100%;
 }
 
 .aia-reports-column {
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    width: 100%;
+    min-width: 0;
 }
 
 /* ===== WIDGET STYLES ===== */
@@ -230,6 +247,7 @@
     border-radius: var(--aia-radius-lg);
     overflow: hidden;
     transition: all var(--aia-transition-fast) var(--aia-easing-smooth);
+    width: 100%;
 }
 
 .aia-widget:hover {
@@ -259,13 +277,15 @@
 
 .aia-widget-content {
     padding: 1.5rem;
+    width: 100%;
 }
 
 /* ===== REPORT CARDS ===== */
 .aia-report-types-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: 1.5rem;
+    width: 100%;
 }
 
 .aia-report-card {
@@ -276,6 +296,7 @@
     transition: all var(--aia-transition-fast) var(--aia-easing-smooth);
     position: relative;
     overflow: hidden;
+    width: 100%;
 }
 
 .aia-report-card:hover {

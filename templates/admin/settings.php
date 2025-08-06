@@ -40,21 +40,21 @@ $api_last_test = '2024-01-15 10:30:00'; // This would come from database
     <!-- Skip Link for Accessibility -->
     <a href="#aia-main-content" class="aia-sr-only aia-skip-link"><?php _e('Skip to main content', 'ai-inventory-agent'); ?></a>
 
-    <!-- Professional Header -->
-    <div class="aia-settings-page-header">
-        <div class="aia-settings-title-section">
-            <h1 class="aia-settings-main-title">
-                <svg class="aia-icon aia-icon--lg" aria-hidden="true">
+    <!-- Standardized Page Header -->
+    <div class="aia-page-header">
+        <div class="aia-page-header-content">
+            <h1 class="aia-page-title">
+                <svg class="aia-icon" aria-hidden="true">
                     <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#aia-settings"></use>
                 </svg>
                 <?php esc_html_e('Settings', 'ai-inventory-agent'); ?>
             </h1>
-            <p class="aia-settings-subtitle">
+            <p class="aia-page-subtitle">
                 <?php esc_html_e('Configure your AI Inventory Agent settings and preferences for optimal performance', 'ai-inventory-agent'); ?>
             </p>
         </div>
         
-        <div class="aia-settings-actions">
+        <div class="aia-page-header-actions">
             <button class="aia-btn aia-btn--light aia-btn--sm" onclick="exportSettings()">
                 <svg class="aia-icon aia-icon--sm" aria-hidden="true">
                     <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#aia-download"></use>

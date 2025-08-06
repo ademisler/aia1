@@ -21,24 +21,26 @@ $summary = $inventory_analysis ? $inventory_analysis->get_inventory_summary() : 
 ?>
 
 <div class="wrap aia-chat-light">
-    <!-- Professional Header -->
-    <div class="aia-chat-page-header">
-        <div class="aia-chat-title-section">
-            <h1 class="aia-chat-main-title">
-                <svg class="aia-icon aia-icon--lg" aria-hidden="true">
+    <!-- Standardized Page Header -->
+    <div class="aia-page-header">
+        <div class="aia-page-header-content">
+            <h1 class="aia-page-title">
+                <svg class="aia-icon" aria-hidden="true">
                     <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#aia-chat"></use>
                 </svg>
                 <?php esc_html_e('AI Assistant', 'ai-inventory-agent'); ?>
             </h1>
-            <p class="aia-chat-subtitle">
+            <p class="aia-page-subtitle">
                 <?php esc_html_e('Get intelligent insights and recommendations for your inventory', 'ai-inventory-agent'); ?>
             </p>
         </div>
         
         <?php if ($is_configured): ?>
-        <div class="aia-chat-status-badge">
-            <div class="aia-status-indicator aia-status-indicator--online"></div>
-            <span class="aia-status-text"><?php esc_html_e('AI Ready', 'ai-inventory-agent'); ?></span>
+        <div class="aia-page-header-actions">
+            <div class="aia-chat-status-badge">
+                <div class="aia-status-indicator aia-status-indicator--online"></div>
+                <span class="aia-status-text"><?php esc_html_e('AI Ready', 'ai-inventory-agent'); ?></span>
+            </div>
         </div>
         <?php endif; ?>
     </div>

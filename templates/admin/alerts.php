@@ -44,21 +44,21 @@ $warning_count = count($low_stock_products);
 ?>
 
 <div class="wrap aia-alerts-light">
-    <!-- Professional Header -->
-    <div class="aia-alerts-page-header">
-        <div class="aia-alerts-title-section">
-            <h1 class="aia-alerts-main-title">
-                <svg class="aia-icon aia-icon--lg" aria-hidden="true">
+    <!-- Standardized Page Header -->
+    <div class="aia-page-header">
+        <div class="aia-page-header-content">
+            <h1 class="aia-page-title">
+                <svg class="aia-icon" aria-hidden="true">
                     <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#aia-alert-triangle"></use>
                 </svg>
                 <?php esc_html_e('Stock Alerts', 'ai-inventory-agent'); ?>
             </h1>
-            <p class="aia-alerts-subtitle">
+            <p class="aia-page-subtitle">
                 <?php esc_html_e('Monitor and manage inventory alerts and notifications', 'ai-inventory-agent'); ?>
             </p>
         </div>
         
-        <div class="aia-alerts-actions">
+        <div class="aia-page-header-actions">
             <button class="aia-btn aia-btn--light" onclick="location.reload()">
                 <svg class="aia-icon aia-icon--sm" aria-hidden="true">
                     <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#aia-refresh"></use>

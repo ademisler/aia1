@@ -29,18 +29,18 @@ $settings = get_option('aia_settings', []);
     <!-- Skip Link for Accessibility -->
     <a href="#aia-main-content" class="aia-sr-only aia-skip-link"><?php _e('Skip to main content', 'ai-inventory-agent'); ?></a>
 
-    <!-- Page Header -->
-    <div class="aia-reports-page-header">
-        <div class="aia-reports-title-section">
-            <h1 class="aia-reports-main-title">
-                <svg class="aia-icon aia-icon--lg" aria-hidden="true">
+    <!-- Standardized Page Header -->
+    <div class="aia-page-header">
+        <div class="aia-page-header-content">
+            <h1 class="aia-page-title">
+                <svg class="aia-icon" aria-hidden="true">
                     <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#aia-bar-chart"></use>
                 </svg>
                 <?php _e('Inventory Reports', 'ai-inventory-agent'); ?>
             </h1>
-            <p class="aia-reports-subtitle"><?php _e('Generate comprehensive reports and analyze your inventory performance with advanced insights.', 'ai-inventory-agent'); ?></p>
+            <p class="aia-page-subtitle"><?php _e('Generate comprehensive reports and analyze your inventory performance with advanced insights.', 'ai-inventory-agent'); ?></p>
         </div>
-        <div class="aia-reports-actions">
+        <div class="aia-page-header-actions">
             <button type="button" class="aia-btn aia-btn--light aia-btn--sm" onclick="window.print()">
                 <svg class="aia-icon aia-icon--sm" aria-hidden="true">
                     <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#aia-printer"></use>
