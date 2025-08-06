@@ -60,7 +60,7 @@
                 messages: $('.aia-chat-messages'),
                 form: $('.aia-chat-form'),
                 input: $('.aia-chat-form textarea'),
-                sendBtn: $('.aia-chat-send'),
+                sendBtn: $('.aia-send-button'),
                 sessionId: this.generateSessionId(),
                 isLoading: false
             };
@@ -138,28 +138,35 @@
                     session_id: this.chat.sessionId
                 },
                 success: function(response) {
+                    console.log('Chat Response:', response);
                     if (response.success) {
                         // Remove loading message and add AI response
                         $('#' + loadingId).remove();
-                        AIA.addChatMessage('assistant', response.data.response);
+                        self.addChatMessage('assistant', response.data.response);
                         
                         // Update session ID if provided
                         if (response.data.session_id) {
-                            AIA.chat.sessionId = response.data.session_id;
+                            self.chat.sessionId = response.data.session_id;
                         }
                     } else {
                         $('#' + loadingId).remove();
-                        AIA.addChatMessage('assistant', 'Error: ' + response.data);
+                        var errorMsg = response.data;
+                        if (typeof response.data === 'object') {
+                            errorMsg = response.data.message || JSON.stringify(response.data);
+                        }
+                        console.error('Chat Error:', response.data);
+                        self.addChatMessage('assistant', 'Error: ' + errorMsg);
                     }
                 },
-                error: function() {
+                error: function(xhr, status, error) {
                     $('#' + loadingId).remove();
-                    AIA.addChatMessage('assistant', aia_ajax.strings.error);
+                    console.error('Chat AJAX Error:', status, error, xhr.responseText);
+                    self.addChatMessage('assistant', aia_ajax.strings.error + ' (' + status + ')');
                 },
                 complete: function() {
-                    AIA.chat.isLoading = false;
-                    AIA.chat.sendBtn.prop('disabled', false);
-                    AIA.chat.input.focus();
+                    self.chat.isLoading = false;
+                    self.chat.sendBtn.prop('disabled', false);
+                    self.chat.input.focus();
                 }
             });
         },
