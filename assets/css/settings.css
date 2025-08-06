@@ -30,29 +30,29 @@
 }
 
 /* Minimal Settings Header Styles */
-.aia-settings-header {
-    background: #6366f1;
+.aia-settings-light .aia-settings-header {
+    background: #6366f1 !important;
     border-radius: 8px;
     margin-bottom: 24px;
-    color: white;
+    color: white !important;
     padding: 32px;
 }
 
-.aia-settings-header-content {
+.aia-settings-light .aia-settings-header-content {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 24px;
 }
 
-.aia-settings-title-section {
+.aia-settings-light .aia-settings-title-section {
     display: flex;
     align-items: center;
     gap: 16px;
     flex: 1;
 }
 
-.aia-settings-icon-wrapper {
+.aia-settings-light .aia-settings-icon-wrapper {
     width: 48px;
     height: 48px;
     background: rgba(255, 255, 255, 0.1);
@@ -62,32 +62,32 @@
     justify-content: center;
 }
 
-.aia-settings-icon {
+.aia-settings-light .aia-settings-icon {
     width: 24px;
     height: 24px;
     fill: white;
 }
 
-.aia-settings-text-content {
+.aia-settings-light .aia-settings-text-content {
     flex: 1;
 }
 
-.aia-settings-main-title {
+.aia-settings-light .aia-settings-main-title {
     font-size: 1.875rem;
     font-weight: 700;
-    color: white;
+    color: white !important;
     margin: 0 0 4px 0;
     line-height: 1.2;
 }
 
-.aia-settings-subtitle {
+.aia-settings-light .aia-settings-subtitle {
     font-size: 1rem;
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.8) !important;
     margin: 0;
     line-height: 1.4;
 }
 
-.aia-settings-header-actions {
+.aia-settings-light .aia-settings-header-actions {
     display: flex;
     align-items: center;
     gap: 12px;
@@ -124,26 +124,23 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .aia-settings-header {
+    .aia-settings-light .aia-settings-header {
         padding: 20px;
     }
     
-    .aia-settings-header-content {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 16px;
-    }
-    
-    .aia-settings-title-section {
-        text-align: center;
-    }
-    
-    .aia-settings-main-title {
+    .aia-settings-light .aia-settings-main-title {
         font-size: 1.5rem;
     }
     
-    .aia-settings-header-actions {
-        justify-content: center;
+    .aia-settings-light .aia-settings-header-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+    
+    .aia-settings-light .aia-settings-header-actions {
+        width: 100%;
+        justify-content: flex-end;
     }
 }
     top: 40%;
@@ -1769,4 +1766,33 @@
 @keyframes saveStatusBlink {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.5; }
+}
+
+.aia-settings-light .aia-settings-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 0.875rem;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.aia-settings-light .aia-settings-btn--primary {
+    background: rgba(255, 255, 255, 0.2) !important;
+    color: white !important;
+}
+
+.aia-settings-light .aia-settings-btn--primary:hover {
+    background: rgba(255, 255, 255, 0.3) !important;
+}
+
+.aia-settings-light .aia-settings-btn-icon {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
 }
