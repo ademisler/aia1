@@ -130,9 +130,14 @@ class AIChat {
      */
     public function process_message($message, $session_id = null) {
         if (!$this->ai_provider) {
+            // Return a helpful fallback response instead of error
             return [
-                'success' => false,
-                'error' => __('AI provider not configured', 'ai-inventory-agent')
+                'success' => true,
+                'response' => sprintf(
+                    __('Hello! I received your message: "%s". However, AI provider is not configured yet. Please go to Settings to configure your OpenAI or Gemini API key to enable intelligent responses.', 'ai-inventory-agent'),
+                    esc_html($message)
+                ),
+                'session_id' => $session_id ?: $this->generate_session_id()
             ];
         }
         

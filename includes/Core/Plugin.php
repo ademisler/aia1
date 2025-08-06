@@ -320,7 +320,19 @@ class Plugin {
         }
         if ($ai_chat) {
             $response = $ai_chat->process_message($message, $session_id);
-            wp_send_json_success($response);
+            
+            // Ensure response format is correct
+            if ($response && isset($response['success']) && $response['success']) {
+                wp_send_json_success([
+                    'response' => $response['response'] ?? 'AI response received',
+                    'session_id' => $response['session_id'] ?? $session_id,
+                    'processing_time' => $response['processing_time'] ?? 0
+                ]);
+            } else {
+                wp_send_json_error([
+                    'message' => $response['error'] ?? 'Failed to process message'
+                ]);
+            }
         } else {
             // Debug information
             $debug_info = [];

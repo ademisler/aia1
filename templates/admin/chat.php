@@ -307,11 +307,39 @@ jQuery(document).ready(function($) {
             // Show typing indicator
             showTypingIndicator();
             
-            // Send to AI (placeholder - implement actual AI integration)
-            setTimeout(function() {
-                hideTypingIndicator();
-                addMessageToChat('ai', 'Thank you for your message. AI integration is in development.');
-            }, 2000);
+            // Send to AI via AJAX
+            $.ajax({
+                url: ajaxurl,
+                type: 'POST',
+                data: {
+                    action: 'aia_chat',
+                    message: message,
+                    session_id: 'chat_' + Date.now(),
+                    nonce: '<?php echo wp_create_nonce('aia_ajax_nonce'); ?>'
+                },
+                success: function(response) {
+                    hideTypingIndicator();
+                    console.log('Chat AJAX Response:', response); // Debug log
+                    if (response.success && response.data) {
+                        var aiMessage = response.data.response || response.data.message || 'AI response received.';
+                        addMessageToChat('ai', aiMessage);
+                    } else {
+                        var errorMsg = '';
+                        if (response.data) {
+                            errorMsg = response.data.error || response.data.message || 'Unknown error occurred.';
+                        } else {
+                            errorMsg = '<?php esc_js(__('Sorry, I encountered an error. Please try again.', 'ai-inventory-agent')); ?>';
+                        }
+                        addMessageToChat('ai', errorMsg);
+                        console.error('Chat Error Response:', response);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    hideTypingIndicator();
+                    console.error('Chat AJAX Error:', error, xhr.responseText);
+                    addMessageToChat('ai', '<?php esc_js(__('Connection error. Please check your settings and try again.', 'ai-inventory-agent')); ?>');
+                }
+            });
         }
     });
     
