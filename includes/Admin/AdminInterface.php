@@ -574,20 +574,27 @@ class AdminInterface {
      * Handle test API connection AJAX request
      */
     public function handle_test_api_connection() {
-        check_ajax_referer('aia_ajax_nonce', 'nonce');
-        
-        if (!current_user_can('manage_options')) {
-            wp_send_json_error(__('Insufficient permissions.', 'ai-inventory-agent'));
-        }
-        
-        $provider = sanitize_text_field($_POST['provider'] ?? '');
-        $api_key = sanitize_text_field($_POST['api_key'] ?? '');
-        
-        if (empty($provider) || empty($api_key)) {
-            wp_send_json_error(__('Provider and API key are required.', 'ai-inventory-agent'));
-        }
-        
         try {
+            check_ajax_referer('aia_ajax_nonce', 'nonce');
+            
+            if (!current_user_can('manage_options')) {
+                wp_send_json_error(__('Insufficient permissions.', 'ai-inventory-agent'));
+                return;
+            }
+            
+            $provider = sanitize_text_field($_POST['provider'] ?? '');
+            $api_key = sanitize_text_field($_POST['api_key'] ?? '');
+            
+            if (empty($provider) || empty($api_key)) {
+                wp_send_json_error(__('Provider and API key are required.', 'ai-inventory-agent'));
+                return;
+            }
+            
+            // Debug logging
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                error_log("AIA API Test: Testing {$provider} connection with key length: " . strlen($api_key));
+            }
+            
             // Test the connection
             switch ($provider) {
                 case 'openai':
@@ -603,17 +610,29 @@ class AdminInterface {
             
             $result = $provider_instance->test_connection();
             
+            // Debug logging
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                error_log("AIA API Test Result: " . json_encode($result));
+            }
+            
             if ($result['success']) {
                 wp_send_json_success([
                     'message' => __('Connection successful!', 'ai-inventory-agent'),
                     'details' => $result
                 ]);
             } else {
-                wp_send_json_error($result['message']);
+                wp_send_json_error([
+                    'message' => $result['message'],
+                    'debug' => $result['debug'] ?? []
+                ]);
             }
             
-                    } catch (\Exception $e) {
-                wp_send_json_error($e->getMessage());
+        } catch (\Exception $e) {
+            error_log('AIA API Test Exception: ' . $e->getMessage());
+            wp_send_json_error([
+                'message' => __('Connection test failed: ', 'ai-inventory-agent') . $e->getMessage(),
+                'error_type' => 'exception'
+            ]);
         }
     }
     

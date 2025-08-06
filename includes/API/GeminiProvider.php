@@ -243,7 +243,7 @@ class GeminiProvider {
                 throw new \Exception('API key is empty');
             }
             
-            // Gemini API keys are typically 39 characters long and start with "AI"
+            // Gemini API keys are typically 39 characters long
             if (strlen($this->api_key) < 30) {
                 throw new \Exception('API key seems too short. Gemini API keys are typically 39 characters long.');
             }
@@ -256,12 +256,12 @@ class GeminiProvider {
             $test_conversation = [
                 [
                     'role' => 'user',
-                    'content' => 'Say "Hello" in one word.'
+                    'content' => 'Hello, please respond with just "OK" to test the connection.'
                 ]
             ];
             
             $response = $this->generate_response($test_conversation, [
-                'max_tokens' => 20,
+                'max_tokens' => 10,
                 'temperature' => 0
             ]);
             

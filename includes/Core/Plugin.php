@@ -103,30 +103,37 @@ class Plugin {
             // Initialize module manager
             $this->module_manager = new ModuleManager();
             
-            // Initialize admin interface
-            if (is_admin()) {
-                $this->admin_interface = new AdminInterface();
-                // Set plugin instance safely to avoid circular dependency
-                if ($this->admin_interface && method_exists($this->admin_interface, 'set_plugin_instance')) {
-                    $this->admin_interface->set_plugin_instance($this);
-                }
-            }
-            
             // Load plugin settings
             $this->load_settings();
             
-            // Register hooks
+            // Initialize admin interface
+            if (is_admin()) {
+                $this->admin_interface = new \AIA\Admin\AdminInterface();
+                $this->admin_interface->set_plugin_instance($this);
+            }
+            
+            // Register WordPress hooks
             $this->register_hooks();
             
-            // Initialize modules with additional memory check
-            if (memory_get_usage() < (1024 * 1024 * 800)) {
+            // Initialize modules with memory check
+            if (memory_get_usage() < (1024 * 1024 * 600)) { // 600MB threshold for modules
                 $this->init_modules();
             } else {
                 error_log('AIA: Skipping module initialization due to high memory usage');
             }
             
         } catch (\Exception $e) {
-            error_log('AIA: Plugin initialization failed: ' . $e->getMessage());
+            error_log('AIA: Plugin initialization error: ' . $e->getMessage());
+            
+            // Show admin notice if in admin
+            if (is_admin()) {
+                add_action('admin_notices', function() use ($e) {
+                    echo '<div class="notice notice-error"><p>';
+                    echo esc_html__('AI Inventory Agent initialization failed: ', 'ai-inventory-agent');
+                    echo esc_html($e->getMessage());
+                    echo '</p></div>';
+                });
+            }
         }
     }
     

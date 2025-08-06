@@ -5,6 +5,41 @@ All notable changes to AI Inventory Agent will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.8] - 2025-01-08
+
+### Fixed
+- **Settings Form Integration**: Fixed form action to work properly with AJAX instead of WordPress options.php
+- **API Connection Testing**: Enhanced error handling and debug logging for API tests
+- **Memory Usage Optimization**: Improved plugin initialization with memory usage checks
+- **Gemini API Testing**: More reliable connection testing with better validation
+- **Error Handling**: Comprehensive exception handling in AJAX operations
+
+### Improved
+- **Plugin Performance**: Optimized initialization sequence with memory thresholds
+- **Debug Logging**: Enhanced logging throughout API operations and settings management
+- **User Experience**: Better error messages and feedback for API connection issues
+- **Code Quality**: Improved exception handling and error reporting
+- **Settings Management**: Streamlined form processing with proper nonce validation
+
+### Technical
+- **Memory Management**: Added memory usage checks during plugin initialization (700MB threshold)
+- **Module Loading**: Conditional module initialization based on memory usage (600MB threshold)
+- **AJAX Security**: Enhanced nonce validation and permission checks
+- **API Validation**: Improved API key format validation for Gemini provider
+- **Error Recovery**: Better error recovery mechanisms with admin notices
+
+### Developer
+- **Exception Handling**: Comprehensive try-catch blocks in critical operations
+- **Debug Information**: Detailed logging for troubleshooting API and settings issues
+- **Code Organization**: Improved class structure and method organization
+- **Performance Monitoring**: Memory usage tracking and optimization
+
+### Security
+- **Input Validation**: Enhanced sanitization of user inputs
+- **Nonce Security**: Proper nonce validation in all AJAX operations
+- **Permission Checks**: Strict capability checks for admin operations
+- **Error Disclosure**: Controlled error message disclosure to prevent information leakage
+
 ## [2.2.7] - 2025-01-08
 
 ### Fixed

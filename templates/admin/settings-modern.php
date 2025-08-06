@@ -91,14 +91,19 @@ $settings = get_option('aia_settings', []);
                 </button>
             </div>
 
-            <form id="aia-settings-form" method="post" action="options.php">
-                <?php settings_fields('aia_settings_group'); ?>
+            <form id="aia-settings-form" method="post">
+                <?php wp_nonce_field('aia_settings_nonce', 'aia_settings_nonce'); ?>
                 
                 <!-- General Settings Tab -->
                 <div id="general" class="aia-tab-content active">
                     <div class="aia-card">
                         <div class="aia-card-header">
-                            <h3><?php esc_html_e('General Settings', 'ai-inventory-agent'); ?></h3>
+                            <h3 class="aia-card-title">
+                                <svg class="aia-card-icon" viewBox="0 0 24 24">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                                </svg>
+                                <?php esc_html_e('Company Information', 'ai-inventory-agent'); ?>
+                            </h3>
                         </div>
                         <div class="aia-card-body">
                             <div class="aia-form-grid">
