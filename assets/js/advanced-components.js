@@ -700,7 +700,7 @@ AIA.Advanced.ModalSystem = {
 };
 
 // Initialize advanced components when DOM is ready
-$(document).ready(function() {
+jQuery(document).ready(function($) {
     // Initialize all advanced components
     AIA.Advanced.CommandPalette.init();
     AIA.Advanced.NotificationSystem.init();

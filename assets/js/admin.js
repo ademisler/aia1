@@ -215,6 +215,11 @@
          * Format message content
          */
         formatMessage: function(content) {
+            // Ensure content is a string
+            if (typeof content !== 'string') {
+                content = String(content || '');
+            }
+            
             // Convert line breaks to <br>
             content = content.replace(/\n/g, '<br>');
             
