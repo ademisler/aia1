@@ -1,9 +1,9 @@
 # AI Inventory Agent - Releases
 
-## Latest Version: 1.0.3
+## Latest Version: 1.0.4
 
 ### Download
-- [ai-inventory-agent-v1.0.3.zip](ai-inventory-agent-v1.0.3.zip) - Latest stable release
+- [ai-inventory-agent-v1.0.4.zip](ai-inventory-agent-v1.0.4.zip) - Latest stable release
 
 ### Installation
 1. Download the latest ZIP file
@@ -15,6 +15,12 @@
 Older versions are available in the [archive](archive/) folder.
 
 ### Version History
+
+#### v1.0.4 (2025-01-08) - CRITICAL HOTFIX
+- **FIXED**: Fatal error "Undefined constant AIA_VERSION" in AdminInterface.php
+- **FIXED**: Admin asset enqueuing causing critical errors
+- **CORRECTED**: All instances of incorrect constant references
+- Plugin admin interface now loads correctly
 
 #### v1.0.3 (2025-01-08) - CRITICAL MEMORY FIX
 - **FIXED**: Fatal memory exhaustion error (1GB limit exceeded) causing site freezing

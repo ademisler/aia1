@@ -623,7 +623,7 @@ class AdminInterface {
             'aia-admin-style',
             AIA_PLUGIN_URL . 'assets/css/admin.css',
             [],
-            AIA_VERSION
+            AIA_PLUGIN_VERSION
         );
         
         // Enqueue admin scripts
@@ -631,7 +631,7 @@ class AdminInterface {
             'aia-admin-script',
             AIA_PLUGIN_URL . 'assets/js/admin.js',
             ['jquery'],
-            AIA_VERSION,
+            AIA_PLUGIN_VERSION,
             true
         );
         
@@ -640,7 +640,7 @@ class AdminInterface {
             'aia-ui-components',
             AIA_PLUGIN_URL . 'assets/js/ui-components.js',
             ['jquery'],
-            AIA_VERSION,
+            AIA_PLUGIN_VERSION,
             true
         );
         
@@ -658,7 +658,7 @@ class AdminInterface {
             'aia-charts',
             AIA_PLUGIN_URL . 'assets/js/charts.js',
             ['jquery', 'chartjs'],
-            AIA_VERSION,
+            AIA_PLUGIN_VERSION,
             true
         );
         

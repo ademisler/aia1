@@ -329,6 +329,11 @@ The plugin is fully translatable:
 
 ## 📝 Changelog
 
+### Version 1.0.4
+- **CRITICAL HOTFIX**: Fixed fatal error "Undefined constant AIA_VERSION" in AdminInterface.php
+- Fixed admin asset enqueuing causing critical errors
+- Plugin admin interface now loads correctly
+
 ### Version 1.0.3
 - **CRITICAL MEMORY FIX**: Fixed fatal memory exhaustion error causing site freezing
 - Fixed circular dependencies in plugin initialization

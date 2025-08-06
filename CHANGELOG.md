@@ -5,6 +5,24 @@ All notable changes to AI Inventory Agent will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.4] - 2025-01-08
+
+### 🚨 Critical Hotfix
+
+#### Fixed
+- **Undefined Constant Error**
+  - Fixed fatal error: "Undefined constant AIA_VERSION" in AdminInterface.php line 626
+  - Corrected all instances of incorrect `AIA_VERSION` to proper `AIA_PLUGIN_VERSION` constant
+  - Fixed admin asset enqueuing that was causing critical errors
+  - Plugin admin interface now loads correctly without fatal errors
+
+#### Technical Details
+- **AdminInterface.php**: Fixed 4 instances of `AIA_VERSION` → `AIA_PLUGIN_VERSION`
+  - Line 626: CSS enqueuing version parameter
+  - Line 634: Admin script enqueuing version parameter  
+  - Line 643: UI components script enqueuing version parameter
+  - Line 661: Charts script enqueuing version parameter
+
 ## [1.0.3] - 2025-01-08
 
 ### 🚨 Critical Memory Fix
