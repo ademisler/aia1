@@ -1,6 +1,7 @@
 /**
  * AI Inventory Agent - Advanced Animation System
- * Smooth, performant animations using CSS transforms
+ * Smooth, performant animations and microinteractions
+ * Respects user preferences for reduced motion
  */
 
 /* ===== Keyframe Animations ===== */
@@ -306,9 +307,280 @@
   scroll-behavior: smooth;
 }
 
+/* ===== Modern Microinteractions ===== */
+
+/* Hover lift effect for cards */
+.aia-hover-lift {
+  transition: transform var(--aia-transition-base) var(--aia-ease-out),
+              box-shadow var(--aia-transition-base) var(--aia-ease-out);
+}
+
+.aia-hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--aia-shadow-lg);
+}
+
+/* Button press feedback */
+.aia-press-feedback {
+  transition: transform var(--aia-transition-fast) var(--aia-ease-in-out);
+}
+
+.aia-press-feedback:active {
+  transform: scale(0.98);
+}
+
+/* Icon rotation on hover */
+.aia-icon-rotate {
+  transition: transform var(--aia-transition-base) var(--aia-ease-in-out);
+}
+
+.aia-icon-rotate:hover .aia-icon {
+  transform: rotate(90deg);
+}
+
+/* Glow effect for focus states */
+.aia-glow-focus {
+  position: relative;
+  transition: box-shadow var(--aia-transition-base) var(--aia-ease-in-out);
+}
+
+.aia-glow-focus:focus {
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+}
+
+/* Stagger animation for list items */
+.aia-stagger-children > * {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: aia-fade-in-up 0.5s var(--aia-ease-out) forwards;
+}
+
+.aia-stagger-children > *:nth-child(1) { animation-delay: 0.1s; }
+.aia-stagger-children > *:nth-child(2) { animation-delay: 0.2s; }
+.aia-stagger-children > *:nth-child(3) { animation-delay: 0.3s; }
+.aia-stagger-children > *:nth-child(4) { animation-delay: 0.4s; }
+.aia-stagger-children > *:nth-child(5) { animation-delay: 0.5s; }
+.aia-stagger-children > *:nth-child(6) { animation-delay: 0.6s; }
+
+/* Typewriter effect */
+@keyframes aia-typewriter {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+.aia-typewriter {
+  overflow: hidden;
+  border-right: 2px solid var(--aia-primary-500);
+  white-space: nowrap;
+  margin: 0 auto;
+  animation: aia-typewriter 2s steps(30, end), aia-blink 0.75s step-end infinite;
+}
+
+@keyframes aia-blink {
+  from, to { border-color: transparent; }
+  50% { border-color: var(--aia-primary-500); }
+}
+
+/* Morphing button */
+.aia-morph-button {
+  position: relative;
+  overflow: hidden;
+  transition: all var(--aia-transition-base) var(--aia-ease-in-out);
+}
+
+.aia-morph-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left var(--aia-transition-slow) var(--aia-ease-in-out);
+}
+
+.aia-morph-button:hover::before {
+  left: 100%;
+}
+
+/* Floating action button */
+.aia-fab {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--aia-primary-600);
+  color: white;
+  border: none;
+  cursor: pointer;
+  box-shadow: var(--aia-shadow-lg);
+  z-index: var(--aia-z-fixed);
+  transition: all var(--aia-transition-base) var(--aia-ease-out);
+}
+
+.aia-fab:hover {
+  transform: scale(1.1);
+  box-shadow: var(--aia-shadow-xl);
+}
+
+.aia-fab:active {
+  transform: scale(0.95);
+}
+
+/* Skeleton loading animation */
+@keyframes aia-skeleton-loading {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
+}
+
+.aia-skeleton {
+  background: linear-gradient(90deg, 
+    var(--aia-gray-200) 25%, 
+    var(--aia-gray-100) 50%, 
+    var(--aia-gray-200) 75%
+  );
+  background-size: 200px 100%;
+  animation: aia-skeleton-loading 1.5s infinite;
+  border-radius: var(--aia-radius-md);
+}
+
+/* Progress bar fill animation */
+@keyframes aia-progress-fill {
+  0% { width: 0%; }
+  100% { width: var(--progress-width, 100%); }
+}
+
+.aia-progress-animated .aia-progress__bar {
+  animation: aia-progress-fill 1.5s var(--aia-ease-out) forwards;
+}
+
+/* Notification slide in */
+@keyframes aia-slide-in-right {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.aia-notification-enter {
+  animation: aia-slide-in-right 0.3s var(--aia-ease-out) forwards;
+}
+
+/* Modal backdrop animation */
+@keyframes aia-backdrop-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes aia-modal-scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.aia-modal-backdrop {
+  animation: aia-backdrop-fade-in 0.2s var(--aia-ease-out);
+}
+
+.aia-modal-content {
+  animation: aia-modal-scale-in 0.3s var(--aia-ease-out);
+}
+
+/* Loading dots animation */
+@keyframes aia-loading-dots {
+  0%, 80%, 100% { opacity: 0; }
+  40% { opacity: 1; }
+}
+
+.aia-loading-dots {
+  display: inline-flex;
+  gap: 4px;
+}
+
+.aia-loading-dots > div {
+  width: 8px;
+  height: 8px;
+  background: var(--aia-primary-500);
+  border-radius: 50%;
+  animation: aia-loading-dots 1.4s infinite ease-in-out both;
+}
+
+.aia-loading-dots > div:nth-child(1) { animation-delay: -0.32s; }
+.aia-loading-dots > div:nth-child(2) { animation-delay: -0.16s; }
+
+/* Heartbeat animation for alerts */
+@keyframes aia-heartbeat {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.aia-heartbeat {
+  animation: aia-heartbeat 1.5s ease-in-out infinite;
+}
+
+/* Attention seeker animation */
+@keyframes aia-attention {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.aia-attention {
+  animation: aia-attention 0.6s ease-in-out 3;
+}
+
+/* Success checkmark animation */
+@keyframes aia-checkmark-draw {
+  0% {
+    stroke-dasharray: 0 100;
+  }
+  100% {
+    stroke-dasharray: 100 0;
+  }
+}
+
+.aia-checkmark-animated {
+  stroke-dasharray: 100;
+  animation: aia-checkmark-draw 0.8s ease-out forwards;
+}
+
 /* Performance Optimizations */
 .aia-will-animate {
   will-change: transform, opacity;
+}
+
+.aia-gpu-accelerated {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Intersection Observer animations */
+.aia-animate-on-scroll {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 0.6s var(--aia-ease-out),
+              transform 0.6s var(--aia-ease-out);
+}
+
+.aia-animate-on-scroll.aia-in-view {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* Reduce Motion Support */
@@ -319,5 +591,17 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  .aia-skeleton {
+    animation: none;
+    background: var(--aia-gray-200);
+  }
+  
+  .aia-typewriter {
+    animation: none;
+    border-right: none;
+    overflow: visible;
   }
 }

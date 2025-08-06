@@ -3,20 +3,23 @@
  * Modern, scalable design system foundation
  */
 
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
 :root {
   /* ===== Color Palette ===== */
   
-  /* Primary Colors */
-  --aia-primary-50: #e6f3ff;
-  --aia-primary-100: #b3daff;
-  --aia-primary-200: #80c1ff;
-  --aia-primary-300: #4da8ff;
-  --aia-primary-400: #1a8fff;
-  --aia-primary-500: #0073e6; /* Main Primary */
-  --aia-primary-600: #005bb3;
-  --aia-primary-700: #004280;
-  --aia-primary-800: #002a4d;
-  --aia-primary-900: #00121a;
+  /* Primary Colors - Enhanced with better contrast */
+  --aia-primary-50: #eff6ff;
+  --aia-primary-100: #dbeafe;
+  --aia-primary-200: #bfdbfe;
+  --aia-primary-300: #93c5fd;
+  --aia-primary-400: #60a5fa;
+  --aia-primary-500: #3b82f6; /* Main Primary - Better contrast */
+  --aia-primary-600: #2563eb;
+  --aia-primary-700: #1d4ed8;
+  --aia-primary-800: #1e40af;
+  --aia-primary-900: #1e3a8a;
   
   /* Secondary Colors - AI Purple */
   --aia-secondary-50: #f3e6ff;
@@ -64,23 +67,51 @@
   --aia-danger-800: #4d0009;
   --aia-danger-900: #1a0003;
   
-  /* Neutral Colors */
-  --aia-gray-50: #f8f9fa;
-  --aia-gray-100: #f1f3f5;
-  --aia-gray-200: #e9ecef;
-  --aia-gray-300: #dee2e6;
-  --aia-gray-400: #ced4da;
-  --aia-gray-500: #adb5bd;
-  --aia-gray-600: #868e96;
-  --aia-gray-700: #495057;
-  --aia-gray-800: #343a40;
-  --aia-gray-900: #212529;
+  /* Neutral Colors - Enhanced contrast ratios */
+  --aia-gray-50: #fafaf9;
+  --aia-gray-100: #f5f5f4;
+  --aia-gray-200: #e7e5e4;
+  --aia-gray-300: #d6d3d1;
+  --aia-gray-400: #a8a29e;
+  --aia-gray-500: #78716c;
+  --aia-gray-600: #57534e;
+  --aia-gray-700: #44403c;
+  --aia-gray-800: #292524;
+  --aia-gray-900: #1c1917;
+  
+  /* Semantic Colors for UI States */
+  --aia-text-primary: var(--aia-gray-900);
+  --aia-text-secondary: var(--aia-gray-700);
+  --aia-text-tertiary: var(--aia-gray-600);
+  --aia-text-inverse: #ffffff;
+  
+  --aia-bg-primary: #ffffff;
+  --aia-bg-secondary: var(--aia-gray-50);
+  --aia-bg-tertiary: var(--aia-gray-100);
+  
+  --aia-border-light: var(--aia-gray-200);
+  --aia-border-medium: var(--aia-gray-300);
+  --aia-border-strong: var(--aia-gray-400);
   
   /* ===== Typography ===== */
   
   /* Font Families */
-  --aia-font-primary: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-  --aia-font-mono: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
+  --aia-font-primary: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  --aia-font-display: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --aia-font-mono: "JetBrains Mono", "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
+  
+  /* Typography Scale - Improved readability */
+  --aia-heading-1: var(--aia-text-4xl);
+  --aia-heading-2: var(--aia-text-3xl);
+  --aia-heading-3: var(--aia-text-2xl);
+  --aia-heading-4: var(--aia-text-xl);
+  --aia-heading-5: var(--aia-text-lg);
+  --aia-heading-6: var(--aia-text-base);
+  
+  --aia-body-large: var(--aia-text-lg);
+  --aia-body-base: var(--aia-text-base);
+  --aia-body-small: var(--aia-text-sm);
+  --aia-caption: var(--aia-text-xs);
   
   /* Font Sizes */
   --aia-text-xs: 0.75rem;    /* 12px */
@@ -237,3 +268,84 @@
   transition-duration: var(--aia-transition-base);
   transition-timing-function: var(--aia-ease-in-out);
 }
+
+/* ===== Typography Utility Classes ===== */
+
+.aia-heading-1 {
+  font-family: var(--aia-font-display);
+  font-size: var(--aia-heading-1);
+  font-weight: var(--aia-font-bold);
+  line-height: var(--aia-leading-tight);
+  letter-spacing: var(--aia-tracking-tight);
+  color: var(--aia-text-primary);
+}
+
+.aia-heading-2 {
+  font-family: var(--aia-font-display);
+  font-size: var(--aia-heading-2);
+  font-weight: var(--aia-font-semibold);
+  line-height: var(--aia-leading-tight);
+  letter-spacing: var(--aia-tracking-tight);
+  color: var(--aia-text-primary);
+}
+
+.aia-heading-3 {
+  font-family: var(--aia-font-display);
+  font-size: var(--aia-heading-3);
+  font-weight: var(--aia-font-semibold);
+  line-height: var(--aia-leading-snug);
+  color: var(--aia-text-primary);
+}
+
+.aia-heading-4 {
+  font-family: var(--aia-font-display);
+  font-size: var(--aia-heading-4);
+  font-weight: var(--aia-font-medium);
+  line-height: var(--aia-leading-snug);
+  color: var(--aia-text-primary);
+}
+
+.aia-body-large {
+  font-family: var(--aia-font-primary);
+  font-size: var(--aia-body-large);
+  font-weight: var(--aia-font-normal);
+  line-height: var(--aia-leading-relaxed);
+  color: var(--aia-text-primary);
+}
+
+.aia-body-base {
+  font-family: var(--aia-font-primary);
+  font-size: var(--aia-body-base);
+  font-weight: var(--aia-font-normal);
+  line-height: var(--aia-leading-normal);
+  color: var(--aia-text-secondary);
+}
+
+.aia-body-small {
+  font-family: var(--aia-font-primary);
+  font-size: var(--aia-body-small);
+  font-weight: var(--aia-font-normal);
+  line-height: var(--aia-leading-normal);
+  color: var(--aia-text-tertiary);
+}
+
+.aia-caption {
+  font-family: var(--aia-font-primary);
+  font-size: var(--aia-caption);
+  font-weight: var(--aia-font-medium);
+  line-height: var(--aia-leading-snug);
+  color: var(--aia-text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: var(--aia-tracking-wide);
+}
+
+/* Text Color Utilities */
+.aia-text-primary { color: var(--aia-text-primary); }
+.aia-text-secondary { color: var(--aia-text-secondary); }
+.aia-text-tertiary { color: var(--aia-text-tertiary); }
+.aia-text-inverse { color: var(--aia-text-inverse); }
+
+/* Background Color Utilities */
+.aia-bg-primary { background-color: var(--aia-bg-primary); }
+.aia-bg-secondary { background-color: var(--aia-bg-secondary); }
+.aia-bg-tertiary { background-color: var(--aia-bg-tertiary); }

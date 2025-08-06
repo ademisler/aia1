@@ -1,0 +1,278 @@
+/**
+ * AI Inventory Agent - Icon System
+ * Modern SVG icon utilities with consistent styling
+ */
+
+/* Icon Base Styles */
+.aia-icon {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+/* Icon Sizes */
+.aia-icon--xs {
+  width: 0.75rem;
+  height: 0.75rem;
+}
+
+.aia-icon--sm {
+  width: 0.875rem;
+  height: 0.875rem;
+}
+
+.aia-icon--base {
+  width: 1rem;
+  height: 1rem;
+}
+
+.aia-icon--lg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.aia-icon--xl {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.aia-icon--2xl {
+  width: 2rem;
+  height: 2rem;
+}
+
+.aia-icon--3xl {
+  width: 3rem;
+  height: 3rem;
+}
+
+/* Icon Colors */
+.aia-icon--primary {
+  color: var(--aia-primary-500);
+}
+
+.aia-icon--secondary {
+  color: var(--aia-secondary-500);
+}
+
+.aia-icon--success {
+  color: var(--aia-success-500);
+}
+
+.aia-icon--warning {
+  color: var(--aia-warning-500);
+}
+
+.aia-icon--danger {
+  color: var(--aia-danger-500);
+}
+
+.aia-icon--muted {
+  color: var(--aia-text-tertiary);
+}
+
+.aia-icon--inverse {
+  color: var(--aia-text-inverse);
+}
+
+/* Icon with Text Alignment */
+.aia-icon-text {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--aia-space-2);
+}
+
+.aia-icon-text--reverse {
+  flex-direction: row-reverse;
+}
+
+.aia-icon-text--vertical {
+  flex-direction: column;
+  gap: var(--aia-space-1);
+}
+
+/* Icon Button Styles */
+.aia-icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--aia-space-2);
+  border: none;
+  background: transparent;
+  border-radius: var(--aia-radius-md);
+  cursor: pointer;
+  transition: all var(--aia-transition-base) var(--aia-ease-in-out);
+  color: var(--aia-text-secondary);
+}
+
+.aia-icon-button:hover {
+  background: var(--aia-gray-100);
+  color: var(--aia-text-primary);
+}
+
+.aia-icon-button:active {
+  transform: scale(0.95);
+}
+
+.aia-icon-button:focus {
+  outline: 2px solid var(--aia-primary-500);
+  outline-offset: 2px;
+}
+
+/* Icon Button Variants */
+.aia-icon-button--primary {
+  color: var(--aia-primary-500);
+}
+
+.aia-icon-button--primary:hover {
+  background: var(--aia-primary-50);
+  color: var(--aia-primary-600);
+}
+
+.aia-icon-button--danger {
+  color: var(--aia-danger-500);
+}
+
+.aia-icon-button--danger:hover {
+  background: var(--aia-danger-50);
+  color: var(--aia-danger-600);
+}
+
+/* Icon Badge */
+.aia-icon-badge {
+  position: relative;
+  display: inline-block;
+}
+
+.aia-icon-badge::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 8px;
+  height: 8px;
+  background: var(--aia-danger-500);
+  border: 2px solid var(--aia-bg-primary);
+  border-radius: 50%;
+}
+
+.aia-icon-badge--success::after {
+  background: var(--aia-success-500);
+}
+
+.aia-icon-badge--warning::after {
+  background: var(--aia-warning-500);
+}
+
+/* Loading Icon Animation */
+.aia-icon--loading {
+  animation: aia-spin 1s linear infinite;
+}
+
+@keyframes aia-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Icon List */
+.aia-icon-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.aia-icon-list-item {
+  display: flex;
+  align-items: center;
+  gap: var(--aia-space-3);
+  padding: var(--aia-space-2) 0;
+}
+
+.aia-icon-list-item:not(:last-child) {
+  border-bottom: 1px solid var(--aia-border-light);
+}
+
+/* Status Icons */
+.aia-status-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 50%;
+  font-size: 0.75rem;
+}
+
+.aia-status-icon--success {
+  background: var(--aia-success-100);
+  color: var(--aia-success-700);
+}
+
+.aia-status-icon--warning {
+  background: var(--aia-warning-100);
+  color: var(--aia-warning-700);
+}
+
+.aia-status-icon--danger {
+  background: var(--aia-danger-100);
+  color: var(--aia-danger-700);
+}
+
+.aia-status-icon--info {
+  background: var(--aia-primary-100);
+  color: var(--aia-primary-700);
+}
+
+/* Utility Classes for Common Icons */
+.aia-icon-dashboard {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='currentColor'%3e%3cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M3 3h7v9H3zM14 3h7v5h-7zM14 12h7v9h-7zM3 16h7v5H3z'/%3e%3c/svg%3e");
+}
+
+/* Responsive Icon Sizes */
+@media (max-width: 640px) {
+  .aia-icon--responsive {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+  
+  .aia-icon-text {
+    gap: var(--aia-space-1);
+  }
+  
+  .aia-icon-button {
+    padding: var(--aia-space-1);
+  }
+}
+
+/* High Contrast Mode Support */
+@media (prefers-contrast: high) {
+  .aia-icon {
+    stroke-width: 2.5;
+  }
+  
+  .aia-icon-button {
+    border: 1px solid currentColor;
+  }
+}
+
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .aia-icon--loading {
+    animation: none;
+  }
+  
+  .aia-icon-button {
+    transition: none;
+  }
+}

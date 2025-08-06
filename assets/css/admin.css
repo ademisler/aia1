@@ -5,7 +5,12 @@
 
 /* Import Design System */
 @import url('design-tokens.css');
+@import url('accessibility.css');
+@import url('icons.css');
+@import url('layout.css');
 @import url('components.css');
+@import url('visual-hierarchy.css');
+@import url('responsive.css');
 @import url('dashboard.css');
 @import url('chat.css');
 @import url('animations.css');
@@ -32,9 +37,10 @@
 
 .aia-header h1 {
     margin: 0;
-    color: #1d2327;
-    font-size: 24px;
-    font-weight: 600;
+    color: var(--aia-text-primary);
+    font-size: var(--aia-heading-2);
+    font-weight: var(--aia-font-bold);
+    font-family: var(--aia-font-display);
 }
 
 .aia-header .aia-logo {
@@ -44,8 +50,12 @@
 }
 
 .aia-header .aia-logo::before {
-    content: "🤖";
-    font-size: 24px;
+    content: "";
+    width: 2rem;
+    height: 2rem;
+    background: url('../icons/sprite.svg#aia-bot') no-repeat center;
+    background-size: contain;
+    display: inline-block;
 }
 
 /* Dashboard Styles */

@@ -1,9 +1,9 @@
 # AI Inventory Agent - Releases
 
-## Latest Version: 1.0.8
+## Latest Version: 1.1.0
 
 ### Download
-- [ai-inventory-agent-v1.0.8.zip](ai-inventory-agent-v1.0.8.zip) - Latest stable release
+- [ai-inventory-agent-v1.1.0.zip](ai-inventory-agent-v1.1.0.zip) - Latest stable release with major UI/UX redesign
 
 ### Installation
 1. Download the latest ZIP file
@@ -15,6 +15,19 @@
 Older versions are available in the [archive](archive/) folder.
 
 ### Version History
+
+#### v1.1.0 (2025-01-08) - MAJOR UI/UX REDESIGN
+- **COMPLETE VISUAL OVERHAUL**: Modern, professional interface with comprehensive design system
+- **NEW**: Professional Lucide Icons library replacing emoji icons
+- **NEW**: WCAG 2.1 AA compliant accessibility features
+- **NEW**: Mobile-first responsive design with optimized layouts
+- **NEW**: Advanced animations and microinteractions
+- **NEW**: Enhanced visual hierarchy and information architecture
+- **IMPROVED**: Modern color palette with better contrast ratios
+- **IMPROVED**: Professional typography with Inter font family
+- **IMPROVED**: Modular CSS architecture with design tokens
+- **IMPROVED**: Enhanced forms, buttons, and interactive components
+- This major update transforms the plugin into a modern, accessible SaaS-quality experience
 
 #### v1.0.8 (2025-01-08) - CRITICAL AI CHAT MODULE FIX
 - **FIXED**: "AI Chat module not available" error preventing chat functionality

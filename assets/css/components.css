@@ -1,6 +1,7 @@
 /**
  * AI Inventory Agent - Component Library
- * Reusable, modern UI components
+ * Modern, accessible, and reusable UI components
+ * Following design system tokens and accessibility best practices
  */
 
 /* ===== Button Components ===== */
@@ -94,6 +95,349 @@
 
 .aia-btn-icon.aia-btn-lg {
   padding: var(--aia-space-4);
+}
+
+/* Button Loading State */
+.aia-btn--loading {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.aia-btn--loading::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  margin: auto;
+  border: 2px solid transparent;
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: aia-spin 1s linear infinite;
+}
+
+/* ===== Badge Components ===== */
+
+.aia-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--aia-space-1) var(--aia-space-2);
+  font-size: var(--aia-text-xs);
+  font-weight: var(--aia-font-semibold);
+  line-height: 1;
+  border-radius: var(--aia-radius-full);
+  text-transform: uppercase;
+  letter-spacing: var(--aia-tracking-wide);
+}
+
+.aia-badge--primary {
+  background: var(--aia-primary-100);
+  color: var(--aia-primary-800);
+}
+
+.aia-badge--secondary {
+  background: var(--aia-secondary-100);
+  color: var(--aia-secondary-800);
+}
+
+.aia-badge--success {
+  background: var(--aia-success-100);
+  color: var(--aia-success-800);
+}
+
+.aia-badge--warning {
+  background: var(--aia-warning-100);
+  color: var(--aia-warning-800);
+}
+
+.aia-badge--danger {
+  background: var(--aia-danger-100);
+  color: var(--aia-danger-800);
+}
+
+.aia-badge--gray {
+  background: var(--aia-gray-100);
+  color: var(--aia-gray-800);
+}
+
+/* Badge Sizes */
+.aia-badge--sm {
+  padding: 2px var(--aia-space-1);
+  font-size: 10px;
+}
+
+.aia-badge--lg {
+  padding: var(--aia-space-2) var(--aia-space-3);
+  font-size: var(--aia-text-sm);
+}
+
+/* Badge with Dot */
+.aia-badge--dot {
+  padding-left: var(--aia-space-3);
+  position: relative;
+}
+
+.aia-badge--dot::before {
+  content: '';
+  position: absolute;
+  left: var(--aia-space-2);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+/* ===== Tooltip Components ===== */
+
+.aia-tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.aia-tooltip__content {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-bottom: var(--aia-space-2);
+  padding: var(--aia-space-2) var(--aia-space-3);
+  background: var(--aia-gray-900);
+  color: var(--aia-text-inverse);
+  font-size: var(--aia-text-sm);
+  font-weight: var(--aia-font-medium);
+  line-height: var(--aia-leading-tight);
+  border-radius: var(--aia-radius-md);
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: all var(--aia-transition-base) var(--aia-ease-in-out);
+  z-index: var(--aia-z-tooltip);
+  pointer-events: none;
+}
+
+.aia-tooltip__content::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 4px solid transparent;
+  border-top-color: var(--aia-gray-900);
+}
+
+.aia-tooltip:hover .aia-tooltip__content,
+.aia-tooltip:focus .aia-tooltip__content {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Tooltip Positions */
+.aia-tooltip--top .aia-tooltip__content {
+  bottom: 100%;
+  margin-bottom: var(--aia-space-2);
+}
+
+.aia-tooltip--bottom .aia-tooltip__content {
+  top: 100%;
+  bottom: auto;
+  margin-top: var(--aia-space-2);
+  margin-bottom: 0;
+}
+
+.aia-tooltip--bottom .aia-tooltip__content::after {
+  top: -4px;
+  border-top-color: transparent;
+  border-bottom-color: var(--aia-gray-900);
+}
+
+/* ===== Dropdown Components ===== */
+
+.aia-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.aia-dropdown__trigger {
+  cursor: pointer;
+}
+
+.aia-dropdown__content {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 200px;
+  margin-top: var(--aia-space-1);
+  background: var(--aia-bg-primary);
+  border: 1px solid var(--aia-border-light);
+  border-radius: var(--aia-radius-lg);
+  box-shadow: var(--aia-shadow-lg);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-4px);
+  transition: all var(--aia-transition-base) var(--aia-ease-in-out);
+  z-index: var(--aia-z-dropdown);
+}
+
+.aia-dropdown.aia-dropdown--active .aia-dropdown__content {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.aia-dropdown__item {
+  display: flex;
+  align-items: center;
+  gap: var(--aia-space-2);
+  padding: var(--aia-space-3) var(--aia-space-4);
+  color: var(--aia-text-secondary);
+  text-decoration: none;
+  font-size: var(--aia-text-sm);
+  transition: all var(--aia-transition-base) var(--aia-ease-in-out);
+  cursor: pointer;
+}
+
+.aia-dropdown__item:hover,
+.aia-dropdown__item:focus {
+  background: var(--aia-primary-50);
+  color: var(--aia-primary-700);
+  text-decoration: none;
+}
+
+.aia-dropdown__item:first-child {
+  border-radius: var(--aia-radius-lg) var(--aia-radius-lg) 0 0;
+}
+
+.aia-dropdown__item:last-child {
+  border-radius: 0 0 var(--aia-radius-lg) var(--aia-radius-lg);
+}
+
+.aia-dropdown__divider {
+  height: 1px;
+  background: var(--aia-border-light);
+  margin: var(--aia-space-1) 0;
+}
+
+/* ===== Progress Components ===== */
+
+.aia-progress {
+  width: 100%;
+  height: 8px;
+  background: var(--aia-gray-200);
+  border-radius: var(--aia-radius-full);
+  overflow: hidden;
+}
+
+.aia-progress__bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--aia-primary-500), var(--aia-primary-600));
+  border-radius: var(--aia-radius-full);
+  transition: width var(--aia-transition-slow) var(--aia-ease-out);
+}
+
+.aia-progress--success .aia-progress__bar {
+  background: linear-gradient(90deg, var(--aia-success-500), var(--aia-success-600));
+}
+
+.aia-progress--warning .aia-progress__bar {
+  background: linear-gradient(90deg, var(--aia-warning-500), var(--aia-warning-600));
+}
+
+.aia-progress--danger .aia-progress__bar {
+  background: linear-gradient(90deg, var(--aia-danger-500), var(--aia-danger-600));
+}
+
+/* Progress Sizes */
+.aia-progress--sm {
+  height: 4px;
+}
+
+.aia-progress--lg {
+  height: 12px;
+}
+
+/* ===== Toggle Components ===== */
+
+.aia-toggle {
+  position: relative;
+  display: inline-block;
+  width: 48px;
+  height: 24px;
+  background: var(--aia-gray-300);
+  border-radius: var(--aia-radius-full);
+  cursor: pointer;
+  transition: background-color var(--aia-transition-base) var(--aia-ease-in-out);
+}
+
+.aia-toggle__input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.aia-toggle__slider {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  background: var(--aia-bg-primary);
+  border-radius: var(--aia-radius-full);
+  transition: transform var(--aia-transition-base) var(--aia-ease-in-out);
+  box-shadow: var(--aia-shadow-sm);
+}
+
+.aia-toggle__input:checked + .aia-toggle {
+  background: var(--aia-primary-500);
+}
+
+.aia-toggle__input:checked + .aia-toggle .aia-toggle__slider {
+  transform: translateX(24px);
+}
+
+.aia-toggle__input:focus + .aia-toggle {
+  outline: 2px solid var(--aia-primary-500);
+  outline-offset: 2px;
+}
+
+/* ===== Tab Components ===== */
+
+.aia-tabs {
+  width: 100%;
+}
+
+.aia-tabs__nav {
+  display: flex;
+  border-bottom: 1px solid var(--aia-border-light);
+  margin-bottom: var(--aia-space-6);
+}
+
+.aia-tabs__tab {
+  padding: var(--aia-space-3) var(--aia-space-4);
+  color: var(--aia-text-tertiary);
+  text-decoration: none;
+  font-weight: var(--aia-font-medium);
+  border-bottom: 2px solid transparent;
+  transition: all var(--aia-transition-base) var(--aia-ease-in-out);
+  cursor: pointer;
+}
+
+.aia-tabs__tab:hover {
+  color: var(--aia-text-secondary);
+}
+
+.aia-tabs__tab--active {
+  color: var(--aia-primary-600);
+  border-bottom-color: var(--aia-primary-600);
+}
+
+.aia-tabs__content {
+  display: none;
+}
+
+.aia-tabs__content--active {
+  display: block;
 }
 
 /* ===== Card Components ===== */

@@ -50,6 +50,8 @@
             });
             
             return toast;
+            
+            return toast;
         },
         
         dismiss: function(toast) {
@@ -314,16 +316,220 @@
     };
 
     /**
+     * Enhanced Dropdown Component
+     */
+    AIA.UI.EnhancedDropdown = {
+        init: function() {
+            $(document).on('click', '.aia-dropdown__trigger', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                const dropdown = $(this).closest('.aia-dropdown');
+                const isActive = dropdown.hasClass('aia-dropdown--active');
+                
+                // Close all other dropdowns
+                $('.aia-dropdown').removeClass('aia-dropdown--active');
+                
+                // Toggle current dropdown
+                if (!isActive) {
+                    dropdown.addClass('aia-dropdown--active');
+                }
+            });
+            
+            // Close dropdown when clicking outside
+            $(document).on('click', function(e) {
+                if (!$(e.target).closest('.aia-dropdown').length) {
+                    $('.aia-dropdown').removeClass('aia-dropdown--active');
+                }
+            });
+        }
+    };
+
+    /**
+     * Toggle Component
+     */
+    AIA.UI.Toggle = {
+        init: function() {
+            $(document).on('change', '.aia-toggle__input', function() {
+                const isChecked = $(this).is(':checked');
+                $(this).trigger('aia:toggle:change', { checked: isChecked });
+            });
+        }
+    };
+
+    /**
+     * Loading States
+     */
+    AIA.UI.Loading = {
+        show: function(element, text = '') {
+            element.addClass('aia-btn--loading');
+            if (text) {
+                element.data('original-text', element.text()).text(text);
+            }
+        },
+        
+        hide: function(element) {
+            element.removeClass('aia-btn--loading');
+            const originalText = element.data('original-text');
+            if (originalText) {
+                element.text(originalText).removeData('original-text');
+            }
+        }
+    };
+
+    /**
+     * Animation Controller
+     */
+    AIA.UI.Animation = {
+        // Intersection Observer for scroll animations
+        observer: null,
+        
+        init: function() {
+            this.initScrollAnimations();
+            this.initStaggerAnimations();
+            this.initMicrointeractions();
+        },
+        
+        initScrollAnimations: function() {
+            if ('IntersectionObserver' in window) {
+                this.observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('aia-in-view');
+                        }
+                    });
+                }, { threshold: 0.1 });
+                
+                // Observe all scroll animation elements
+                $('.aia-animate-on-scroll').each((index, element) => {
+                    this.observer.observe(element);
+                });
+            }
+        },
+        
+        initStaggerAnimations: function() {
+            $('.aia-stagger-children').each(function() {
+                const children = $(this).children();
+                children.each(function(index) {
+                    $(this).css('animation-delay', (index * 0.1) + 's');
+                });
+            });
+        },
+        
+        initMicrointeractions: function() {
+            // Add hover lift to cards
+            $('.aia-card').addClass('aia-hover-lift');
+            
+            // Add press feedback to buttons
+            $('.aia-button, .aia-btn').addClass('aia-press-feedback');
+            
+            // Add glow focus to form elements
+            $('.aia-form-input, .aia-form-select, .aia-form-textarea').addClass('aia-glow-focus');
+        },
+        
+        // Animate progress bar
+        animateProgress: function(element, targetWidth, duration = 1500) {
+            const progressBar = element.find('.aia-progress__bar');
+            progressBar.css('--progress-width', targetWidth + '%');
+            element.addClass('aia-progress-animated');
+        },
+        
+        // Show notification with animation
+        showNotification: function(message, type = 'info', duration = 5000) {
+            const notification = $(`
+                <div class="aia-notification aia-notification--${type} aia-notification-enter">
+                    <div class="aia-notification__content">
+                        <svg class="aia-icon aia-icon--sm">
+                            <use href="${AIA_PLUGIN_URL}assets/icons/sprite.svg#aia-${type === 'success' ? 'check' : type}"></use>
+                        </svg>
+                        <span>${message}</span>
+                    </div>
+                    <button class="aia-notification__close">
+                        <svg class="aia-icon aia-icon--xs">
+                            <use href="${AIA_PLUGIN_URL}assets/icons/sprite.svg#aia-error"></use>
+                        </svg>
+                    </button>
+                </div>
+            `);
+            
+            // Add to container
+            let container = $('.aia-notification-container');
+            if (!container.length) {
+                container = $('<div class="aia-notification-container"></div>').appendTo('body');
+            }
+            
+            notification.appendTo(container);
+            
+            // Auto remove
+            if (duration > 0) {
+                setTimeout(() => {
+                    this.hideNotification(notification);
+                }, duration);
+            }
+            
+            // Close button
+            notification.find('.aia-notification__close').on('click', () => {
+                this.hideNotification(notification);
+            });
+            
+            return notification;
+        },
+        
+        hideNotification: function(notification) {
+            notification.addClass('aia-notification-exit');
+            setTimeout(() => {
+                notification.remove();
+            }, 300);
+        },
+        
+        // Skeleton loading
+        showSkeleton: function(element, lines = 3) {
+            const skeleton = $('<div class="aia-skeleton-wrapper"></div>');
+            for (let i = 0; i < lines; i++) {
+                skeleton.append('<div class="aia-skeleton" style="height: 16px; margin-bottom: 8px;"></div>');
+            }
+            element.html(skeleton);
+        },
+        
+        hideSkeleton: function(element, content) {
+            element.html(content);
+        },
+        
+        // Attention animation
+        drawAttention: function(element) {
+            element.addClass('aia-attention');
+            setTimeout(() => {
+                element.removeClass('aia-attention');
+            }, 1800); // 3 iterations * 0.6s
+        },
+        
+        // Heartbeat for urgent items
+        startHeartbeat: function(element) {
+            element.addClass('aia-heartbeat');
+        },
+        
+        stopHeartbeat: function(element) {
+            element.removeClass('aia-heartbeat');
+        }
+    };
+
+    /**
      * Initialize all components
      */
     $(document).ready(function() {
         AIA.UI.Dropdown.init();
+        AIA.UI.EnhancedDropdown.init();
         AIA.UI.Tooltip.init();
+        AIA.UI.Toggle.init();
+        AIA.UI.Animation.init();
         
         // Initialize tabs if present
         $('.aia-tabs').each(function() {
             AIA.UI.Tabs.init(this);
         });
+        
+        // Add page load animation
+        $('body').addClass('aia-page-loaded');
     });
 
 })(jQuery);
