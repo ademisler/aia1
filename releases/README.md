@@ -1,9 +1,9 @@
 # AI Inventory Agent - Releases
 
-## Latest Version: 1.0.4
+## Latest Version: 1.0.5
 
 ### Download
-- [ai-inventory-agent-v1.0.4.zip](ai-inventory-agent-v1.0.4.zip) - Latest stable release
+- [ai-inventory-agent-v1.0.5.zip](ai-inventory-agent-v1.0.5.zip) - Latest stable release
 
 ### Installation
 1. Download the latest ZIP file
@@ -15,6 +15,13 @@
 Older versions are available in the [archive](archive/) folder.
 
 ### Version History
+
+#### v1.0.5 (2025-01-08) - CRITICAL ADMIN INTERFACE FIX
+- **FIXED**: Fatal error "Call to a member function get_setting() on null" in InventoryAnalysis.php
+- **FIXED**: Missing template files causing "Failed to open stream" warnings
+- **ADDED**: Complete admin interface templates (analysis.php, alerts.php, reports.php)
+- **IMPROVED**: Plugin instance handling across all modules with proper null checks
+- Admin dashboard now loads completely without errors
 
 #### v1.0.4 (2025-01-08) - CRITICAL HOTFIX
 - **FIXED**: Fatal error "Undefined constant AIA_VERSION" in AdminInterface.php

@@ -5,6 +5,41 @@ All notable changes to AI Inventory Agent will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.5] - 2025-01-08
+
+### 🚨 Critical Admin Interface Fix
+
+#### Fixed
+- **Null Plugin Instance Error**
+  - Fixed fatal error: "Call to a member function get_setting() on null" in InventoryAnalysis.php line 204
+  - Added null checks and safe plugin instance initialization in all module methods
+  - Fixed plugin instance availability in get_low_stock_products(), get_out_of_stock_products(), and other inventory methods
+  - Added proper error handling and logging for debugging
+
+- **Missing Template Files**
+  - Created missing admin template files: analysis.php, alerts.php, reports.php
+  - Fixed "Failed to open stream: No such file or directory" warnings
+  - All admin pages now load correctly without template errors
+
+#### Technical Details
+- **InventoryAnalysis.php**: Added plugin instance checks in 5+ methods
+  - get_low_stock_products(): Added null check and safe initialization
+  - get_out_of_stock_products(): Added null check and safe initialization  
+  - calculate_low_stock_value(): Added null check and safe initialization
+  - check_stock_alerts(): Added null check and safe initialization
+  - get_recent_stock_changes(): Added null check and safe initialization
+  - on_stock_change(): Added null check and safe initialization
+
+- **Template Files Created**:
+  - templates/admin/analysis.php: Complete inventory analysis dashboard
+  - templates/admin/alerts.php: Stock alerts management interface
+  - templates/admin/reports.php: Reports generation and management interface
+
+#### New Features
+- **Analysis Page**: Stock overview cards, recent activity tracking, low stock products table
+- **Alerts Page**: Alert settings, critical/low stock warnings, management actions
+- **Reports Page**: Quick statistics, report generation, settings management
+
 ## [1.0.4] - 2025-01-08
 
 ### 🚨 Critical Hotfix

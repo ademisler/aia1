@@ -329,6 +329,12 @@ The plugin is fully translatable:
 
 ## 📝 Changelog
 
+### Version 1.0.5
+- **CRITICAL ADMIN INTERFACE FIX**: Fixed null plugin instance errors in InventoryAnalysis module
+- Fixed missing template files causing admin page errors
+- Added complete admin interface templates (analysis, alerts, reports pages)
+- Improved plugin instance handling with proper null checks
+
 ### Version 1.0.4
 - **CRITICAL HOTFIX**: Fixed fatal error "Undefined constant AIA_VERSION" in AdminInterface.php
 - Fixed admin asset enqueuing causing critical errors

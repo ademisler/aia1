@@ -201,6 +201,16 @@ class InventoryAnalysis {
     private function get_low_stock_products() {
         global $wpdb;
         
+        // Ensure plugin instance is available
+        if (!$this->plugin) {
+            $this->plugin = \AIA\Core\Plugin::get_instance();
+        }
+        
+        if (!$this->plugin) {
+            error_log('AIA InventoryAnalysis: Plugin instance not available in get_low_stock_products');
+            return [];
+        }
+        
         $low_stock_threshold = $this->plugin->get_setting('low_stock_threshold');
         $critical_stock_threshold = $this->plugin->get_setting('critical_stock_threshold');
         
@@ -226,6 +236,16 @@ class InventoryAnalysis {
      */
     private function get_out_of_stock_products() {
         global $wpdb;
+        
+        // Ensure plugin instance is available
+        if (!$this->plugin) {
+            $this->plugin = \AIA\Core\Plugin::get_instance();
+        }
+        
+        if (!$this->plugin) {
+            error_log('AIA InventoryAnalysis: Plugin instance not available in get_out_of_stock_products');
+            return [];
+        }
         
         $critical_stock_threshold = $this->plugin->get_setting('critical_stock_threshold');
         
@@ -316,6 +336,16 @@ class InventoryAnalysis {
     private function calculate_low_stock_value() {
         global $wpdb;
         
+        // Ensure plugin instance is available
+        if (!$this->plugin) {
+            $this->plugin = \AIA\Core\Plugin::get_instance();
+        }
+        
+        if (!$this->plugin) {
+            error_log('AIA InventoryAnalysis: Plugin instance not available in calculate_low_stock_value');
+            return 0.0;
+        }
+        
         $low_stock_threshold = $this->plugin->get_setting('low_stock_threshold');
         
         $result = $wpdb->get_var($wpdb->prepare("
@@ -341,6 +371,16 @@ class InventoryAnalysis {
      * @return array Recent stock changes
      */
     private function get_recent_stock_changes($limit = 50, $days = 7) {
+        // Ensure plugin instance is available
+        if (!$this->plugin) {
+            $this->plugin = \AIA\Core\Plugin::get_instance();
+        }
+        
+        if (!$this->plugin) {
+            error_log('AIA InventoryAnalysis: Plugin instance not available in get_recent_stock_changes');
+            return [];
+        }
+        
         $database = $this->plugin->get_database();
         $table = $database->get_table_name('inventory_logs');
         
@@ -510,6 +550,16 @@ class InventoryAnalysis {
         $old_stock = get_post_meta($product_id, '_previous_stock', true);
         
         // Log the change
+        // Ensure plugin instance is available
+        if (!$this->plugin) {
+            $this->plugin = \AIA\Core\Plugin::get_instance();
+        }
+        
+        if (!$this->plugin) {
+            error_log('AIA InventoryAnalysis: Plugin instance not available in on_stock_change');
+            return;
+        }
+        
         $database = $this->plugin->get_database();
         $database->log_inventory_change(
             $product_id,
@@ -590,6 +640,17 @@ class InventoryAnalysis {
      */
     private function check_stock_alerts($product) {
         $stock_quantity = $product->get_stock_quantity();
+        
+        // Ensure plugin instance is available
+        if (!$this->plugin) {
+            $this->plugin = \AIA\Core\Plugin::get_instance();
+        }
+        
+        if (!$this->plugin) {
+            error_log('AIA InventoryAnalysis: Plugin instance not available in check_stock_alerts');
+            return;
+        }
+        
         $low_stock_threshold = $this->plugin->get_setting('low_stock_threshold');
         $critical_stock_threshold = $this->plugin->get_setting('critical_stock_threshold');
         
