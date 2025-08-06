@@ -329,6 +329,12 @@ The plugin is fully translatable:
 
 ## 📝 Changelog
 
+### Version 1.0.8
+- **CRITICAL AI CHAT MODULE FIX**: Fixed "AI Chat module not available" error
+- Added automatic chat module enablement and re-initialization on demand
+- Enhanced module loading with better error handling and debugging information
+- AI Chat now works reliably even without initial API key configuration
+
 ### Version 1.0.7
 - **CRITICAL DUPLICATE ID & AUTHORIZATION FIXES**: Complete resolution of DOM validation and permission errors
 - Fixed WordPress Settings API conflicts causing duplicate HTML ID errors

@@ -110,6 +110,9 @@ class ModuleManager {
         
         // Check if module is enabled in settings
         if (!$this->is_module_enabled($module_id)) {
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                error_log("AIA: Module '{$module_id}' is disabled in settings");
+            }
             return false;
         }
         
@@ -142,6 +145,10 @@ class ModuleManager {
             
             // Trigger module loaded action
             do_action('aia_module_loaded', $module_id, $instance);
+            
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                error_log("AIA: Successfully initialized module '{$module_id}'");
+            }
             
             return true;
             
@@ -234,7 +241,15 @@ class ModuleManager {
         
         $setting_key = $setting_map[$module_id] ?? $module_id . '_enabled';
         
-        return isset($settings[$setting_key]) ? $settings[$setting_key] : true;
+        // Get the setting value, defaulting to true if not set
+        $enabled = isset($settings[$setting_key]) ? $settings[$setting_key] : true;
+        
+        // Debug logging
+        if (defined('WP_DEBUG') && WP_DEBUG && $module_id === 'ai_chat') {
+            error_log("AIA: Checking if module '{$module_id}' is enabled. Setting key: '{$setting_key}', Value: " . ($enabled ? 'true' : 'false'));
+        }
+        
+        return $enabled;
     }
     
     /**

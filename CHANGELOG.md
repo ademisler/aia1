@@ -5,6 +5,43 @@ All notable changes to AI Inventory Agent will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.8] - 2025-01-08
+
+### 🚨 Critical AI Chat Module Fix
+
+#### Fixed
+- **AI Chat Module Not Available Error**
+  - Fixed "AI Chat module not available" error preventing chat functionality
+  - Added automatic chat module enablement if disabled in settings
+  - Added module re-initialization on demand if module fails to load initially
+  - Enhanced debugging information to identify module loading issues
+
+#### Technical Details
+- **ModuleManager.php**: 
+  - Added comprehensive debugging for module initialization process
+  - Enhanced `is_module_enabled()` with debug logging for ai_chat module
+  - Added success logging when modules are initialized
+- **Plugin.php**: 
+  - Added `ensure_chat_module_enabled()` method to automatically enable chat in settings
+  - Added module re-initialization attempt if chat module is not found
+  - Enhanced error messages with debug information including module status
+- **AIChat.php**: 
+  - Modified initialization to not fail when API key is missing (allows module to load)
+  - Added debug logging for successful module initialization
+  - Improved error handling in `process_message()` for missing AI provider
+
+#### Root Cause Analysis
+The AI Chat module was failing to initialize due to:
+1. `chat_enabled` setting being false in user settings
+2. Module initialization failing silently when API key was not configured
+3. No retry mechanism if module failed to load during plugin initialization
+
+#### Solution Implementation
+- **Auto-Enable**: Automatically enables chat module in settings when chat is accessed
+- **Lazy Loading**: Re-attempts module initialization on first chat request if not loaded
+- **Better Error Handling**: Module loads even without API key, shows appropriate error messages
+- **Debug Information**: Comprehensive logging to identify initialization issues
+
 ## [1.0.7] - 2025-01-08
 
 ### 🚨 Critical Duplicate ID & Authorization Fixes

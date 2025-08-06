@@ -267,6 +267,23 @@ class Plugin {
     }
     
     /**
+     * Ensure AI Chat module is enabled in settings
+     */
+    private function ensure_chat_module_enabled() {
+        $settings = get_option('aia_settings', []);
+        
+        // If chat_enabled is not set or is false, enable it
+        if (!isset($settings['chat_enabled']) || !$settings['chat_enabled']) {
+            $settings['chat_enabled'] = true;
+            update_option('aia_settings', $settings);
+            
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                error_log('AIA: Enabled chat module in settings');
+            }
+        }
+    }
+    
+    /**
      * Handle chat AJAX requests
      */
     public function handle_chat_ajax() {
@@ -288,12 +305,41 @@ class Plugin {
             wp_send_json_error(__('Message cannot be empty.', 'ai-inventory-agent'));
         }
         
+        // Ensure chat module is enabled
+        $this->ensure_chat_module_enabled();
+        
         $ai_chat = $this->module_manager->get_module('ai_chat');
+        
+        // If module is still not available, try to initialize it
+        if (!$ai_chat) {
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                error_log('AIA: Chat module not found, attempting to initialize...');
+            }
+            $this->module_manager->init_module('ai_chat');
+            $ai_chat = $this->module_manager->get_module('ai_chat');
+        }
         if ($ai_chat) {
             $response = $ai_chat->process_message($message, $session_id);
             wp_send_json_success($response);
         } else {
-            wp_send_json_error(__('AI Chat module not available.', 'ai-inventory-agent'));
+            // Debug information
+            $debug_info = [];
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                $settings = get_option('aia_settings', []);
+                $debug_info = [
+                    'chat_enabled' => isset($settings['chat_enabled']) ? $settings['chat_enabled'] : 'not set',
+                    'api_key_configured' => !empty($settings['api_key']),
+                    'ai_provider' => $settings['ai_provider'] ?? 'not set',
+                    'registered_modules' => array_keys($this->module_manager->get_registered_modules()),
+                    'active_modules' => array_keys($this->module_manager->get_active_modules()),
+                ];
+                error_log('AIA Chat Debug: ' . json_encode($debug_info));
+            }
+            
+            wp_send_json_error([
+                'message' => __('AI Chat module not available.', 'ai-inventory-agent'),
+                'debug' => $debug_info
+            ]);
         }
     }
     

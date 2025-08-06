@@ -68,11 +68,16 @@ class AIChat {
             return;
         }
         
-        // Initialize AI provider
+        // Initialize AI provider (don't fail if API key is missing)
         $this->init_ai_provider();
         
         // Register hooks
         $this->register_hooks();
+        
+        // Debug logging
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log('AIA AIChat: Module initialized successfully');
+        }
     }
     
     /**
@@ -83,7 +88,10 @@ class AIChat {
         $api_key = $this->plugin->get_setting('api_key');
         
         if (empty($api_key)) {
-            error_log('AIA: No API key configured for AI provider');
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                error_log('AIA AIChat: No API key configured for AI provider');
+            }
+            // Don't return here - allow the module to load but without AI provider
             return;
         }
         

@@ -1,9 +1,9 @@
 # AI Inventory Agent - Releases
 
-## Latest Version: 1.0.7
+## Latest Version: 1.0.8
 
 ### Download
-- [ai-inventory-agent-v1.0.7.zip](ai-inventory-agent-v1.0.7.zip) - Latest stable release
+- [ai-inventory-agent-v1.0.8.zip](ai-inventory-agent-v1.0.8.zip) - Latest stable release
 
 ### Installation
 1. Download the latest ZIP file
@@ -15,6 +15,14 @@
 Older versions are available in the [archive](archive/) folder.
 
 ### Version History
+
+#### v1.0.8 (2025-01-08) - CRITICAL AI CHAT MODULE FIX
+- **FIXED**: "AI Chat module not available" error preventing chat functionality
+- **FIXED**: Module initialization failures when API key is not configured
+- **ADDED**: Automatic chat module enablement if disabled in settings
+- **ADDED**: Module re-initialization on demand if module fails to load initially
+- **IMPROVED**: Enhanced debugging information to identify module loading issues
+- AI Chat now works reliably even without initial API key configuration
 
 #### v1.0.7 (2025-01-08) - CRITICAL DUPLICATE ID & AUTHORIZATION FIXES
 - **FIXED**: Complete resolution of duplicate HTML ID errors in browser console
