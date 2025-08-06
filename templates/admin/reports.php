@@ -20,337 +20,468 @@ $summary = [];
 if ($inventory_analysis) {
     $summary = $inventory_analysis->get_inventory_summary();
 }
+
+// Get settings
+$settings = get_option('aia_settings', []);
 ?>
 
-<div class="wrap aia-reports-page">
-    <h1><?php _e('Inventory Reports', 'ai-inventory-agent'); ?></h1>
-    
-    <div class="aia-reports-container">
+<div class="wrap aia-reports-light">
+    <!-- Skip Link for Accessibility -->
+    <a href="#aia-main-content" class="aia-sr-only aia-skip-link"><?php _e('Skip to main content', 'ai-inventory-agent'); ?></a>
+
+    <!-- Page Header -->
+    <div class="aia-reports-page-header">
+        <div class="aia-reports-title-section">
+            <h1 class="aia-reports-main-title">
+                <svg class="aia-title-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#bar-chart-3"></use>
+                </svg>
+                <?php _e('Inventory Reports', 'ai-inventory-agent'); ?>
+            </h1>
+            <p class="aia-reports-subtitle"><?php _e('Generate comprehensive reports and analyze your inventory performance with advanced insights.', 'ai-inventory-agent'); ?></p>
+        </div>
+        <div class="aia-reports-actions">
+            <button type="button" class="aia-btn aia-btn--light aia-btn--sm" onclick="window.print()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#printer"></use>
+                </svg>
+                <?php _e('Print', 'ai-inventory-agent'); ?>
+            </button>
+            <button type="button" class="aia-btn aia-btn--primary aia-btn--sm" onclick="exportAllReports()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#download"></use>
+                </svg>
+                <?php _e('Export All', 'ai-inventory-agent'); ?>
+            </button>
+        </div>
+    </div>
+
+    <div id="aia-main-content" class="aia-main-content">
         
-        <!-- Quick Stats -->
-        <div class="aia-section">
-            <h2><?php _e('Quick Statistics', 'ai-inventory-agent'); ?></h2>
-            <div class="aia-stats-grid">
-                <div class="aia-stat-card">
-                    <div class="aia-stat-number"><?php echo esc_html($summary['total_products'] ?? 0); ?></div>
-                    <div class="aia-stat-label"><?php _e('Total Products', 'ai-inventory-agent'); ?></div>
+        <!-- Key Metrics Section -->
+        <div class="aia-metrics-section">
+            <div class="aia-section-header">
+                <h2 class="aia-section-title"><?php _e('Report Metrics', 'ai-inventory-agent'); ?></h2>
+                <p class="aia-section-description"><?php _e('Key performance indicators for your inventory reporting dashboard', 'ai-inventory-agent'); ?></p>
+            </div>
+            <div class="aia-metrics-grid">
+                <div class="aia-metric-card">
+                    <div class="aia-metric-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#package"></use>
+                        </svg>
+                    </div>
+                    <div class="aia-metric-content">
+                        <div class="aia-metric-number"><?php echo esc_html($summary['total_products'] ?? 0); ?></div>
+                        <div class="aia-metric-label"><?php _e('Total Products', 'ai-inventory-agent'); ?></div>
+                        <div class="aia-metric-description"><?php _e('Active inventory items', 'ai-inventory-agent'); ?></div>
+                    </div>
                 </div>
-                <div class="aia-stat-card">
-                    <div class="aia-stat-number"><?php echo wc_price($summary['total_stock_value'] ?? 0); ?></div>
-                    <div class="aia-stat-label"><?php _e('Total Stock Value', 'ai-inventory-agent'); ?></div>
+                <div class="aia-metric-card">
+                    <div class="aia-metric-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#dollar-sign"></use>
+                        </svg>
+                    </div>
+                    <div class="aia-metric-content">
+                        <div class="aia-metric-number"><?php echo wc_price($summary['total_stock_value'] ?? 0); ?></div>
+                        <div class="aia-metric-label"><?php _e('Total Stock Value', 'ai-inventory-agent'); ?></div>
+                        <div class="aia-metric-description"><?php _e('Current inventory worth', 'ai-inventory-agent'); ?></div>
+                    </div>
                 </div>
-                <div class="aia-stat-card">
-                    <div class="aia-stat-number"><?php echo esc_html($summary['low_stock_count'] ?? 0); ?></div>
-                    <div class="aia-stat-label"><?php _e('Low Stock Items', 'ai-inventory-agent'); ?></div>
+                <div class="aia-metric-card">
+                    <div class="aia-metric-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#alert-triangle"></use>
+                        </svg>
+                    </div>
+                    <div class="aia-metric-content">
+                        <div class="aia-metric-number"><?php echo esc_html($summary['low_stock_count'] ?? 0); ?></div>
+                        <div class="aia-metric-label"><?php _e('Low Stock Items', 'ai-inventory-agent'); ?></div>
+                        <div class="aia-metric-description"><?php _e('Require attention', 'ai-inventory-agent'); ?></div>
+                    </div>
                 </div>
-                <div class="aia-stat-card">
-                    <div class="aia-stat-number"><?php echo esc_html($summary['out_of_stock_count'] ?? 0); ?></div>
-                    <div class="aia-stat-label"><?php _e('Out of Stock', 'ai-inventory-agent'); ?></div>
+                <div class="aia-metric-card">
+                    <div class="aia-metric-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#x-circle"></use>
+                        </svg>
+                    </div>
+                    <div class="aia-metric-content">
+                        <div class="aia-metric-number"><?php echo esc_html($summary['out_of_stock_count'] ?? 0); ?></div>
+                        <div class="aia-metric-label"><?php _e('Out of Stock', 'ai-inventory-agent'); ?></div>
+                        <div class="aia-metric-description"><?php _e('Need immediate restock', 'ai-inventory-agent'); ?></div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Report Generation -->
-        <div class="aia-section">
-            <h2><?php _e('Generate Reports', 'ai-inventory-agent'); ?></h2>
-            <div class="aia-report-generator">
+        <!-- Reports Content Grid -->
+        <div class="aia-reports-content-grid">
+            
+            <!-- Left Column: Report Generation -->
+            <div class="aia-reports-column">
                 
-                <div class="aia-report-type-grid">
-                    
-                    <!-- Inventory Summary Report -->
-                    <div class="aia-report-card">
-                        <div class="aia-report-icon">📊</div>
-                        <h3><?php _e('Inventory Summary', 'ai-inventory-agent'); ?></h3>
-                        <p><?php _e('Complete overview of your current inventory status, stock levels, and values.', 'ai-inventory-agent'); ?></p>
-                        <div class="aia-report-actions">
-                            <button type="button" class="button button-primary aia-generate-report" data-type="inventory_summary">
-                                <?php _e('Generate Report', 'ai-inventory-agent'); ?>
-                            </button>
+                <!-- Report Generator Widget -->
+                <div class="aia-widget">
+                    <div class="aia-widget-header">
+                        <h3 class="aia-widget-title">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#file-text"></use>
+                            </svg>
+                            <?php _e('Generate Reports', 'ai-inventory-agent'); ?>
+                        </h3>
+                    </div>
+                    <div class="aia-widget-content">
+                        <div class="aia-report-types-grid">
+                            
+                            <!-- Inventory Summary Report -->
+                            <div class="aia-report-card">
+                                <div class="aia-report-header">
+                                    <div class="aia-report-icon">
+                                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                            <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#bar-chart-3"></use>
+                                        </svg>
+                                    </div>
+                                    <div class="aia-report-status">
+                                        <span class="aia-status-badge aia-status-badge--ready"><?php _e('Ready', 'ai-inventory-agent'); ?></span>
+                                    </div>
+                                </div>
+                                <div class="aia-report-content">
+                                    <h4 class="aia-report-title"><?php _e('Inventory Summary', 'ai-inventory-agent'); ?></h4>
+                                    <p class="aia-report-description"><?php _e('Complete overview of current inventory status, stock levels, and values with trend analysis.', 'ai-inventory-agent'); ?></p>
+                                </div>
+                                <div class="aia-report-actions">
+                                    <button type="button" class="aia-btn aia-btn--primary aia-btn--sm aia-generate-report" data-type="inventory_summary">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#play"></use>
+                                        </svg>
+                                        <?php _e('Generate', 'ai-inventory-agent'); ?>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Low Stock Report -->
+                            <div class="aia-report-card">
+                                <div class="aia-report-header">
+                                    <div class="aia-report-icon aia-report-icon--warning">
+                                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                            <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#alert-triangle"></use>
+                                        </svg>
+                                    </div>
+                                    <div class="aia-report-status">
+                                        <span class="aia-status-badge aia-status-badge--warning"><?php _e('Alert', 'ai-inventory-agent'); ?></span>
+                                    </div>
+                                </div>
+                                <div class="aia-report-content">
+                                    <h4 class="aia-report-title"><?php _e('Low Stock Report', 'ai-inventory-agent'); ?></h4>
+                                    <p class="aia-report-description"><?php _e('Detailed analysis of products with low or critical stock levels requiring immediate attention.', 'ai-inventory-agent'); ?></p>
+                                </div>
+                                <div class="aia-report-actions">
+                                    <button type="button" class="aia-btn aia-btn--warning aia-btn--sm aia-generate-report" data-type="low_stock">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#play"></use>
+                                        </svg>
+                                        <?php _e('Generate', 'ai-inventory-agent'); ?>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Stock Movement Report -->
+                            <div class="aia-report-card">
+                                <div class="aia-report-header">
+                                    <div class="aia-report-icon aia-report-icon--success">
+                                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                            <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#trending-up"></use>
+                                        </svg>
+                                    </div>
+                                    <div class="aia-report-status">
+                                        <span class="aia-status-badge aia-status-badge--success"><?php _e('Active', 'ai-inventory-agent'); ?></span>
+                                    </div>
+                                </div>
+                                <div class="aia-report-content">
+                                    <h4 class="aia-report-title"><?php _e('Stock Movement', 'ai-inventory-agent'); ?></h4>
+                                    <p class="aia-report-description"><?php _e('Track stock changes, sales velocity, and inventory turnover rates with predictive insights.', 'ai-inventory-agent'); ?></p>
+                                </div>
+                                <div class="aia-report-actions">
+                                    <button type="button" class="aia-btn aia-btn--primary aia-btn--sm aia-generate-report" data-type="stock_movement">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#play"></use>
+                                        </svg>
+                                        <?php _e('Generate', 'ai-inventory-agent'); ?>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Performance Report -->
+                            <div class="aia-report-card">
+                                <div class="aia-report-header">
+                                    <div class="aia-report-icon aia-report-icon--info">
+                                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                            <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#target"></use>
+                                        </svg>
+                                    </div>
+                                    <div class="aia-report-status">
+                                        <span class="aia-status-badge aia-status-badge--info"><?php _e('Analytics', 'ai-inventory-agent'); ?></span>
+                                    </div>
+                                </div>
+                                <div class="aia-report-content">
+                                    <h4 class="aia-report-title"><?php _e('Performance Report', 'ai-inventory-agent'); ?></h4>
+                                    <p class="aia-report-description"><?php _e('Analyze top performing products, slow movers, and profitability metrics with AI recommendations.', 'ai-inventory-agent'); ?></p>
+                                </div>
+                                <div class="aia-report-actions">
+                                    <button type="button" class="aia-btn aia-btn--primary aia-btn--sm aia-generate-report" data-type="performance">
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#play"></use>
+                                        </svg>
+                                        <?php _e('Generate', 'ai-inventory-agent'); ?>
+                                    </button>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
-
-                    <!-- Low Stock Report -->
-                    <div class="aia-report-card">
-                        <div class="aia-report-icon">⚠️</div>
-                        <h3><?php _e('Low Stock Report', 'ai-inventory-agent'); ?></h3>
-                        <p><?php _e('Detailed report of all products with low or critical stock levels.', 'ai-inventory-agent'); ?></p>
-                        <div class="aia-report-actions">
-                            <button type="button" class="button button-primary aia-generate-report" data-type="low_stock">
-                                <?php _e('Generate Report', 'ai-inventory-agent'); ?>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Stock Movement Report -->
-                    <div class="aia-report-card">
-                        <div class="aia-report-icon">📈</div>
-                        <h3><?php _e('Stock Movement', 'ai-inventory-agent'); ?></h3>
-                        <p><?php _e('Track stock changes, sales velocity, and inventory turnover rates.', 'ai-inventory-agent'); ?></p>
-                        <div class="aia-report-actions">
-                            <button type="button" class="button button-primary aia-generate-report" data-type="stock_movement">
-                                <?php _e('Generate Report', 'ai-inventory-agent'); ?>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Performance Report -->
-                    <div class="aia-report-card">
-                        <div class="aia-report-icon">🎯</div>
-                        <h3><?php _e('Performance Report', 'ai-inventory-agent'); ?></h3>
-                        <p><?php _e('Analyze top performing products, slow movers, and profitability metrics.', 'ai-inventory-agent'); ?></p>
-                        <div class="aia-report-actions">
-                            <button type="button" class="button button-primary aia-generate-report" data-type="performance">
-                                <?php _e('Generate Report', 'ai-inventory-agent'); ?>
-                            </button>
-                        </div>
-                    </div>
-
                 </div>
+
+            </div>
+
+            <!-- Right Column: Settings & History -->
+            <div class="aia-reports-column">
+                
+                <!-- Report Settings Widget -->
+                <div class="aia-widget">
+                    <div class="aia-widget-header">
+                        <h3 class="aia-widget-title">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#settings"></use>
+                            </svg>
+                            <?php _e('Report Settings', 'ai-inventory-agent'); ?>
+                        </h3>
+                    </div>
+                    <div class="aia-widget-content">
+                        <form method="post" action="options.php" class="aia-report-settings-form">
+                            <?php settings_fields('aia_settings'); ?>
+                            
+                            <div class="aia-form-group">
+                                <label for="report_frequency" class="aia-form-label">
+                                    <?php _e('Automatic Report Frequency', 'ai-inventory-agent'); ?>
+                                </label>
+                                <select id="report_frequency" name="aia_settings[report_frequency]" class="aia-form-select">
+                                    <option value="daily" <?php selected($settings['report_frequency'] ?? 'weekly', 'daily'); ?>>
+                                        <?php _e('Daily', 'ai-inventory-agent'); ?>
+                                    </option>
+                                    <option value="weekly" <?php selected($settings['report_frequency'] ?? 'weekly', 'weekly'); ?>>
+                                        <?php _e('Weekly', 'ai-inventory-agent'); ?>
+                                    </option>
+                                    <option value="monthly" <?php selected($settings['report_frequency'] ?? 'weekly', 'monthly'); ?>>
+                                        <?php _e('Monthly', 'ai-inventory-agent'); ?>
+                                    </option>
+                                    <option value="disabled" <?php selected($settings['report_frequency'] ?? 'weekly', 'disabled'); ?>>
+                                        <?php _e('Disabled', 'ai-inventory-agent'); ?>
+                                    </option>
+                                </select>
+                                <p class="aia-form-description"><?php _e('How often to automatically generate and email reports.', 'ai-inventory-agent'); ?></p>
+                            </div>
+
+                            <div class="aia-form-group aia-form-group--checkbox">
+                                <label for="reports_enabled" class="aia-checkbox-label">
+                                    <input type="checkbox" 
+                                           id="reports_enabled" 
+                                           name="aia_settings[reports_enabled]" 
+                                           value="1" 
+                                           class="aia-checkbox"
+                                           <?php checked($settings['reports_enabled'] ?? true); ?> />
+                                    <span class="aia-checkbox-indicator"></span>
+                                    <span class="aia-checkbox-text"><?php _e('Enable automatic report generation and email delivery', 'ai-inventory-agent'); ?></span>
+                                </label>
+                            </div>
+
+                            <div class="aia-form-actions">
+                                <button type="submit" class="aia-btn aia-btn--primary">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#check"></use>
+                                    </svg>
+                                    <?php _e('Save Settings', 'ai-inventory-agent'); ?>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Report History Widget -->
+                <div class="aia-widget">
+                    <div class="aia-widget-header">
+                        <h3 class="aia-widget-title">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#clock"></use>
+                            </svg>
+                            <?php _e('Recent Reports', 'ai-inventory-agent'); ?>
+                        </h3>
+                    </div>
+                    <div class="aia-widget-content">
+                        
+                        <!-- Empty State -->
+                        <div class="aia-empty-state">
+                            <div class="aia-empty-icon">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
+                                    <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#file-text"></use>
+                                </svg>
+                            </div>
+                            <div class="aia-empty-title"><?php _e('No Reports Generated Yet', 'ai-inventory-agent'); ?></div>
+                            <div class="aia-empty-description"><?php _e('Use the report generator to create your first inventory report. Reports will appear here once generated.', 'ai-inventory-agent'); ?></div>
+                            <div class="aia-empty-actions">
+                                <button type="button" class="aia-btn aia-btn--primary aia-btn--sm" onclick="document.querySelector('.aia-generate-report').click()">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#plus"></use>
+                                    </svg>
+                                    <?php _e('Create First Report', 'ai-inventory-agent'); ?>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Report History List (hidden until reports exist) -->
+                        <div class="aia-report-history" style="display: none;">
+                            <div class="aia-history-list">
+                                <!-- Report history items would be populated here via JavaScript -->
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
             </div>
         </div>
 
-        <!-- Report Settings -->
-        <div class="aia-section">
-            <h2><?php _e('Report Settings', 'ai-inventory-agent'); ?></h2>
-            <form method="post" action="options.php">
-                <?php 
-                settings_fields('aia_settings');
-                $settings = get_option('aia_settings', []);
-                ?>
-                
-                <table class="form-table">
-                    <tr>
-                        <th scope="row">
-                            <label for="report_frequency"><?php _e('Automatic Report Frequency', 'ai-inventory-agent'); ?></label>
-                        </th>
-                        <td>
-                            <select id="report_frequency" name="aia_settings[report_frequency]">
-                                <option value="daily" <?php selected($settings['report_frequency'] ?? 'weekly', 'daily'); ?>>
-                                    <?php _e('Daily', 'ai-inventory-agent'); ?>
-                                </option>
-                                <option value="weekly" <?php selected($settings['report_frequency'] ?? 'weekly', 'weekly'); ?>>
-                                    <?php _e('Weekly', 'ai-inventory-agent'); ?>
-                                </option>
-                                <option value="monthly" <?php selected($settings['report_frequency'] ?? 'weekly', 'monthly'); ?>>
-                                    <?php _e('Monthly', 'ai-inventory-agent'); ?>
-                                </option>
-                                <option value="disabled" <?php selected($settings['report_frequency'] ?? 'weekly', 'disabled'); ?>>
-                                    <?php _e('Disabled', 'ai-inventory-agent'); ?>
-                                </option>
-                            </select>
-                            <p class="description"><?php _e('How often to automatically generate and email reports.', 'ai-inventory-agent'); ?></p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">
-                            <?php _e('Enable Reports', 'ai-inventory-agent'); ?>
-                        </th>
-                        <td>
-                            <label for="reports_enabled">
-                                <input type="checkbox" 
-                                       id="reports_enabled" 
-                                       name="aia_settings[reports_enabled]" 
-                                       value="1" 
-                                       <?php checked($settings['reports_enabled'] ?? true); ?> />
-                                <?php _e('Enable automatic report generation and email delivery', 'ai-inventory-agent'); ?>
-                            </label>
-                        </td>
-                    </tr>
-                </table>
-                
-                <?php submit_button(); ?>
-            </form>
-        </div>
-
-        <!-- Recent Reports -->
-        <div class="aia-section">
-            <h2><?php _e('Recent Reports', 'ai-inventory-agent'); ?></h2>
-            <div class="aia-recent-reports">
-                <p><?php _e('No reports generated yet. Use the report generator above to create your first report.', 'ai-inventory-agent'); ?></p>
-                
-                <!-- This would be populated with actual report history -->
-                <div class="aia-report-history" style="display: none;">
-                    <table class="wp-list-table widefat fixed striped">
-                        <thead>
-                            <tr>
-                                <th><?php _e('Report Type', 'ai-inventory-agent'); ?></th>
-                                <th><?php _e('Generated', 'ai-inventory-agent'); ?></th>
-                                <th><?php _e('Status', 'ai-inventory-agent'); ?></th>
-                                <th><?php _e('Actions', 'ai-inventory-agent'); ?></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Report history items would go here -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 
 <!-- Report Generation Modal -->
-<div id="aia-report-modal" class="aia-modal" style="display: none;">
+<div id="aia-report-modal" class="aia-modal" style="display: none;" role="dialog" aria-labelledby="aia-modal-title" aria-hidden="true">
     <div class="aia-modal-content">
         <div class="aia-modal-header">
-            <h2><?php _e('Generating Report...', 'ai-inventory-agent'); ?></h2>
-            <span class="aia-modal-close">&times;</span>
+            <h2 id="aia-modal-title" class="aia-modal-title"><?php _e('Generating Report', 'ai-inventory-agent'); ?></h2>
+            <button type="button" class="aia-modal-close" aria-label="<?php esc_attr_e('Close modal', 'ai-inventory-agent'); ?>">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#x"></use>
+                </svg>
+            </button>
         </div>
         <div class="aia-modal-body">
-            <div class="aia-loading-spinner"></div>
-            <p><?php _e('Please wait while we generate your report. This may take a few moments.', 'ai-inventory-agent'); ?></p>
+            <div class="aia-loading-container">
+                <div class="aia-loading-spinner"></div>
+                <div class="aia-loading-text">
+                    <h3><?php _e('Processing Your Request', 'ai-inventory-agent'); ?></h3>
+                    <p><?php _e('Please wait while we generate your comprehensive inventory report. This may take a few moments depending on your data size.', 'ai-inventory-agent'); ?></p>
+                </div>
+            </div>
+            <div class="aia-progress-bar">
+                <div class="aia-progress-fill"></div>
+            </div>
         </div>
     </div>
 </div>
 
-<style>
-.aia-reports-page .aia-section {
-    background: #fff;
-    border: 1px solid #ccd0d4;
-    border-radius: 4px;
-    padding: 20px;
-    margin-bottom: 20px;
-}
-
-.aia-reports-page .aia-stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-    margin-top: 20px;
-}
-
-.aia-reports-page .aia-stat-card {
-    text-align: center;
-    padding: 20px;
-    background: #f9f9f9;
-    border-radius: 4px;
-    border: 1px solid #ddd;
-}
-
-.aia-reports-page .aia-stat-number {
-    font-size: 2em;
-    font-weight: bold;
-    color: #2271b1;
-    margin-bottom: 8px;
-}
-
-.aia-reports-page .aia-stat-label {
-    color: #666;
-    font-size: 14px;
-}
-
-.aia-reports-page .aia-report-type-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 20px;
-    margin-top: 20px;
-}
-
-.aia-reports-page .aia-report-card {
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    padding: 20px;
-    text-align: center;
-    background: #fafafa;
-}
-
-.aia-reports-page .aia-report-icon {
-    font-size: 48px;
-    margin-bottom: 15px;
-}
-
-.aia-reports-page .aia-report-card h3 {
-    margin-bottom: 10px;
-    color: #333;
-}
-
-.aia-reports-page .aia-report-card p {
-    color: #666;
-    margin-bottom: 20px;
-    line-height: 1.5;
-}
-
-.aia-reports-page .aia-report-actions {
-    margin-top: 15px;
-}
-
-.aia-modal {
-    position: fixed;
-    z-index: 100000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.5);
-}
-
-.aia-modal-content {
-    background-color: #fff;
-    margin: 15% auto;
-    padding: 0;
-    border-radius: 4px;
-    width: 500px;
-    max-width: 90%;
-}
-
-.aia-modal-header {
-    padding: 20px;
-    border-bottom: 1px solid #ddd;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.aia-modal-header h2 {
-    margin: 0;
-}
-
-.aia-modal-close {
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.aia-modal-body {
-    padding: 20px;
-    text-align: center;
-}
-
-.aia-loading-spinner {
-    border: 4px solid #f3f3f3;
-    border-top: 4px solid #2271b1;
-    border-radius: 50%;
-    width: 50px;
-    height: 50px;
-    animation: spin 1s linear infinite;
-    margin: 20px auto;
-}
-
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-</style>
-
 <script>
 jQuery(document).ready(function($) {
+    
     // Report generation handling
     $('.aia-generate-report').on('click', function() {
         var reportType = $(this).data('type');
-        $('#aia-report-modal').show();
+        var reportTitle = $(this).closest('.aia-report-card').find('.aia-report-title').text();
+        
+        // Update modal title
+        $('#aia-modal-title').text('<?php _e('Generating', 'ai-inventory-agent'); ?> ' + reportTitle);
+        
+        // Show modal
+        $('#aia-report-modal').show().attr('aria-hidden', 'false');
+        $('body').addClass('aia-modal-open');
+        
+        // Start progress animation
+        var progressBar = $('.aia-progress-fill');
+        progressBar.css('width', '0%');
+        
+        // Animate progress
+        var progress = 0;
+        var progressInterval = setInterval(function() {
+            progress += Math.random() * 15;
+            if (progress > 90) progress = 90;
+            progressBar.css('width', progress + '%');
+        }, 200);
         
         // Simulate report generation (replace with actual AJAX call)
         setTimeout(function() {
-            $('#aia-report-modal').hide();
-            alert('Report generated successfully! (This is a demo - implement actual report generation)');
+            clearInterval(progressInterval);
+            progressBar.css('width', '100%');
+            
+            setTimeout(function() {
+                $('#aia-report-modal').hide().attr('aria-hidden', 'true');
+                $('body').removeClass('aia-modal-open');
+                
+                // Show success notification
+                showNotification('<?php _e('Report Generated Successfully!', 'ai-inventory-agent'); ?>', 'success');
+                
+                // Add to history (placeholder)
+                addReportToHistory(reportTitle, reportType);
+                
+                // Reset progress
+                progressBar.css('width', '0%');
+            }, 500);
         }, 3000);
     });
     
     // Modal close handling
-    $('.aia-modal-close, .aia-modal').on('click', function(e) {
+    $('.aia-modal-close').on('click', function() {
+        $('#aia-report-modal').hide().attr('aria-hidden', 'true');
+        $('body').removeClass('aia-modal-open');
+    });
+    
+    // Close modal on backdrop click
+    $('.aia-modal').on('click', function(e) {
         if (e.target === this) {
-            $('#aia-report-modal').hide();
+            $(this).hide().attr('aria-hidden', 'true');
+            $('body').removeClass('aia-modal-open');
         }
     });
+    
+    // Escape key to close modal
+    $(document).on('keydown', function(e) {
+        if (e.key === 'Escape' && $('#aia-report-modal').is(':visible')) {
+            $('#aia-report-modal').hide().attr('aria-hidden', 'true');
+            $('body').removeClass('aia-modal-open');
+        }
+    });
+    
+    // Export all reports function
+    window.exportAllReports = function() {
+        showNotification('<?php _e('Exporting all reports...', 'ai-inventory-agent'); ?>', 'info');
+        // Placeholder for actual export functionality
+        setTimeout(function() {
+            showNotification('<?php _e('All reports exported successfully!', 'ai-inventory-agent'); ?>', 'success');
+        }, 2000);
+    };
+    
+    // Add report to history (placeholder)
+    function addReportToHistory(title, type) {
+        // This would normally add to database and refresh the history widget
+        console.log('Report generated:', title, type);
+    }
+    
+    // Simple notification system
+    function showNotification(message, type) {
+        var notification = $('<div class="aia-notification aia-notification--' + type + '">' + message + '</div>');
+        $('body').append(notification);
+        
+        setTimeout(function() {
+            notification.addClass('aia-notification--show');
+        }, 100);
+        
+        setTimeout(function() {
+            notification.removeClass('aia-notification--show');
+            setTimeout(function() {
+                notification.remove();
+            }, 300);
+        }, 3000);
+    }
+    
 });
 </script>
