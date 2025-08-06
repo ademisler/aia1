@@ -1,23 +1,25 @@
 /**
- * AI Inventory Agent - Clean Dashboard Styles
- * Modern, clean and organized dashboard layout
+ * AI Inventory Agent - Light Theme Dashboard
+ * Professional, clean and cohesive light theme design
  */
 
-/* ===== Clean Dashboard Base ===== */
+/* ===== Light Theme Foundation ===== */
 
-.aia-dashboard-clean {
-  background: #ffffff;
+.aia-dashboard-light {
+  background: #fafbfc;
   min-height: 100vh;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  color: #1f2937;
+  line-height: 1.5;
 }
 
-/* ===== Dashboard Header ===== */
+/* ===== Professional Header ===== */
 
 .aia-dashboard-header {
   background: #ffffff;
-  padding: 32px 0;
+  padding: 40px 0;
   border-bottom: 1px solid #e5e7eb;
-  margin-bottom: 32px;
+  margin-bottom: 40px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -33,16 +35,19 @@
 .aia-dashboard-main-title {
   display: flex;
   align-items: center;
-  gap: 12px;
-  font-size: 28px;
-  font-weight: 600;
+  gap: 16px;
+  font-size: 32px;
+  font-weight: 700;
   color: #111827;
   margin: 0 0 8px 0;
   line-height: 1.2;
+  letter-spacing: -0.025em;
 }
 
 .aia-dashboard-main-title .aia-icon {
-  color: #3b82f6;
+  color: #2563eb;
+  width: 36px;
+  height: 36px;
 }
 
 .aia-dashboard-subtitle {
@@ -58,97 +63,121 @@
   align-items: center;
 }
 
-/* ===== Clean Button System ===== */
+/* ===== Light Theme Button System ===== */
 
 .aia-btn {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 16px;
-  border-radius: 8px;
+  padding: 12px 20px;
+  border-radius: 10px;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   text-decoration: none;
   border: none;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   line-height: 1.4;
+  letter-spacing: 0.025em;
 }
 
 .aia-btn--primary {
-  background: #3b82f6;
+  background: #2563eb;
   color: #ffffff;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
 }
 
 .aia-btn--primary:hover {
-  background: #2563eb;
+  background: #1d4ed8;
   color: #ffffff;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px 0 rgba(37, 99, 235, 0.3);
 }
 
-.aia-btn--secondary {
-  background: #f3f4f6;
+.aia-btn--light {
+  background: #ffffff;
   color: #374151;
   border: 1px solid #d1d5db;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 
-.aia-btn--secondary:hover {
-  background: #e5e7eb;
+.aia-btn--light:hover {
+  background: #f9fafb;
   color: #374151;
+  border-color: #9ca3af;
 }
 
 .aia-btn--warning {
   background: #f59e0b;
   color: #ffffff;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
 }
 
 .aia-btn--warning:hover {
   background: #d97706;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px 0 rgba(245, 158, 11, 0.3);
 }
 
 .aia-btn--sm {
-  padding: 6px 12px;
+  padding: 8px 14px;
   font-size: 13px;
+  border-radius: 8px;
 }
 
 .aia-btn--outline {
   background: transparent;
-  color: #3b82f6;
-  border: 1px solid #3b82f6;
+  color: #2563eb;
+  border: 1px solid #2563eb;
 }
 
 .aia-btn--outline:hover {
-  background: #3b82f6;
+  background: #2563eb;
   color: #ffffff;
 }
 
 /* ===== Alert Banner ===== */
 
 .aia-alert-banner {
-  background: #fef3c7;
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
   border: 1px solid #f59e0b;
-  border-radius: 12px;
-  padding: 16px 20px;
-  margin-bottom: 32px;
+  border-radius: 16px;
+  padding: 20px 24px;
+  margin-bottom: 40px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
+  gap: 20px;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
 }
 
 .aia-alert-content {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 16px;
+}
+
+.aia-alert-icon-wrapper {
+  width: 48px;
+  height: 48px;
+  background: #ffffff;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
 }
 
 .aia-alert-icon {
   color: #f59e0b;
-  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
 }
 
 .aia-alert-text h4 {
-  font-size: 16px;
-  font-weight: 600;
+  font-size: 18px;
+  font-weight: 700;
   color: #92400e;
   margin: 0 0 4px 0;
 }
@@ -159,95 +188,138 @@
   margin: 0;
 }
 
-/* ===== Stats Section ===== */
+/* ===== Metrics Section ===== */
 
-.aia-stats-section {
+.aia-metrics-section {
+  margin-bottom: 48px;
+}
+
+.aia-section-header {
+  text-align: center;
   margin-bottom: 32px;
 }
 
-.aia-stats-grid-clean {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 20px;
+.aia-section-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #111827;
+  margin: 0 0 8px 0;
+  letter-spacing: -0.025em;
 }
 
-.aia-stat-item {
+.aia-section-description {
+  font-size: 16px;
+  color: #6b7280;
+  margin: 0;
+}
+
+.aia-metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.aia-metric-card {
   background: #ffffff;
   border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  padding: 24px;
+  border-radius: 16px;
+  padding: 32px;
   display: flex;
   align-items: center;
-  gap: 16px;
-  transition: all 0.2s ease;
+  gap: 20px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
 }
 
-.aia-stat-item:hover {
-  border-color: #d1d5db;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+.aia-metric-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--accent-color);
+  transition: width 0.3s ease;
 }
 
-.aia-stat-icon {
-  width: 48px;
-  height: 48px;
-  border-radius: 10px;
+.aia-metric-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.aia-metric-card:hover::before {
+  width: 8px;
+}
+
+.aia-metric-card--primary {
+  --accent-color: #2563eb;
+}
+
+.aia-metric-card--success {
+  --accent-color: #10b981;
+}
+
+.aia-metric-card--warning {
+  --accent-color: #f59e0b;
+}
+
+.aia-metric-card--danger {
+  --accent-color: #ef4444;
+}
+
+.aia-metric-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  background: var(--accent-color);
+  color: #ffffff;
+  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.15);
 }
 
-.aia-stat-icon--primary {
-  background: #dbeafe;
-  color: #3b82f6;
-}
-
-.aia-stat-icon--success {
-  background: #d1fae5;
-  color: #10b981;
-}
-
-.aia-stat-icon--warning {
-  background: #fef3c7;
-  color: #f59e0b;
-}
-
-.aia-stat-icon--danger {
-  background: #fee2e2;
-  color: #ef4444;
-}
-
-.aia-stat-content {
+.aia-metric-content {
   flex: 1;
 }
 
-.aia-stat-number {
-  font-size: 28px;
-  font-weight: 700;
+.aia-metric-number {
+  font-size: 36px;
+  font-weight: 800;
   color: #111827;
-  line-height: 1.2;
+  line-height: 1.1;
+  margin-bottom: 8px;
+  letter-spacing: -0.025em;
+}
+
+.aia-metric-label {
+  font-size: 16px;
+  color: #374151;
+  font-weight: 600;
   margin-bottom: 4px;
 }
 
-.aia-stat-label {
+.aia-metric-description {
   font-size: 14px;
   color: #6b7280;
-  font-weight: 500;
+  font-weight: 400;
 }
 
-/* ===== Dashboard Grid Layout ===== */
+/* ===== Content Grid Layout ===== */
 
-.aia-dashboard-grid {
+.aia-content-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 24px;
-  margin-bottom: 32px;
+  gap: 32px;
+  margin-bottom: 48px;
 }
 
-.aia-dashboard-column {
+.aia-content-column {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 32px;
 }
 
 /* ===== Widget System ===== */
@@ -255,8 +327,14 @@
 .aia-widget {
   background: #ffffff;
   border: 1px solid #e5e7eb;
-  border-radius: 12px;
+  border-radius: 16px;
   overflow: hidden;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.aia-widget:hover {
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
 .aia-widget--full {
@@ -264,126 +342,219 @@
 }
 
 .aia-widget-header {
-  padding: 20px 24px;
-  border-bottom: 1px solid #e5e7eb;
-  background: #f9fafb;
+  padding: 24px 32px;
+  border-bottom: 1px solid #f3f4f6;
+  background: #fafbfc;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.aia-widget-header-content {
+  flex: 1;
 }
 
 .aia-widget-title {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 18px;
-  font-weight: 600;
+  gap: 12px;
+  font-size: 20px;
+  font-weight: 700;
   color: #111827;
-  margin: 0;
+  margin: 0 0 4px 0;
+  letter-spacing: -0.025em;
 }
 
 .aia-widget-title .aia-icon {
   color: #6b7280;
+  width: 20px;
+  height: 20px;
+}
+
+.aia-widget-subtitle {
+  font-size: 14px;
+  color: #6b7280;
+  margin: 0;
 }
 
 .aia-widget-content {
-  padding: 24px;
+  padding: 32px;
 }
 
-/* ===== Value Display ===== */
+.aia-widget-content--no-padding {
+  padding: 0;
+}
 
-.aia-value-display {
+/* ===== Value Showcase ===== */
+
+.aia-value-showcase {
   text-align: center;
 }
 
-.aia-value-amount {
-  font-size: 36px;
-  font-weight: 700;
+.aia-value-main {
+  font-size: 48px;
+  font-weight: 800;
   color: #111827;
-  margin-bottom: 8px;
-  line-height: 1.2;
+  margin-bottom: 12px;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
 }
 
-.aia-value-description {
-  font-size: 14px;
+.aia-value-subtitle {
+  font-size: 16px;
   color: #6b7280;
+  margin-bottom: 16px;
+  font-weight: 500;
 }
 
-/* ===== Activity List ===== */
+.aia-value-trend {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #10b981;
+  font-weight: 600;
+}
 
-.aia-activity-list {
+.aia-trend-icon {
+  width: 16px;
+  height: 16px;
+}
+
+/* ===== Activity Timeline ===== */
+
+.aia-activity-timeline {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 20px;
 }
 
 .aia-activity-item {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 12px;
-  background: #f9fafb;
-  border-radius: 8px;
-}
-
-.aia-activity-icon {
-  width: 32px;
-  height: 32px;
-  background: #e5e7eb;
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.aia-activity-icon .aia-icon {
-  color: #6b7280;
-}
-
-.aia-activity-text {
-  font-size: 14px;
-  color: #374151;
-  font-weight: 500;
-}
-
-/* ===== Actions Grid ===== */
-
-.aia-actions-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
-}
-
-.aia-action-card {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+  gap: 16px;
   padding: 16px;
   background: #f9fafb;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  text-decoration: none;
+  border-radius: 12px;
   transition: all 0.2s ease;
 }
 
-.aia-action-card:hover {
+.aia-activity-item:hover {
   background: #f3f4f6;
-  border-color: #d1d5db;
-  transform: translateY(-1px);
 }
 
-.aia-action-icon {
+.aia-activity-icon {
   width: 40px;
   height: 40px;
-  background: #ffffff;
-  border-radius: 8px;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  border: 1px solid #e5e7eb;
+  color: #ffffff;
 }
 
-.aia-action-icon .aia-icon {
-  color: #3b82f6;
+.aia-activity-icon--info {
+  background: #2563eb;
+}
+
+.aia-activity-icon--success {
+  background: #10b981;
+}
+
+.aia-activity-content {
+  flex: 1;
+}
+
+.aia-activity-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #111827;
+  margin-bottom: 2px;
+}
+
+.aia-activity-description {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.aia-activity-empty {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.aia-empty-icon {
+  width: 48px;
+  height: 48px;
+  color: #d1d5db;
+  margin-bottom: 12px;
+}
+
+.aia-empty-text {
+  font-size: 16px;
+  color: #9ca3af;
+  font-weight: 500;
+}
+
+/* ===== Actions List ===== */
+
+.aia-actions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.aia-action-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  text-decoration: none;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  group: action;
+}
+
+.aia-action-item:hover {
+  background: #ffffff;
+  border-color: #d1d5db;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.1);
+}
+
+.aia-action-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #ffffff;
+  transition: all 0.2s ease;
+}
+
+.aia-action-icon--primary {
+  background: #2563eb;
+}
+
+.aia-action-icon--info {
+  background: #0891b2;
+}
+
+.aia-action-icon--success {
+  background: #10b981;
+}
+
+.aia-action-icon--neutral {
+  background: #6b7280;
+}
+
+.aia-action-item:hover .aia-action-icon {
+  transform: scale(1.1);
 }
 
 .aia-action-content {
@@ -391,20 +562,30 @@
 }
 
 .aia-action-title {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 600;
   color: #111827;
   margin-bottom: 2px;
 }
 
 .aia-action-description {
-  font-size: 13px;
+  font-size: 14px;
   color: #6b7280;
 }
 
-/* ===== Table System ===== */
+.aia-action-arrow {
+  color: #9ca3af;
+  transition: all 0.2s ease;
+}
 
-.aia-table-container {
+.aia-action-item:hover .aia-action-arrow {
+  color: #6b7280;
+  transform: translateX(4px);
+}
+
+/* ===== Modern Table System ===== */
+
+.aia-table-wrapper {
   overflow-x: auto;
 }
 
@@ -413,79 +594,105 @@
   border-collapse: collapse;
 }
 
-.aia-table th {
+.aia-table--modern th {
   text-align: left;
-  padding: 12px;
+  padding: 16px 24px;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 700;
   color: #374151;
   background: #f9fafb;
   border-bottom: 1px solid #e5e7eb;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.05em;
 }
 
-.aia-table td {
-  padding: 16px 12px;
+.aia-table--modern td {
+  padding: 20px 24px;
   border-bottom: 1px solid #f3f4f6;
   font-size: 14px;
   color: #374151;
 }
 
-.aia-table tbody tr:hover {
-  background: #f9fafb;
+.aia-table-row:hover {
+  background: #fafbfc;
 }
 
-.aia-table tbody tr:last-child td {
+.aia-table-row:last-child td {
   border-bottom: none;
 }
 
-.aia-product-info strong {
-  color: #111827;
-  font-weight: 600;
+.aia-product-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
-.aia-price {
+.aia-product-name {
   font-weight: 600;
+  color: #111827;
+  font-size: 15px;
+}
+
+.aia-product-id {
+  font-size: 12px;
+  color: #9ca3af;
+  font-weight: 500;
+}
+
+.aia-stock-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.aia-stock-number {
+  font-size: 18px;
+  font-weight: 700;
   color: #111827;
 }
 
-/* ===== Badge System ===== */
+.aia-stock-unit {
+  font-size: 12px;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
 
-.aia-badge {
+.aia-status-badge {
   display: inline-flex;
   align-items: center;
-  padding: 4px 8px;
-  border-radius: 6px;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: 8px;
   font-size: 12px;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.05em;
 }
 
-.aia-badge--warning {
+.aia-status-badge--warning {
   background: #fef3c7;
   color: #92400e;
   border: 1px solid #f59e0b;
 }
 
-.aia-badge--success {
-  background: #d1fae5;
-  color: #065f46;
-  border: 1px solid #10b981;
+.aia-price-cell {
+  font-weight: 700;
+  color: #111827;
+  font-size: 15px;
 }
 
-.aia-badge--danger {
-  background: #fee2e2;
-  color: #991b1b;
-  border: 1px solid #ef4444;
+.aia-table-actions {
+  display: flex;
+  gap: 8px;
 }
 
 /* ===== Responsive Design ===== */
 
-@media (max-width: 1024px) {
-  .aia-dashboard-grid {
+@media (max-width: 1200px) {
+  .aia-content-grid {
     grid-template-columns: 1fr;
+    gap: 24px;
   }
 }
 
@@ -493,11 +700,16 @@
   .aia-dashboard-header {
     flex-direction: column;
     align-items: flex-start;
-    gap: 20px;
+    gap: 24px;
+    padding: 32px 0;
   }
   
   .aia-dashboard-title-section {
     min-width: auto;
+  }
+  
+  .aia-dashboard-main-title {
+    font-size: 28px;
   }
   
   .aia-dashboard-actions {
@@ -505,34 +717,35 @@
     justify-content: flex-start;
   }
   
-  .aia-stats-grid-clean {
+  .aia-metrics-grid {
     grid-template-columns: 1fr;
+    gap: 16px;
   }
   
-  .aia-stat-item {
-    padding: 20px;
+  .aia-metric-card {
+    padding: 24px;
   }
   
-  .aia-stat-number {
-    font-size: 24px;
+  .aia-metric-number {
+    font-size: 28px;
+  }
+  
+  .aia-widget-header {
+    padding: 20px 24px;
   }
   
   .aia-widget-content {
-    padding: 20px;
+    padding: 24px;
   }
   
   .aia-alert-banner {
     flex-direction: column;
     align-items: flex-start;
-    gap: 12px;
+    gap: 16px;
   }
   
-  .aia-actions-grid {
-    gap: 8px;
-  }
-  
-  .aia-action-card {
-    padding: 12px;
+  .aia-value-main {
+    font-size: 36px;
   }
 }
 
@@ -543,25 +756,28 @@
   
   .aia-dashboard-main-title {
     font-size: 24px;
-  }
-  
-  .aia-dashboard-subtitle {
-    font-size: 14px;
-  }
-  
-  .aia-btn {
-    padding: 8px 12px;
-    font-size: 13px;
-  }
-  
-  .aia-stat-item {
-    flex-direction: column;
-    text-align: center;
     gap: 12px;
   }
   
-  .aia-value-amount {
-    font-size: 28px;
+  .aia-dashboard-main-title .aia-icon {
+    width: 28px;
+    height: 28px;
+  }
+  
+  .aia-btn {
+    padding: 10px 16px;
+    font-size: 13px;
+  }
+  
+  .aia-metric-card {
+    flex-direction: column;
+    text-align: center;
+    gap: 16px;
+  }
+  
+  .aia-metric-icon {
+    width: 56px;
+    height: 56px;
   }
   
   .aia-widget-header {
@@ -569,10 +785,19 @@
   }
   
   .aia-widget-content {
-    padding: 16px 20px;
+    padding: 20px;
   }
   
   .aia-widget-title {
-    font-size: 16px;
+    font-size: 18px;
+  }
+  
+  .aia-value-main {
+    font-size: 32px;
+  }
+  
+  .aia-table--modern th,
+  .aia-table--modern td {
+    padding: 12px 16px;
   }
 }
