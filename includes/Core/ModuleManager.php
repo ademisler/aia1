@@ -66,11 +66,30 @@ class ModuleManager {
      * Initialize all modules
      */
     public function init_modules() {
-        // Sort modules by dependencies
-        $sorted_modules = $this->sort_modules_by_dependencies();
+        // Prevent initialization if memory usage is too high
+        if (memory_get_usage() > (1024 * 1024 * 800)) { // 800MB threshold
+            error_log('AIA: Memory usage too high, skipping module initialization');
+            return;
+        }
         
-        foreach ($sorted_modules as $module_id) {
-            $this->init_module($module_id);
+        // Prevent infinite recursion
+        static $initializing = false;
+        if ($initializing) {
+            error_log('AIA: Module initialization already in progress, preventing recursion');
+            return;
+        }
+        
+        $initializing = true;
+        
+        try {
+            // Sort modules by dependencies
+            $sorted_modules = $this->sort_modules_by_dependencies();
+            
+            foreach ($sorted_modules as $module_id) {
+                $this->init_module($module_id);
+            }
+        } finally {
+            $initializing = false;
         }
     }
     
@@ -110,6 +129,7 @@ class ModuleManager {
         }
         
         try {
+            // Pass plugin instance to avoid circular dependency
             $instance = new $class_name();
             
             if (method_exists($instance, 'init')) {
@@ -189,7 +209,20 @@ class ModuleManager {
      * @return bool
      */
     private function is_module_enabled($module_id) {
-        $plugin = Plugin::get_instance();
+        // Avoid circular dependency by directly accessing settings
+        $settings = get_option('aia_settings', [
+            'ai_provider' => 'openai',
+            'api_key' => '',
+            'chat_enabled' => true,
+            'forecasting_enabled' => true,
+            'notifications_enabled' => true,
+            'reports_enabled' => true,
+            'low_stock_threshold' => 5,
+            'critical_stock_threshold' => 1,
+            'notification_email' => get_option('admin_email'),
+            'report_frequency' => 'weekly',
+            'system_prompt' => 'You are an AI inventory management assistant. Help users manage their WooCommerce store inventory efficiently.',
+        ]);
         
         // Map module IDs to setting keys
         $setting_map = [
@@ -201,7 +234,7 @@ class ModuleManager {
         
         $setting_key = $setting_map[$module_id] ?? $module_id . '_enabled';
         
-        return $plugin->get_setting($setting_key) !== false;
+        return isset($settings[$setting_key]) ? $settings[$setting_key] : true;
     }
     
     /**

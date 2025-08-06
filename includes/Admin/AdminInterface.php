@@ -22,7 +22,7 @@ class AdminInterface {
      * Constructor
      */
     public function __construct() {
-        $this->plugin = Plugin::get_instance();
+        // Avoid circular dependency - plugin instance will be set during init
         $this->init();
     }
     
@@ -40,6 +40,13 @@ class AdminInterface {
         add_action('wp_ajax_aia_save_settings', [$this, 'handle_save_settings']);
         add_action('wp_ajax_aia_test_api_connection', [$this, 'handle_test_api_connection']);
         add_action('wp_ajax_aia_dismiss_notice', [$this, 'handle_dismiss_notice']);
+    }
+    
+    /**
+     * Set plugin instance (called after plugin initialization)
+     */
+    public function set_plugin_instance($plugin) {
+        $this->plugin = $plugin;
     }
     
     /**

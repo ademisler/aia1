@@ -41,7 +41,10 @@ class Database {
         $this->define_tables();
         
         // Only create tables during activation or when needed
-        if (is_admin() && (current_user_can('activate_plugins') || get_option('aia_db_version') !== AIA_PLUGIN_VERSION)) {
+        // Add memory check to prevent issues during initialization
+        if (is_admin() && 
+            memory_get_usage() < (1024 * 1024 * 800) && // Less than 800MB
+            (current_user_can('activate_plugins') || get_option('aia_db_version') !== AIA_PLUGIN_VERSION)) {
             $this->create_tables();
         }
         

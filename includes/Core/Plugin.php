@@ -56,7 +56,22 @@ class Plugin {
      */
     public static function get_instance() {
         if (self::$instance === null) {
+            // Add memory protection
+            if (memory_get_usage() > (1024 * 1024 * 900)) { // 900MB threshold
+                error_log('AIA: Memory usage too high, preventing initialization');
+                return null;
+            }
+            
+            // Prevent infinite recursion
+            static $initializing = false;
+            if ($initializing) {
+                error_log('AIA: Circular dependency detected in Plugin::get_instance()');
+                return null;
+            }
+            
+            $initializing = true;
             self::$instance = new self();
+            $initializing = false;
         }
         return self::$instance;
     }
@@ -72,28 +87,47 @@ class Plugin {
      * Initialize plugin components
      */
     private function init() {
-        // Load text domain for translations
-        add_action('init', [$this, 'load_textdomain']);
-        
-        // Initialize database
-        $this->database = new Database();
-        
-        // Initialize module manager
-        $this->module_manager = new ModuleManager();
-        
-        // Initialize admin interface
-        if (is_admin()) {
-            $this->admin_interface = new AdminInterface();
+        // Prevent initialization if memory usage is too high
+        if (memory_get_usage() > (1024 * 1024 * 700)) { // 700MB threshold
+            error_log('AIA: Memory usage too high during plugin initialization');
+            return;
         }
         
-        // Load plugin settings
-        $this->load_settings();
-        
-        // Register hooks
-        $this->register_hooks();
-        
-        // Initialize modules
-        $this->init_modules();
+        try {
+            // Load text domain for translations
+            add_action('init', [$this, 'load_textdomain']);
+            
+            // Initialize database
+            $this->database = new Database();
+            
+            // Initialize module manager
+            $this->module_manager = new ModuleManager();
+            
+            // Initialize admin interface
+            if (is_admin()) {
+                $this->admin_interface = new AdminInterface();
+                // Set plugin instance safely to avoid circular dependency
+                if ($this->admin_interface && method_exists($this->admin_interface, 'set_plugin_instance')) {
+                    $this->admin_interface->set_plugin_instance($this);
+                }
+            }
+            
+            // Load plugin settings
+            $this->load_settings();
+            
+            // Register hooks
+            $this->register_hooks();
+            
+            // Initialize modules with additional memory check
+            if (memory_get_usage() < (1024 * 1024 * 800)) {
+                $this->init_modules();
+            } else {
+                error_log('AIA: Skipping module initialization due to high memory usage');
+            }
+            
+        } catch (\Exception $e) {
+            error_log('AIA: Plugin initialization failed: ' . $e->getMessage());
+        }
     }
     
     /**

@@ -83,6 +83,18 @@ spl_autoload_register(function ($class) {
 
 // Initialize the plugin with safety checks
 add_action('plugins_loaded', function() {
+    // Prevent multiple initializations
+    static $initialized = false;
+    if ($initialized) {
+        return;
+    }
+    
+    // Memory check before initialization
+    if (memory_get_usage() > (1024 * 1024 * 600)) { // 600MB threshold
+        error_log('AIA: Memory usage too high before plugin initialization: ' . memory_get_usage());
+        return;
+    }
+    
     // Double-check WooCommerce is still active
     if (!aia_is_woocommerce_active()) {
         return;
@@ -97,7 +109,10 @@ add_action('plugins_loaded', function() {
     }
     
     try {
-        AIA\Core\Plugin::get_instance();
+        $instance = AIA\Core\Plugin::get_instance();
+        if ($instance) {
+            $initialized = true;
+        }
     } catch (Exception $e) {
         if (defined('WP_DEBUG') && WP_DEBUG) {
             error_log('AIA: Plugin initialization failed: ' . $e->getMessage());

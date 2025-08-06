@@ -33,13 +33,23 @@ class SupplierAnalysis {
      * Constructor
      */
     public function __construct() {
-        $this->plugin = Plugin::get_instance();
+        // Avoid circular dependency - plugin instance will be set during init
     }
     
     /**
      * Initialize the module
      */
     public function init() {
+        // Set plugin instance safely during init
+        if (!$this->plugin && class_exists('AIA\\Core\\Plugin')) {
+            $this->plugin = \AIA\Core\Plugin::get_instance();
+        }
+        
+        if (!$this->plugin) {
+            error_log('AIA SupplierAnalysis: Plugin instance not available during init');
+            return;
+        }
+        
         // Register hooks
         $this->register_hooks();
     }

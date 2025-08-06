@@ -50,7 +50,7 @@ class AIChat {
      * Constructor
      */
     public function __construct() {
-        $this->plugin = Plugin::get_instance();
+        // Avoid circular dependency - plugin instance will be set during init
         $this->inventory_context = new InventoryContext();
     }
     
@@ -58,6 +58,16 @@ class AIChat {
      * Initialize the module
      */
     public function init() {
+        // Set plugin instance safely during init
+        if (!$this->plugin && class_exists('AIA\\Core\\Plugin')) {
+            $this->plugin = \AIA\Core\Plugin::get_instance();
+        }
+        
+        if (!$this->plugin) {
+            error_log('AIA AIChat: Plugin instance not available during init');
+            return;
+        }
+        
         // Initialize AI provider
         $this->init_ai_provider();
         
