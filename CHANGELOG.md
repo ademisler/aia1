@@ -5,6 +5,34 @@ All notable changes to AI Inventory Agent will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.2] - 2025-01-08
+
+### 🎨 COMPREHENSIVE STYLING & FORM FIXES
+
+#### 🔧 **Form & Layout Improvements**
+- **Box-Sizing Fix**: Added `box-sizing: border-box` to all form elements preventing overflow issues
+- **Input Group Layout**: Fixed input group padding and flex alignment for proper form display
+- **Grid Container**: Added proper width constraints and overflow prevention for content grids
+- **Select Dropdown**: Improved select element padding to accommodate dropdown arrow properly
+
+#### ✨ **Form Validation & Feedback**
+- **Validation States**: Added comprehensive success and error state styling for form inputs
+- **Status Messages**: Implemented color-coded status feedback with icons for better UX
+- **Save States**: Added loading animations and feedback for form submission states
+- **Error Handling**: Enhanced form error display with proper styling and accessibility
+
+#### 🎯 **Page-Specific Fixes**
+- **Dashboard**: Fixed hover effect z-index issues on metric cards, improved grid responsiveness
+- **Analysis**: Enhanced chart container styling, added touch-friendly improvements
+- **Reports**: Added comprehensive print styles, improved responsive layout for tablets
+- **Settings**: Fixed form kayma (sliding) issues, standardized typography with CSS variables
+
+#### 🔧 **Technical Improvements**
+- **CSS Variables**: Standardized color usage across all pages using design tokens
+- **Responsive Design**: Added tablet breakpoints (1024px) for better mid-size device support
+- **Accessibility**: Maintained proper ARIA attributes and semantic HTML structure
+- **Performance**: Optimized CSS loading with individual file enqueuing instead of @import
+
 ## [2.1.1] - 2025-01-08
 
 ### 🔧 CRITICAL FIXES & UI IMPROVEMENTS

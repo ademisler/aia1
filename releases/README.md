@@ -1,9 +1,9 @@
 # AI Inventory Agent - Releases
 
-## Latest Version: 2.1.1
+## Latest Version: 2.1.2
 
 ### Download
-- [ai-inventory-agent-v2.1.1.zip](ai-inventory-agent-v2.1.1.zip) - Latest stable release with critical fixes and UI improvements
+- [ai-inventory-agent-v2.1.2.zip](ai-inventory-agent-v2.1.2.zip) - Latest stable release with comprehensive styling and form fixes
 
 ### Installation
 1. Download the latest ZIP file
@@ -15,6 +15,13 @@
 Older versions are available in the [archive](archive/) folder.
 
 ### Version History
+
+#### v2.1.2 (2025-01-08) - COMPREHENSIVE STYLING & FORM FIXES
+- **🎨 FORM IMPROVEMENTS**: Fixed box-sizing issues, input group layouts, and grid container overflow
+- **✨ VALIDATION STATES**: Added comprehensive success/error states with color-coded feedback
+- **🔧 PAGE FIXES**: Dashboard hover effects, Analysis touch improvements, Reports print styles, Settings form kayma fixes
+- **📱 RESPONSIVE**: Added tablet breakpoints (1024px) and improved mobile layouts
+- **🎯 CONSISTENCY**: Standardized CSS variables usage and typography across all pages
 
 #### v2.1.1 (2025-01-08) - CRITICAL FIXES & UI IMPROVEMENTS
 - **🐛 BUG FIXES**: Fixed chat system JavaScript issues, reports modal problems, and form layout inconsistencies
