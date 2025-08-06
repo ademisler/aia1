@@ -8,11 +8,11 @@
 
 /* ===== SETTINGS PAGE BASE ===== */
 .aia-settings-light {
-    background: #fafbfc;
+    background: var(--aia-gray-50, #fafbfc);
     min-height: 100vh;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-    color: #1f2937;
-    line-height: 1.5;
+    font-family: var(--aia-font-primary, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif);
+    color: var(--aia-text-primary, #1f2937);
+    line-height: var(--aia-leading-normal, 1.5);
 }
 
 /* ===== PAGE HEADER ===== */
@@ -72,12 +72,16 @@
     grid-template-columns: 2fr 1fr;
     gap: 2rem;
     align-items: start;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .aia-settings-main-column {
     display: flex;
     flex-direction: column;
     gap: 2rem;
+    min-width: 0;
+    width: 100%;
 }
 
 .aia-settings-sidebar-column {
@@ -341,6 +345,7 @@
     background: #ffffff;
     transition: all 0.2s ease;
     line-height: 1.4;
+    box-sizing: border-box;
 }
 
 .aia-form-input:focus {
@@ -352,6 +357,36 @@
 .aia-form-input--error {
     border-color: #ef4444;
     box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.aia-form-input--success {
+    border-color: #10b981;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+.aia-form-error {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #ef4444;
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+}
+
+.aia-form-success {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #10b981;
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+}
+
+.aia-form-error .aia-icon,
+.aia-form-success .aia-icon {
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
 }
 
 .aia-form-textarea {
@@ -367,6 +402,7 @@
     resize: vertical;
     min-height: 100px;
     font-family: inherit;
+    box-sizing: border-box;
 }
 
 .aia-form-textarea:focus {
@@ -377,7 +413,7 @@
 
 .aia-form-select {
     width: 100%;
-    padding: 0.75rem 1rem;
+    padding: 0.75rem 2.5rem 0.75rem 1rem;
     border: 2px solid #e5e7eb;
     border-radius: 8px;
     font-size: 0.875rem;
@@ -387,6 +423,7 @@
     appearance: none;
     transition: all 0.2s ease;
     cursor: pointer;
+    box-sizing: border-box;
 }
 
 .aia-form-select:focus {
@@ -421,7 +458,8 @@
 }
 
 .aia-input-group .aia-form-input {
-    padding-right: 7rem;
+    padding-right: 6rem;
+    flex: 1;
 }
 
 .aia-input-actions {
@@ -822,6 +860,20 @@
     }
 }
 
+@media (max-width: 1024px) {
+    .aia-settings-content-grid {
+        gap: 1.5rem;
+    }
+    
+    .aia-widget {
+        margin-bottom: 1.5rem;
+    }
+    
+    .aia-provider-selection {
+        gap: 0.75rem;
+    }
+}
+
 @media (max-width: 768px) {
     .aia-settings-page-header {
         flex-direction: column;
@@ -933,4 +985,62 @@
     .aia-notification--show {
         transform: translateY(0);
     }
+}
+
+/* ===== Save States ===== */
+
+.aia-form-saving {
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+.aia-btn--loading {
+    position: relative;
+    pointer-events: none;
+    opacity: 0.8;
+}
+
+.aia-btn--loading .aia-icon {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.aia-save-status {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-top: 1rem;
+    transition: all 0.2s ease;
+}
+
+.aia-save-status--success {
+    background: #d1fae5;
+    color: #065f46;
+    border: 1px solid #10b981;
+}
+
+.aia-save-status--error {
+    background: #fee2e2;
+    color: #991b1b;
+    border: 1px solid #ef4444;
+}
+
+.aia-save-status--info {
+    background: #dbeafe;
+    color: #1e40af;
+    border: 1px solid #3b82f6;
+}
+
+.aia-save-status .aia-icon {
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
 }
