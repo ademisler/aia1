@@ -30,7 +30,21 @@ define('AIA_PLUGIN_VERSION', '1.0.0');
 define('AIA_PLUGIN_BASENAME', plugin_basename(__FILE__));
 
 // Check if WooCommerce is active
-if (!in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins')))) {
+function aia_is_woocommerce_active() {
+    if (is_multisite()) {
+        // Check if WooCommerce is network activated
+        if (array_key_exists('woocommerce/woocommerce.php', get_site_option('active_sitewide_plugins', []))) {
+            return true;
+        }
+        // Check if WooCommerce is activated on current site
+        return in_array('woocommerce/woocommerce.php', (array) get_option('active_plugins', []));
+    } else {
+        // Single site check
+        return in_array('woocommerce/woocommerce.php', (array) get_option('active_plugins', []));
+    }
+}
+
+if (!aia_is_woocommerce_active()) {
     add_action('admin_notices', function() {
         echo '<div class="notice notice-error"><p>';
         echo __('AI Inventory Agent requires WooCommerce to be installed and activated.', 'ai-inventory-agent');

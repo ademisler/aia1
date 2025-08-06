@@ -1,0 +1,402 @@
+/**
+ * AI Inventory Agent - Data Visualization Components
+ * Modern charts, graphs, and data displays
+ */
+
+/* ===== Chart Components ===== */
+
+/* Chart Container */
+.aia-chart {
+  position: relative;
+  background: white;
+  border-radius: var(--aia-radius-xl);
+  padding: var(--aia-space-6);
+  box-shadow: var(--aia-shadow-sm);
+}
+
+.aia-chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--aia-space-4);
+}
+
+.aia-chart-title {
+  font-size: var(--aia-text-lg);
+  font-weight: var(--aia-font-semibold);
+  color: var(--aia-gray-900);
+}
+
+.aia-chart-legend {
+  display: flex;
+  gap: var(--aia-space-4);
+  flex-wrap: wrap;
+  margin-top: var(--aia-space-4);
+}
+
+.aia-legend-item {
+  display: flex;
+  align-items: center;
+  gap: var(--aia-space-2);
+  font-size: var(--aia-text-sm);
+  color: var(--aia-gray-600);
+}
+
+.aia-legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: var(--aia-radius-sm);
+}
+
+/* ===== Progress Ring ===== */
+
+.aia-progress-ring {
+  position: relative;
+  width: 120px;
+  height: 120px;
+}
+
+.aia-progress-ring-svg {
+  transform: rotate(-90deg);
+}
+
+.aia-progress-ring-background {
+  fill: none;
+  stroke: var(--aia-gray-200);
+  stroke-width: 8;
+}
+
+.aia-progress-ring-progress {
+  fill: none;
+  stroke: var(--aia-primary-500);
+  stroke-width: 8;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.5s var(--aia-ease-out);
+}
+
+.aia-progress-ring-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.aia-progress-ring-value {
+  font-size: var(--aia-text-2xl);
+  font-weight: var(--aia-font-bold);
+  color: var(--aia-gray-900);
+}
+
+.aia-progress-ring-label {
+  font-size: var(--aia-text-sm);
+  color: var(--aia-gray-600);
+}
+
+/* ===== Sparkline Charts ===== */
+
+.aia-sparkline {
+  height: 40px;
+  width: 100%;
+  position: relative;
+}
+
+.aia-sparkline-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.aia-sparkline-line {
+  fill: none;
+  stroke: var(--aia-primary-500);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.aia-sparkline-area {
+  fill: url(#sparkline-gradient);
+  opacity: 0.3;
+}
+
+.aia-sparkline-dot {
+  fill: var(--aia-primary-500);
+  stroke: white;
+  stroke-width: 2;
+}
+
+/* ===== Bar Chart ===== */
+
+.aia-bar-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--aia-space-2);
+  height: 200px;
+  padding: var(--aia-space-4) 0;
+}
+
+.aia-bar {
+  flex: 1;
+  background: linear-gradient(to top, var(--aia-primary-500), var(--aia-primary-400));
+  border-radius: var(--aia-radius-md) var(--aia-radius-md) 0 0;
+  position: relative;
+  min-height: 4px;
+  transition: all 0.3s var(--aia-ease-out);
+  cursor: pointer;
+}
+
+.aia-bar:hover {
+  background: linear-gradient(to top, var(--aia-primary-600), var(--aia-primary-500));
+  transform: scaleY(1.05);
+}
+
+.aia-bar-value {
+  position: absolute;
+  top: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: var(--aia-text-xs);
+  font-weight: var(--aia-font-medium);
+  color: var(--aia-gray-700);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.aia-bar:hover .aia-bar-value {
+  opacity: 1;
+}
+
+.aia-bar-label {
+  position: absolute;
+  bottom: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: var(--aia-text-xs);
+  color: var(--aia-gray-600);
+  white-space: nowrap;
+}
+
+/* ===== Gauge Chart ===== */
+
+.aia-gauge {
+  position: relative;
+  width: 200px;
+  height: 120px;
+  margin: 0 auto;
+}
+
+.aia-gauge-background {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 100px 100px 0 0;
+  background: var(--aia-gray-200);
+  overflow: hidden;
+}
+
+.aia-gauge-fill {
+  position: absolute;
+  width: 100%;
+  height: 200%;
+  background: conic-gradient(
+    from 180deg at 50% 50%,
+    var(--aia-success-500) 0deg,
+    var(--aia-warning-500) 120deg,
+    var(--aia-danger-500) 180deg
+  );
+  transform-origin: center center;
+  transition: transform 0.5s var(--aia-ease-out);
+}
+
+.aia-gauge-center {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 60px;
+  background: white;
+  border-radius: 60px 60px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.aia-gauge-value {
+  font-size: var(--aia-text-xl);
+  font-weight: var(--aia-font-bold);
+  color: var(--aia-gray-900);
+}
+
+.aia-gauge-label {
+  font-size: var(--aia-text-xs);
+  color: var(--aia-gray-600);
+}
+
+/* ===== Activity Heatmap ===== */
+
+.aia-heatmap {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 3px;
+}
+
+.aia-heatmap-cell {
+  aspect-ratio: 1;
+  background: var(--aia-gray-200);
+  border-radius: var(--aia-radius-sm);
+  cursor: pointer;
+  transition: all 0.2s var(--aia-ease-out);
+  position: relative;
+}
+
+.aia-heatmap-cell[data-level="1"] {
+  background: var(--aia-primary-200);
+}
+
+.aia-heatmap-cell[data-level="2"] {
+  background: var(--aia-primary-300);
+}
+
+.aia-heatmap-cell[data-level="3"] {
+  background: var(--aia-primary-400);
+}
+
+.aia-heatmap-cell[data-level="4"] {
+  background: var(--aia-primary-500);
+}
+
+.aia-heatmap-cell:hover {
+  transform: scale(1.2);
+  box-shadow: var(--aia-shadow-md);
+  z-index: 10;
+}
+
+/* ===== Metric Cards ===== */
+
+.aia-metric-card {
+  background: white;
+  border-radius: var(--aia-radius-xl);
+  padding: var(--aia-space-6);
+  position: relative;
+  overflow: hidden;
+}
+
+.aia-metric-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100px;
+  height: 100px;
+  background: var(--aia-primary-100);
+  border-radius: 50%;
+  transform: translate(30px, -30px);
+  opacity: 0.5;
+}
+
+.aia-metric-icon {
+  width: 48px;
+  height: 48px;
+  background: var(--aia-primary-100);
+  color: var(--aia-primary-600);
+  border-radius: var(--aia-radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--aia-text-xl);
+  margin-bottom: var(--aia-space-4);
+}
+
+.aia-metric-value {
+  font-size: var(--aia-text-3xl);
+  font-weight: var(--aia-font-bold);
+  color: var(--aia-gray-900);
+  line-height: 1;
+  margin-bottom: var(--aia-space-2);
+}
+
+.aia-metric-label {
+  font-size: var(--aia-text-sm);
+  color: var(--aia-gray-600);
+  margin-bottom: var(--aia-space-3);
+}
+
+.aia-metric-trend {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--aia-space-1);
+  padding: var(--aia-space-1) var(--aia-space-3);
+  border-radius: var(--aia-radius-full);
+  font-size: var(--aia-text-sm);
+  font-weight: var(--aia-font-medium);
+}
+
+.aia-metric-trend.positive {
+  background: var(--aia-success-100);
+  color: var(--aia-success-700);
+}
+
+.aia-metric-trend.negative {
+  background: var(--aia-danger-100);
+  color: var(--aia-danger-700);
+}
+
+/* ===== Timeline ===== */
+
+.aia-timeline {
+  position: relative;
+  padding-left: var(--aia-space-8);
+}
+
+.aia-timeline::before {
+  content: '';
+  position: absolute;
+  left: 15px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--aia-gray-300);
+}
+
+.aia-timeline-item {
+  position: relative;
+  padding-bottom: var(--aia-space-6);
+}
+
+.aia-timeline-marker {
+  position: absolute;
+  left: -23px;
+  width: 16px;
+  height: 16px;
+  background: white;
+  border: 3px solid var(--aia-primary-500);
+  border-radius: 50%;
+  z-index: 1;
+}
+
+.aia-timeline-content {
+  background: var(--aia-gray-50);
+  padding: var(--aia-space-4);
+  border-radius: var(--aia-radius-lg);
+  border-left: 3px solid var(--aia-primary-500);
+}
+
+.aia-timeline-time {
+  font-size: var(--aia-text-sm);
+  color: var(--aia-gray-600);
+  margin-bottom: var(--aia-space-2);
+}
+
+.aia-timeline-title {
+  font-size: var(--aia-text-base);
+  font-weight: var(--aia-font-semibold);
+  color: var(--aia-gray-900);
+  margin-bottom: var(--aia-space-1);
+}
+
+.aia-timeline-description {
+  font-size: var(--aia-text-sm);
+  color: var(--aia-gray-700);
+}

@@ -216,7 +216,11 @@ class Plugin {
             wp_die(__('Insufficient permissions.', 'ai-inventory-agent'));
         }
         
+        // Apply rate limiting - 20 requests per minute
+        \AIA\Utils\RateLimiter::check_ajax_limit('ai_chat', 20, 60);
+        
         $message = sanitize_text_field($_POST['message'] ?? '');
+        $session_id = sanitize_text_field($_POST['session_id'] ?? '');
         
         if (empty($message)) {
             wp_send_json_error(__('Message cannot be empty.', 'ai-inventory-agent'));
@@ -224,7 +228,7 @@ class Plugin {
         
         $ai_chat = $this->module_manager->get_module('ai_chat');
         if ($ai_chat) {
-            $response = $ai_chat->process_message($message);
+            $response = $ai_chat->process_message($message, $session_id);
             wp_send_json_success($response);
         } else {
             wp_send_json_error(__('AI Chat module not available.', 'ai-inventory-agent'));

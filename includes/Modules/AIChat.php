@@ -158,7 +158,7 @@ class AIChat {
                 'processing_time' => round($processing_time, 3)
             ];
             
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             error_log('AIA Chat Error: ' . $e->getMessage());
             
             return [
@@ -269,12 +269,12 @@ class AIChat {
             global $wpdb;
             
             // Get total products
-            $total_products = $wpdb->get_var("
+            $total_products = $wpdb->get_var($wpdb->prepare("
                 SELECT COUNT(*) 
                 FROM {$wpdb->posts} 
-                WHERE post_type = 'product' 
-                AND post_status = 'publish'
-            ");
+                WHERE post_type = %s 
+                AND post_status = %s
+            ", 'product', 'publish'));
             
             // Get low stock threshold
             $low_stock_threshold = $this->plugin->get_setting('low_stock_threshold');
@@ -292,15 +292,15 @@ class AIChat {
             ", $low_stock_threshold));
             
             // Get out of stock count
-            $out_of_stock_count = $wpdb->get_var("
+            $out_of_stock_count = $wpdb->get_var($wpdb->prepare("
                 SELECT COUNT(*) 
                 FROM {$wpdb->posts} p
                 INNER JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id
-                WHERE p.post_type = 'product' 
-                AND p.post_status = 'publish'
-                AND pm.meta_key = '_stock'
+                WHERE p.post_type = %s 
+                AND p.post_status = %s
+                AND pm.meta_key = %s
                 AND (pm.meta_value = '0' OR pm.meta_value = '')
-            ");
+            ", 'product', 'publish', '_stock'));
             
             $stats = [
                 'total_products' => (int) $total_products,

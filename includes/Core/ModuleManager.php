@@ -125,7 +125,7 @@ class ModuleManager {
             
             return true;
             
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             error_log("AIA: Failed to initialize module '{$module_id}': " . $e->getMessage());
             return false;
         }
@@ -286,7 +286,7 @@ class ModuleManager {
             if (method_exists($instance, $method)) {
                 try {
                     $results[$module_id] = call_user_func_array([$instance, $method], $args);
-                } catch (Exception $e) {
+                } catch (\Exception $e) {
                     error_log("AIA: Error executing '{$method}' on module '{$module_id}': " . $e->getMessage());
                     $results[$module_id] = false;
                 }

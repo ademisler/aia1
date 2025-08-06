@@ -152,12 +152,12 @@ class InventoryContext {
         $message_lower = strtolower($message);
         
         // Get WooCommerce product categories
-        $terms = $wpdb->get_results("
+        $terms = $wpdb->get_results($wpdb->prepare("
             SELECT name 
             FROM {$wpdb->terms} t
             INNER JOIN {$wpdb->term_taxonomy} tt ON t.term_id = tt.term_id
-            WHERE tt.taxonomy = 'product_cat'
-        ");
+            WHERE tt.taxonomy = %s
+        ", 'product_cat'));
         
         foreach ($terms as $term) {
             if (strpos($message_lower, strtolower($term->name)) !== false) {

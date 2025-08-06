@@ -64,6 +64,23 @@ class Database {
                     KEY created_at (created_at)
                 "
             ],
+            'reports' => [
+                'name' => $this->table_prefix . 'reports',
+                'schema' => "
+                    id bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+                    report_type varchar(50) NOT NULL,
+                    period_start date NOT NULL,
+                    period_end date NOT NULL,
+                    report_data longtext NOT NULL,
+                    generated_by bigint(20) unsigned DEFAULT NULL,
+                    created_at datetime DEFAULT CURRENT_TIMESTAMP,
+                    PRIMARY KEY (id),
+                    KEY report_type (report_type),
+                    KEY period_start (period_start),
+                    KEY period_end (period_end),
+                    KEY created_at (created_at)
+                "
+            ],
             'demand_forecasts' => [
                 'name' => $this->table_prefix . 'demand_forecasts',
                 'schema' => "
@@ -465,5 +482,53 @@ class Database {
         foreach ($this->tables as $table_info) {
             $this->wpdb->query("DROP TABLE IF EXISTS {$table_info['name']}");
         }
+    }
+    
+    /**
+     * Get table name by key
+     * 
+     * @param string $table_key Table key
+     * @return string|null Table name or null if not found
+     */
+    public function get_table_name($table_key) {
+        return isset($this->tables[$table_key]) ? $this->tables[$table_key]['name'] : null;
+    }
+    
+    /**
+     * Check if table exists
+     * 
+     * @param string $table_key Table key
+     * @return bool
+     */
+    public function table_exists($table_key) {
+        $table_name = $this->get_table_name($table_key);
+        if (!$table_name) {
+            return false;
+        }
+        
+        $result = $this->wpdb->get_var($this->wpdb->prepare(
+            "SHOW TABLES LIKE %s",
+            $table_name
+        ));
+        
+        return $result === $table_name;
+    }
+    
+    /**
+     * Get all plugin tables status
+     * 
+     * @return array
+     */
+    public function get_tables_status() {
+        $status = [];
+        
+        foreach ($this->tables as $key => $table) {
+            $status[$key] = [
+                'name' => $table['name'],
+                'exists' => $this->table_exists($key)
+            ];
+        }
+        
+        return $status;
     }
 }

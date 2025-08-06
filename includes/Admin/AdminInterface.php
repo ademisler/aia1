@@ -34,6 +34,7 @@ class AdminInterface {
         add_action('admin_init', [$this, 'register_settings']);
         add_action('admin_notices', [$this, 'show_admin_notices']);
         add_action('wp_dashboard_setup', [$this, 'add_dashboard_widgets']);
+        add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_assets']);
         
         // AJAX handlers
         add_action('wp_ajax_aia_save_settings', [$this, 'handle_save_settings']);
@@ -403,7 +404,7 @@ class AdminInterface {
         }
         
         // Check for WooCommerce
-        if (!class_exists('WooCommerce')) {
+        if (!$this->is_woocommerce_active()) {
             echo '<div class="notice notice-error">';
             echo '<p><strong>' . __('AI Inventory Agent:', 'ai-inventory-agent') . '</strong> ';
             echo __('WooCommerce is required for this plugin to work properly.', 'ai-inventory-agent');
@@ -412,7 +413,7 @@ class AdminInterface {
         }
         
         // Show success message after settings save
-        if (isset($_GET['settings-updated']) && $_GET['settings-updated'] === 'true') {
+        if (isset($_GET['settings-updated']) && sanitize_text_field($_GET['settings-updated']) === 'true') {
             echo '<div class="notice notice-success is-dismissible">';
             echo '<p>' . __('Settings saved successfully!', 'ai-inventory-agent') . '</p>';
             echo '</div>';
@@ -482,7 +483,7 @@ class AdminInterface {
     public function handle_save_settings() {
         check_ajax_referer('aia_ajax_nonce', 'nonce');
         
-        if (!current_user_can('manage_options')) {
+        if (!current_user_can('configure_aia')) {
             wp_send_json_error(__('Insufficient permissions.', 'ai-inventory-agent'));
         }
         
@@ -539,8 +540,8 @@ class AdminInterface {
                 wp_send_json_error($result['message']);
             }
             
-        } catch (Exception $e) {
-            wp_send_json_error($e->getMessage());
+                    } catch (\Exception $e) {
+                wp_send_json_error($e->getMessage());
         }
     }
     
@@ -577,5 +578,93 @@ class AdminInterface {
     public function is_plugin_admin_page() {
         $screen = get_current_screen();
         return $screen && strpos($screen->id, 'ai-inventory-agent') !== false;
+    }
+    
+    /**
+     * Check if WooCommerce is active
+     * 
+     * @return bool
+     */
+    private function is_woocommerce_active() {
+        if (is_multisite()) {
+            // Check if WooCommerce is network activated
+            if (array_key_exists('woocommerce/woocommerce.php', get_site_option('active_sitewide_plugins', []))) {
+                return true;
+            }
+            // Check if WooCommerce is activated on current site
+            return in_array('woocommerce/woocommerce.php', (array) get_option('active_plugins', []));
+        } else {
+            // Single site check
+            return in_array('woocommerce/woocommerce.php', (array) get_option('active_plugins', []));
+        }
+    }
+    
+    /**
+     * Enqueue admin assets
+     * 
+     * @param string $hook Current admin page hook
+     */
+    public function enqueue_admin_assets($hook) {
+        // Only load on our plugin pages
+        if (strpos($hook, 'ai-inventory-agent') === false && 
+            strpos($hook, 'aia-') === false) {
+            return;
+        }
+        
+        // Enqueue modern CSS
+        wp_enqueue_style(
+            'aia-admin-style',
+            AIA_PLUGIN_URL . 'assets/css/admin.css',
+            [],
+            AIA_VERSION
+        );
+        
+        // Enqueue admin scripts
+        wp_enqueue_script(
+            'aia-admin-script',
+            AIA_PLUGIN_URL . 'assets/js/admin.js',
+            ['jquery'],
+            AIA_VERSION,
+            true
+        );
+        
+        // Enqueue UI components
+        wp_enqueue_script(
+            'aia-ui-components',
+            AIA_PLUGIN_URL . 'assets/js/ui-components.js',
+            ['jquery'],
+            AIA_VERSION,
+            true
+        );
+        
+        // Enqueue Chart.js from CDN
+        wp_enqueue_script(
+            'chartjs',
+            'https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js',
+            [],
+            '4.4.0',
+            true
+        );
+        
+        // Enqueue charts script
+        wp_enqueue_script(
+            'aia-charts',
+            AIA_PLUGIN_URL . 'assets/js/charts.js',
+            ['jquery', 'chartjs'],
+            AIA_VERSION,
+            true
+        );
+        
+        // Localize script
+        wp_localize_script('aia-admin-script', 'aia_admin', [
+            'ajax_url' => admin_url('admin-ajax.php'),
+            'nonce' => wp_create_nonce('aia_ajax_nonce'),
+            'i18n' => [
+                'confirm_delete' => __('Are you sure you want to delete this item?', 'ai-inventory-agent'),
+                'loading' => __('Loading...', 'ai-inventory-agent'),
+                'error' => __('An error occurred. Please try again.', 'ai-inventory-agent'),
+                'success' => __('Operation completed successfully.', 'ai-inventory-agent')
+            ]
+        ]);
     }
 }

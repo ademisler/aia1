@@ -48,9 +48,25 @@ class OpenAIProvider {
      * @throws Exception
      */
     public function generate_response($conversation, $options = []) {
+        // Validate conversation array
+        if (!is_array($conversation) || empty($conversation)) {
+            throw new \Exception('Invalid conversation format');
+        }
+        
+        // Validate and sanitize options
         $model = $options['model'] ?? $this->default_model;
-        $max_tokens = $options['max_tokens'] ?? 1000;
-        $temperature = $options['temperature'] ?? 0.7;
+        $max_tokens = max(1, min(4000, intval($options['max_tokens'] ?? 1000)));
+        $temperature = max(0, min(2, floatval($options['temperature'] ?? 0.7)));
+        
+        // Validate messages structure
+        foreach ($conversation as $message) {
+            if (!isset($message['role']) || !isset($message['content'])) {
+                throw new \Exception('Invalid message format in conversation');
+            }
+            if (!in_array($message['role'], ['system', 'user', 'assistant'])) {
+                throw new \Exception('Invalid message role: ' . $message['role']);
+            }
+        }
         
         $request_body = [
             'model' => $model,
@@ -107,9 +123,18 @@ class OpenAIProvider {
         $status_code = wp_remote_retrieve_response_code($response);
         $body = wp_remote_retrieve_body($response);
         
-        if ($status_code !== 200) {
+        // Handle different HTTP status codes
+        if ($status_code === 401) {
+            throw new \Exception("Authentication failed. Please check your API key.");
+        } elseif ($status_code === 429) {
             $error_data = json_decode($body, true);
-            $error_message = $error_data['error']['message'] ?? 'Unknown error';
+            $retry_after = wp_remote_retrieve_header($response, 'retry-after');
+            throw new \Exception("Rate limit exceeded. Please try again in {$retry_after} seconds.");
+        } elseif ($status_code === 500 || $status_code === 502 || $status_code === 503) {
+            throw new \Exception("OpenAI API is temporarily unavailable. Please try again later.");
+        } elseif ($status_code !== 200) {
+            $error_data = json_decode($body, true);
+            $error_message = isset($error_data['error']['message']) ? $error_data['error']['message'] : 'Unknown error';
             throw new \Exception("OpenAI API returned status {$status_code}: {$error_message}");
         }
         

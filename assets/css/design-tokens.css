@@ -1,0 +1,239 @@
+/**
+ * AI Inventory Agent - Design Tokens
+ * Modern, scalable design system foundation
+ */
+
+:root {
+  /* ===== Color Palette ===== */
+  
+  /* Primary Colors */
+  --aia-primary-50: #e6f3ff;
+  --aia-primary-100: #b3daff;
+  --aia-primary-200: #80c1ff;
+  --aia-primary-300: #4da8ff;
+  --aia-primary-400: #1a8fff;
+  --aia-primary-500: #0073e6; /* Main Primary */
+  --aia-primary-600: #005bb3;
+  --aia-primary-700: #004280;
+  --aia-primary-800: #002a4d;
+  --aia-primary-900: #00121a;
+  
+  /* Secondary Colors - AI Purple */
+  --aia-secondary-50: #f3e6ff;
+  --aia-secondary-100: #dab3ff;
+  --aia-secondary-200: #c180ff;
+  --aia-secondary-300: #a84dff;
+  --aia-secondary-400: #8f1aff;
+  --aia-secondary-500: #7600e6;
+  --aia-secondary-600: #5c00b3;
+  --aia-secondary-700: #420080;
+  --aia-secondary-800: #29004d;
+  --aia-secondary-900: #0f001a;
+  
+  /* Accent Colors - Success/Warning/Danger */
+  --aia-success-50: #e6f9f1;
+  --aia-success-100: #b3ecd4;
+  --aia-success-200: #80dfb8;
+  --aia-success-300: #4dd29b;
+  --aia-success-400: #1ac57f;
+  --aia-success-500: #00b862;
+  --aia-success-600: #00904c;
+  --aia-success-700: #006837;
+  --aia-success-800: #004021;
+  --aia-success-900: #00180c;
+  
+  --aia-warning-50: #fff9e6;
+  --aia-warning-100: #ffecb3;
+  --aia-warning-200: #ffdf80;
+  --aia-warning-300: #ffd24d;
+  --aia-warning-400: #ffc51a;
+  --aia-warning-500: #ffb800;
+  --aia-warning-600: #cc9300;
+  --aia-warning-700: #996e00;
+  --aia-warning-800: #664900;
+  --aia-warning-900: #332400;
+  
+  --aia-danger-50: #ffe6e9;
+  --aia-danger-100: #ffb3bb;
+  --aia-danger-200: #ff808e;
+  --aia-danger-300: #ff4d60;
+  --aia-danger-400: #ff1a33;
+  --aia-danger-500: #e60019;
+  --aia-danger-600: #b30014;
+  --aia-danger-700: #80000f;
+  --aia-danger-800: #4d0009;
+  --aia-danger-900: #1a0003;
+  
+  /* Neutral Colors */
+  --aia-gray-50: #f8f9fa;
+  --aia-gray-100: #f1f3f5;
+  --aia-gray-200: #e9ecef;
+  --aia-gray-300: #dee2e6;
+  --aia-gray-400: #ced4da;
+  --aia-gray-500: #adb5bd;
+  --aia-gray-600: #868e96;
+  --aia-gray-700: #495057;
+  --aia-gray-800: #343a40;
+  --aia-gray-900: #212529;
+  
+  /* ===== Typography ===== */
+  
+  /* Font Families */
+  --aia-font-primary: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  --aia-font-mono: "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
+  
+  /* Font Sizes */
+  --aia-text-xs: 0.75rem;    /* 12px */
+  --aia-text-sm: 0.875rem;   /* 14px */
+  --aia-text-base: 1rem;     /* 16px */
+  --aia-text-lg: 1.125rem;   /* 18px */
+  --aia-text-xl: 1.25rem;    /* 20px */
+  --aia-text-2xl: 1.5rem;    /* 24px */
+  --aia-text-3xl: 1.875rem;  /* 30px */
+  --aia-text-4xl: 2.25rem;   /* 36px */
+  --aia-text-5xl: 3rem;      /* 48px */
+  
+  /* Font Weights */
+  --aia-font-light: 300;
+  --aia-font-normal: 400;
+  --aia-font-medium: 500;
+  --aia-font-semibold: 600;
+  --aia-font-bold: 700;
+  --aia-font-extrabold: 800;
+  
+  /* Line Heights */
+  --aia-leading-none: 1;
+  --aia-leading-tight: 1.25;
+  --aia-leading-snug: 1.375;
+  --aia-leading-normal: 1.5;
+  --aia-leading-relaxed: 1.625;
+  --aia-leading-loose: 2;
+  
+  /* Letter Spacing */
+  --aia-tracking-tight: -0.025em;
+  --aia-tracking-normal: 0;
+  --aia-tracking-wide: 0.025em;
+  --aia-tracking-wider: 0.05em;
+  --aia-tracking-widest: 0.1em;
+  
+  /* ===== Spacing ===== */
+  
+  --aia-space-0: 0;
+  --aia-space-1: 0.25rem;   /* 4px */
+  --aia-space-2: 0.5rem;    /* 8px */
+  --aia-space-3: 0.75rem;   /* 12px */
+  --aia-space-4: 1rem;      /* 16px */
+  --aia-space-5: 1.25rem;   /* 20px */
+  --aia-space-6: 1.5rem;    /* 24px */
+  --aia-space-7: 1.75rem;   /* 28px */
+  --aia-space-8: 2rem;      /* 32px */
+  --aia-space-9: 2.25rem;   /* 36px */
+  --aia-space-10: 2.5rem;   /* 40px */
+  --aia-space-12: 3rem;     /* 48px */
+  --aia-space-16: 4rem;     /* 64px */
+  --aia-space-20: 5rem;     /* 80px */
+  --aia-space-24: 6rem;     /* 96px */
+  
+  /* ===== Border Radius ===== */
+  
+  --aia-radius-none: 0;
+  --aia-radius-sm: 0.125rem;   /* 2px */
+  --aia-radius-base: 0.25rem;  /* 4px */
+  --aia-radius-md: 0.375rem;   /* 6px */
+  --aia-radius-lg: 0.5rem;     /* 8px */
+  --aia-radius-xl: 0.75rem;    /* 12px */
+  --aia-radius-2xl: 1rem;      /* 16px */
+  --aia-radius-3xl: 1.5rem;    /* 24px */
+  --aia-radius-full: 9999px;
+  
+  /* ===== Shadows ===== */
+  
+  --aia-shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --aia-shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --aia-shadow-base: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --aia-shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --aia-shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --aia-shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  --aia-shadow-2xl: 0 35px 60px -15px rgba(0, 0, 0, 0.3);
+  --aia-shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+  
+  /* Colored shadows for hover effects */
+  --aia-shadow-primary: 0 10px 20px -5px rgba(0, 115, 230, 0.2);
+  --aia-shadow-secondary: 0 10px 20px -5px rgba(118, 0, 230, 0.2);
+  --aia-shadow-success: 0 10px 20px -5px rgba(0, 184, 98, 0.2);
+  --aia-shadow-warning: 0 10px 20px -5px rgba(255, 184, 0, 0.2);
+  --aia-shadow-danger: 0 10px 20px -5px rgba(230, 0, 25, 0.2);
+  
+  /* ===== Transitions ===== */
+  
+  --aia-transition-fast: 150ms;
+  --aia-transition-base: 200ms;
+  --aia-transition-slow: 300ms;
+  --aia-transition-slower: 500ms;
+  
+  --aia-ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --aia-ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --aia-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --aia-ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  
+  /* ===== Z-Index Scale ===== */
+  
+  --aia-z-0: 0;
+  --aia-z-10: 10;
+  --aia-z-20: 20;
+  --aia-z-30: 30;
+  --aia-z-40: 40;
+  --aia-z-50: 50;
+  --aia-z-dropdown: 1000;
+  --aia-z-sticky: 1020;
+  --aia-z-fixed: 1030;
+  --aia-z-modal-backdrop: 1040;
+  --aia-z-modal: 1050;
+  --aia-z-popover: 1060;
+  --aia-z-tooltip: 1070;
+  
+  /* ===== Breakpoints ===== */
+  
+  --aia-screen-xs: 475px;
+  --aia-screen-sm: 640px;
+  --aia-screen-md: 768px;
+  --aia-screen-lg: 1024px;
+  --aia-screen-xl: 1280px;
+  --aia-screen-2xl: 1536px;
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Override colors for dark mode */
+    --aia-bg-primary: var(--aia-gray-900);
+    --aia-bg-secondary: var(--aia-gray-800);
+    --aia-text-primary: var(--aia-gray-100);
+    --aia-text-secondary: var(--aia-gray-300);
+  }
+}
+
+/* Utility Classes for Design Tokens */
+.aia-transition-all {
+  transition-property: all;
+  transition-duration: var(--aia-transition-base);
+  transition-timing-function: var(--aia-ease-in-out);
+}
+
+.aia-transition-colors {
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-duration: var(--aia-transition-base);
+  transition-timing-function: var(--aia-ease-in-out);
+}
+
+.aia-transition-transform {
+  transition-property: transform;
+  transition-duration: var(--aia-transition-base);
+  transition-timing-function: var(--aia-ease-in-out);
+}
+
+.aia-transition-shadow {
+  transition-property: box-shadow;
+  transition-duration: var(--aia-transition-base);
+  transition-timing-function: var(--aia-ease-in-out);
+}

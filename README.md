@@ -339,6 +339,25 @@ The plugin is fully translatable:
 - Modular architecture
 - WordPress admin integration
 
+## 📚 Documentation
+
+### For Users
+- [User Guide](docs/USER_GUIDE.md) - Complete guide for using the plugin
+- [Installation Guide](docs/installation.md) - Step-by-step installation
+- [FAQ](docs/USER_GUIDE.md#faq) - Frequently asked questions
+
+### For Developers
+- [Developer Guide](docs/DEVELOPER_GUIDE.md) - Technical documentation
+- [API Reference](docs/API_REFERENCE.md) - REST API endpoints
+- [AGENTS.md](AGENTS.md) - AI coding guidelines
+- [Contributing](CONTRIBUTING.md) - How to contribute
+
+### Quick Links
+- [Latest Release](releases/ai-inventory-agent-v1.0.0.zip)
+- [Changelog](CHANGELOG.md)
+- [Support Forum](https://wordpress.org/support/plugin/ai-inventory-agent/)
+- [Report Issues](https://github.com/yourusername/ai-inventory-agent/issues)
+
 ## 📄 License
 
 This plugin is licensed under the GPL v2 or later.

@@ -1,0 +1,418 @@
+/**
+ * AI Inventory Agent - Modern Dashboard Styles
+ * Responsive, modern dashboard layout
+ */
+
+/* ===== Dashboard Layout ===== */
+
+.aia-dashboard {
+  min-height: 100vh;
+  background: var(--aia-gray-50);
+  font-family: var(--aia-font-primary);
+}
+
+.aia-dashboard-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: var(--aia-space-6);
+}
+
+/* Dashboard Header */
+.aia-dashboard-header {
+  background: white;
+  border-radius: var(--aia-radius-xl);
+  padding: var(--aia-space-6);
+  margin-bottom: var(--aia-space-6);
+  box-shadow: var(--aia-shadow-sm);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--aia-space-4);
+}
+
+.aia-dashboard-title {
+  display: flex;
+  align-items: center;
+  gap: var(--aia-space-3);
+}
+
+.aia-dashboard-title h1 {
+  font-size: var(--aia-text-2xl);
+  font-weight: var(--aia-font-bold);
+  color: var(--aia-gray-900);
+  margin: 0;
+}
+
+.aia-dashboard-subtitle {
+  font-size: var(--aia-text-sm);
+  color: var(--aia-gray-600);
+  margin-top: var(--aia-space-1);
+}
+
+/* Dashboard Actions */
+.aia-dashboard-actions {
+  display: flex;
+  gap: var(--aia-space-3);
+  align-items: center;
+}
+
+/* ===== Stats Grid ===== */
+
+.aia-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--aia-space-6);
+  margin-bottom: var(--aia-space-8);
+}
+
+.aia-stat-card {
+  background: white;
+  border-radius: var(--aia-radius-xl);
+  padding: var(--aia-space-6);
+  box-shadow: var(--aia-shadow-sm);
+  position: relative;
+  overflow: hidden;
+  transition: all var(--aia-transition-base) var(--aia-ease-in-out);
+}
+
+.aia-stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--aia-shadow-md);
+}
+
+.aia-stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--aia-primary-500);
+}
+
+.aia-stat-card.success::before {
+  background: var(--aia-success-500);
+}
+
+.aia-stat-card.warning::before {
+  background: var(--aia-warning-500);
+}
+
+.aia-stat-card.danger::before {
+  background: var(--aia-danger-500);
+}
+
+.aia-stat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--aia-space-4);
+}
+
+.aia-stat-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--aia-radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--aia-text-xl);
+  background: var(--aia-primary-100);
+  color: var(--aia-primary-600);
+}
+
+.aia-stat-card.success .aia-stat-icon {
+  background: var(--aia-success-100);
+  color: var(--aia-success-600);
+}
+
+.aia-stat-card.warning .aia-stat-icon {
+  background: var(--aia-warning-100);
+  color: var(--aia-warning-600);
+}
+
+.aia-stat-card.danger .aia-stat-icon {
+  background: var(--aia-danger-100);
+  color: var(--aia-danger-600);
+}
+
+.aia-stat-value {
+  font-size: var(--aia-text-3xl);
+  font-weight: var(--aia-font-bold);
+  color: var(--aia-gray-900);
+  line-height: 1;
+  margin-bottom: var(--aia-space-2);
+}
+
+.aia-stat-label {
+  font-size: var(--aia-text-sm);
+  color: var(--aia-gray-600);
+  font-weight: var(--aia-font-medium);
+}
+
+.aia-stat-change {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--aia-space-1);
+  font-size: var(--aia-text-xs);
+  font-weight: var(--aia-font-medium);
+  margin-top: var(--aia-space-3);
+  padding: var(--aia-space-1) var(--aia-space-2);
+  border-radius: var(--aia-radius-md);
+}
+
+.aia-stat-change.positive {
+  background: var(--aia-success-100);
+  color: var(--aia-success-700);
+}
+
+.aia-stat-change.negative {
+  background: var(--aia-danger-100);
+  color: var(--aia-danger-700);
+}
+
+/* ===== Dashboard Widgets ===== */
+
+.aia-dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: var(--aia-space-6);
+  margin-bottom: var(--aia-space-8);
+}
+
+.aia-widget {
+  background: white;
+  border-radius: var(--aia-radius-xl);
+  box-shadow: var(--aia-shadow-sm);
+  overflow: hidden;
+  transition: all var(--aia-transition-base) var(--aia-ease-in-out);
+}
+
+.aia-widget:hover {
+  box-shadow: var(--aia-shadow-md);
+}
+
+/* Widget Sizes */
+.aia-widget-sm {
+  grid-column: span 3;
+}
+
+.aia-widget-md {
+  grid-column: span 6;
+}
+
+.aia-widget-lg {
+  grid-column: span 8;
+}
+
+.aia-widget-xl {
+  grid-column: span 12;
+}
+
+.aia-widget-header {
+  padding: var(--aia-space-6);
+  border-bottom: 1px solid var(--aia-gray-100);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.aia-widget-title {
+  font-size: var(--aia-text-lg);
+  font-weight: var(--aia-font-semibold);
+  color: var(--aia-gray-900);
+  margin: 0;
+}
+
+.aia-widget-actions {
+  display: flex;
+  gap: var(--aia-space-2);
+}
+
+.aia-widget-body {
+  padding: var(--aia-space-6);
+}
+
+/* ===== Chart Container ===== */
+
+.aia-chart-container {
+  position: relative;
+  height: 300px;
+  width: 100%;
+}
+
+.aia-chart-loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* ===== Table Styles ===== */
+
+.aia-table-container {
+  overflow-x: auto;
+  border-radius: var(--aia-radius-lg);
+  border: 1px solid var(--aia-gray-200);
+}
+
+.aia-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--aia-text-sm);
+}
+
+.aia-table thead {
+  background: var(--aia-gray-50);
+  border-bottom: 1px solid var(--aia-gray-200);
+}
+
+.aia-table th {
+  padding: var(--aia-space-3) var(--aia-space-4);
+  text-align: left;
+  font-weight: var(--aia-font-semibold);
+  color: var(--aia-gray-700);
+  white-space: nowrap;
+}
+
+.aia-table td {
+  padding: var(--aia-space-4);
+  border-bottom: 1px solid var(--aia-gray-100);
+  color: var(--aia-gray-900);
+}
+
+.aia-table tbody tr:hover {
+  background: var(--aia-gray-50);
+}
+
+.aia-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* ===== Quick Actions ===== */
+
+.aia-quick-actions {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--aia-space-4);
+}
+
+.aia-action-card {
+  background: white;
+  border: 2px solid var(--aia-gray-200);
+  border-radius: var(--aia-radius-lg);
+  padding: var(--aia-space-5);
+  text-align: center;
+  cursor: pointer;
+  transition: all var(--aia-transition-base) var(--aia-ease-in-out);
+  text-decoration: none;
+  color: inherit;
+}
+
+.aia-action-card:hover {
+  border-color: var(--aia-primary-500);
+  transform: translateY(-2px);
+  box-shadow: var(--aia-shadow-md);
+}
+
+.aia-action-icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto var(--aia-space-4);
+  border-radius: var(--aia-radius-full);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--aia-text-2xl);
+  background: var(--aia-primary-100);
+  color: var(--aia-primary-600);
+}
+
+.aia-action-title {
+  font-size: var(--aia-text-base);
+  font-weight: var(--aia-font-semibold);
+  color: var(--aia-gray-900);
+  margin-bottom: var(--aia-space-2);
+}
+
+.aia-action-description {
+  font-size: var(--aia-text-sm);
+  color: var(--aia-gray-600);
+}
+
+/* ===== Responsive Design ===== */
+
+@media (max-width: 1024px) {
+  .aia-widget-sm,
+  .aia-widget-md {
+    grid-column: span 6;
+  }
+  
+  .aia-widget-lg {
+    grid-column: span 12;
+  }
+}
+
+@media (max-width: 768px) {
+  .aia-dashboard-container {
+    padding: var(--aia-space-4);
+  }
+  
+  .aia-stats-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .aia-widget-sm,
+  .aia-widget-md,
+  .aia-widget-lg {
+    grid-column: span 12;
+  }
+  
+  .aia-dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .aia-dashboard-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
+
+/* ===== Dark Mode Support ===== */
+
+@media (prefers-color-scheme: dark) {
+  .aia-dashboard {
+    background: var(--aia-gray-900);
+  }
+  
+  .aia-dashboard-header,
+  .aia-stat-card,
+  .aia-widget,
+  .aia-action-card {
+    background: var(--aia-gray-800);
+    border-color: var(--aia-gray-700);
+  }
+  
+  .aia-dashboard-title h1,
+  .aia-stat-value,
+  .aia-widget-title,
+  .aia-action-title {
+    color: var(--aia-gray-100);
+  }
+  
+  .aia-dashboard-subtitle,
+  .aia-stat-label,
+  .aia-action-description {
+    color: var(--aia-gray-400);
+  }
+  
+  .aia-table thead {
+    background: var(--aia-gray-700);
+  }
+  
+  .aia-table tbody tr:hover {
+    background: var(--aia-gray-700);
+  }
+}
