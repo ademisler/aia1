@@ -578,11 +578,26 @@
 }
 
 /* Advanced Backdrop Utilities */
-.aia-backdrop-blur-sm { backdrop-filter: blur(4px); }
-.aia-backdrop-blur { backdrop-filter: blur(8px); }
-.aia-backdrop-blur-md { backdrop-filter: blur(12px); }
-.aia-backdrop-blur-lg { backdrop-filter: blur(16px); }
-.aia-backdrop-blur-xl { backdrop-filter: blur(24px); }
+.aia-backdrop-blur-sm { 
+  -webkit-backdrop-filter: blur(4px); 
+  backdrop-filter: blur(4px); 
+}
+.aia-backdrop-blur { 
+  -webkit-backdrop-filter: blur(8px); 
+  backdrop-filter: blur(8px); 
+}
+.aia-backdrop-blur-md { 
+  -webkit-backdrop-filter: blur(12px); 
+  backdrop-filter: blur(12px); 
+}
+.aia-backdrop-blur-lg { 
+  -webkit-backdrop-filter: blur(16px); 
+  backdrop-filter: blur(16px); 
+}
+.aia-backdrop-blur-xl { 
+  -webkit-backdrop-filter: blur(24px); 
+  backdrop-filter: blur(24px); 
+}
 
 .aia-backdrop-brightness-50 { backdrop-filter: brightness(0.5); }
 .aia-backdrop-brightness-75 { backdrop-filter: brightness(0.75); }

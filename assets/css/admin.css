@@ -3,26 +3,7 @@
  * Complete admin interface styling with light theme consistency
  */
 
-@import url('design-tokens.css');
-@import url('icons.css');
-@import url('layout.css');
-@import url('components.css');
-@import url('advanced-components.css');
-@import url('ai-ux-patterns.css');
-@import url('enterprise-features.css');
-@import url('performance-optimizations.css');
-@import url('visual-hierarchy.css');
-@import url('responsive.css');
-@import url('dashboard.css');
-@import url('chat.css');
-@import url('analysis.css');
-@import url('alerts.css');
-@import url('reports.css');
-@import url('settings.css');
-@import url('animations.css');
-@import url('data-visualization.css');
-@import url('forms-advanced.css');
-@import url('accessibility.css');
+/* CSS imports removed - files are now enqueued individually in PHP for better performance and loading order */
 
 /* ===== Global Admin Styles ===== */
 

@@ -618,11 +618,100 @@ class AdminInterface {
             return;
         }
         
-        // Enqueue modern CSS
+        // Enqueue CSS files in proper order
+        // Base styles first
+        wp_enqueue_style(
+            'aia-design-tokens',
+            AIA_PLUGIN_URL . 'assets/css/design-tokens.css',
+            [],
+            AIA_PLUGIN_VERSION
+        );
+        
+        wp_enqueue_style(
+            'aia-icons',
+            AIA_PLUGIN_URL . 'assets/css/icons.css',
+            ['aia-design-tokens'],
+            AIA_PLUGIN_VERSION
+        );
+        
+        wp_enqueue_style(
+            'aia-layout',
+            AIA_PLUGIN_URL . 'assets/css/layout.css',
+            ['aia-design-tokens'],
+            AIA_PLUGIN_VERSION
+        );
+        
+        wp_enqueue_style(
+            'aia-components',
+            AIA_PLUGIN_URL . 'assets/css/components.css',
+            ['aia-design-tokens', 'aia-layout'],
+            AIA_PLUGIN_VERSION
+        );
+        
+        // Page-specific styles
+        wp_enqueue_style(
+            'aia-dashboard',
+            AIA_PLUGIN_URL . 'assets/css/dashboard.css',
+            ['aia-components'],
+            AIA_PLUGIN_VERSION
+        );
+        
+        wp_enqueue_style(
+            'aia-chat',
+            AIA_PLUGIN_URL . 'assets/css/chat.css',
+            ['aia-components'],
+            AIA_PLUGIN_VERSION
+        );
+        
+        wp_enqueue_style(
+            'aia-analysis',
+            AIA_PLUGIN_URL . 'assets/css/analysis.css',
+            ['aia-components'],
+            AIA_PLUGIN_VERSION
+        );
+        
+        wp_enqueue_style(
+            'aia-alerts',
+            AIA_PLUGIN_URL . 'assets/css/alerts.css',
+            ['aia-components'],
+            AIA_PLUGIN_VERSION
+        );
+        
+        wp_enqueue_style(
+            'aia-reports',
+            AIA_PLUGIN_URL . 'assets/css/reports.css',
+            ['aia-components'],
+            AIA_PLUGIN_VERSION
+        );
+        
+        wp_enqueue_style(
+            'aia-settings',
+            AIA_PLUGIN_URL . 'assets/css/settings.css',
+            ['aia-components'],
+            AIA_PLUGIN_VERSION
+        );
+        
+        // Enhancement styles - load with lower priority for performance
+        wp_enqueue_style(
+            'aia-animations',
+            AIA_PLUGIN_URL . 'assets/css/animations.css',
+            ['aia-components'],
+            AIA_PLUGIN_VERSION
+        );
+        wp_style_add_data('aia-animations', 'priority', 'low');
+        
+        wp_enqueue_style(
+            'aia-responsive',
+            AIA_PLUGIN_URL . 'assets/css/responsive.css',
+            ['aia-components'],
+            AIA_PLUGIN_VERSION
+        );
+        
+        // Main admin styles (without imports)
         wp_enqueue_style(
             'aia-admin-style',
             AIA_PLUGIN_URL . 'assets/css/admin.css',
-            [],
+            ['aia-chat', 'aia-dashboard', 'aia-analysis', 'aia-alerts', 'aia-reports', 'aia-settings', 'aia-animations', 'aia-responsive'],
             AIA_PLUGIN_VERSION
         );
         
