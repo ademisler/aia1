@@ -170,75 +170,143 @@
     fill: currentColor;
 }
 
-.aia-reports-chart-pattern {
-    position: absolute;
-    bottom: 20px;
-    right: 40px;
-    display: flex;
-    align-items: end;
-    gap: 6px;
+/* Responsive Design */
+@media (max-width: 768px) {
+    .aia-reports-header {
+        padding: 20px;
+    }
+    
+    .aia-reports-header-content {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+    }
+    
+    .aia-reports-title-section {
+        text-align: center;
+    }
+    
+    .aia-reports-main-title {
+        font-size: 1.5rem;
+    }
+    
+    .aia-reports-header-actions {
+        justify-content: center;
+    }
 }
 
-.aia-reports-chart-bar {
-    width: 8px;
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 4px 4px 0 0;
-    animation: chartBarGrow 3s ease-in-out infinite;
+/* ===== REPORTS LAYOUT ===== */
+.aia-reports-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
 }
 
-.aia-reports-chart-bar:nth-child(1) {
-    height: 40px;
-    animation-delay: 0s;
+@media (min-width: 768px) {
+    .aia-reports-container {
+        grid-template-columns: 2fr 1fr;
+        gap: 2.5rem;
+    }
 }
 
-.aia-reports-chart-bar:nth-child(2) {
-    height: 60px;
-    animation-delay: 0.2s;
+/* ===== WIDGET COMPONENTS ===== */
+.aia-widget {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    margin-bottom: 1.5rem;
+    overflow: hidden;
 }
 
-.aia-reports-chart-bar:nth-child(3) {
-    height: 30px;
-    animation-delay: 0.4s;
+.aia-widget-header {
+    padding: 1.5rem;
+    border-bottom: 1px solid #e5e7eb;
+    background: #f9fafb;
 }
 
-.aia-reports-chart-bar:nth-child(4) {
-    height: 80px;
-    animation-delay: 0.6s;
-}
-
-.aia-reports-chart-bar:nth-child(5) {
-    height: 50px;
-    animation-delay: 0.8s;
-}
-
-.aia-reports-header-content {
-    position: relative;
-    z-index: 10;
-    padding: 40px;
-}
-
-.aia-reports-title-section {
-    display: flex;
-    align-items: center;
-    gap: 24px;
-    margin-bottom: 32px;
-}
-
-.aia-reports-icon-container {
-    position: relative;
-}
-
-.aia-reports-icon-bg {
-    width: 80px;
-    height: 80px;
-    background: rgba(255, 255, 255, 0.15);
-    border-radius: 20px;
+.aia-widget-title {
     display: flex;
     align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    position: relative;
+    gap: 0.5rem;
+    margin: 0;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.aia-widget-content {
+    padding: 1.5rem;
+}
+
+/* ===== FORM COMPONENTS ===== */
+.aia-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.aia-form-label {
+    font-weight: 500;
+    color: #374151;
+    font-size: 0.875rem;
+}
+
+.aia-form-select {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    background: #ffffff;
+    font-size: 0.875rem;
+    color: #374151;
+}
+
+.aia-form-select:focus {
+    outline: none;
+    border-color: #f59e0b;
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+}
+
+.aia-form-group--checkbox {
+    padding: 1rem;
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+}
+
+.aia-checkbox-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    cursor: pointer;
+}
+
+.aia-checkbox {
+    margin: 0;
+    width: 18px;
+    height: 18px;
+    accent-color: #f59e0b;
+}
+
+.aia-checkbox-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.aia-checkbox-text strong {
+    font-weight: 600;
+    color: #374151;
+}
+
+.aia-checkbox-text small {
+    font-size: 0.75rem;
+    color: #6b7280;
 }
 
 .aia-reports-icon-shine {
