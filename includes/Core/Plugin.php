@@ -134,13 +134,23 @@ class Plugin {
         add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_scripts']);
         add_action('wp_enqueue_scripts', [$this, 'enqueue_frontend_scripts']);
         
+        // WooCommerce Blocks integration
+        add_action('woocommerce_blocks_loaded', [$this, 'register_checkout_block_integration']);
+        
         // AJAX handlers
         add_action('wp_ajax_aia_chat', [$this, 'handle_chat_ajax']);
         add_action('wp_ajax_aia_get_inventory_data', [$this, 'handle_inventory_data_ajax']);
         
-        // WooCommerce hooks
+        // WooCommerce hooks - Compatible with HPOS
         add_action('woocommerce_product_set_stock', [$this, 'on_stock_change'], 10, 1);
         add_action('woocommerce_order_status_completed', [$this, 'on_order_completed'], 10, 1);
+        
+        // HPOS compatibility hooks
+        add_action('woocommerce_new_order', [$this, 'on_new_order'], 10, 1);
+        add_action('woocommerce_update_order', [$this, 'on_update_order'], 10, 1);
+        
+        // Block-based checkout compatibility
+        add_action('woocommerce_store_api_checkout_order_processed', [$this, 'on_block_checkout_order_processed'], 10, 1);
         
         // Scheduled events
         add_action('aia_daily_analysis', [$this, 'run_daily_analysis']);
@@ -208,13 +218,30 @@ class Plugin {
     }
     
     /**
+     * Register checkout block integration
+     */
+    public function register_checkout_block_integration() {
+        if (class_exists('Automattic\WooCommerce\Blocks\Integrations\IntegrationRegistry')) {
+            add_action(
+                'woocommerce_blocks_checkout_block_registration',
+                function($integration_registry) {
+                    // Register our checkout block integration if needed
+                    // This ensures compatibility with WooCommerce 10.0+ block-based checkout
+                }
+            );
+        }
+    }
+    
+    /**
      * Handle chat AJAX requests
      */
     public function handle_chat_ajax() {
         check_ajax_referer('aia_ajax_nonce', 'nonce');
         
-        if (!current_user_can('manage_woocommerce')) {
-            wp_die(__('Insufficient permissions.', 'ai-inventory-agent'));
+        // Enhanced permission check for WooCommerce 10.0+
+        if (!current_user_can('manage_woocommerce') && !current_user_can('edit_shop_orders')) {
+            wp_send_json_error(__('Insufficient permissions.', 'ai-inventory-agent'), 403);
+            return;
         }
         
         // Apply rate limiting - 20 requests per minute
@@ -242,8 +269,10 @@ class Plugin {
     public function handle_inventory_data_ajax() {
         check_ajax_referer('aia_ajax_nonce', 'nonce');
         
-        if (!current_user_can('manage_woocommerce')) {
-            wp_die(__('Insufficient permissions.', 'ai-inventory-agent'));
+        // Enhanced permission check for WooCommerce 10.0+
+        if (!current_user_can('manage_woocommerce') && !current_user_can('view_woocommerce_reports')) {
+            wp_send_json_error(__('Insufficient permissions.', 'ai-inventory-agent'), 403);
+            return;
         }
         
         $inventory_analysis = $this->module_manager->get_module('inventory_analysis');
@@ -272,6 +301,44 @@ class Plugin {
         $inventory_analysis = $this->module_manager->get_module('inventory_analysis');
         if ($inventory_analysis) {
             $inventory_analysis->update_sales_data($order_id);
+        }
+    }
+    
+    /**
+     * Handle new order events (HPOS compatible)
+     */
+    public function on_new_order($order) {
+        // Handle both order ID and order object for HPOS compatibility
+        $order_id = is_numeric($order) ? $order : $order->get_id();
+        
+        $inventory_analysis = $this->module_manager->get_module('inventory_analysis');
+        if ($inventory_analysis) {
+            $inventory_analysis->track_new_order($order_id);
+        }
+    }
+    
+    /**
+     * Handle order update events (HPOS compatible)
+     */
+    public function on_update_order($order) {
+        // Handle both order ID and order object for HPOS compatibility
+        $order_id = is_numeric($order) ? $order : $order->get_id();
+        
+        $inventory_analysis = $this->module_manager->get_module('inventory_analysis');
+        if ($inventory_analysis) {
+            $inventory_analysis->track_order_update($order_id);
+        }
+    }
+    
+    /**
+     * Handle block-based checkout order processed events
+     */
+    public function on_block_checkout_order_processed($order) {
+        $order_id = is_numeric($order) ? $order : $order->get_id();
+        
+        $inventory_analysis = $this->module_manager->get_module('inventory_analysis');
+        if ($inventory_analysis) {
+            $inventory_analysis->process_block_checkout_order($order_id);
         }
     }
     

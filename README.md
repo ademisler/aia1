@@ -308,10 +308,11 @@ The plugin is fully translatable:
 ## 🛠️ Development
 
 ### Requirements
-- WordPress 5.0+
-- WooCommerce 5.0+
-- PHP 7.4+
-- MySQL 5.6+ or MariaDB 10.0+
+- WordPress 6.0+ (Tested up to 6.6)
+- WooCommerce 8.0+ (Tested up to 10.0)
+- PHP 8.0+ (Compatible with PHP 8.3)
+- MySQL 5.7+ or MariaDB 10.2+
+- Memory: 128MB+ recommended
 
 ### Development Setup
 1. Clone the repository

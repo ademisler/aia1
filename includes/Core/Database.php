@@ -44,6 +44,9 @@ class Database {
         if (is_admin() && (current_user_can('activate_plugins') || get_option('aia_db_version') !== AIA_PLUGIN_VERSION)) {
             $this->create_tables();
         }
+        
+        // Declare HPOS compatibility
+        $this->declare_hpos_compatibility();
     }
     
     /**
@@ -213,6 +216,28 @@ class Database {
         
         // Update database version
         update_option('aia_db_version', AIA_PLUGIN_VERSION);
+    }
+    
+    /**
+     * Declare HPOS compatibility
+     */
+    private function declare_hpos_compatibility() {
+        add_action('before_woocommerce_init', function() {
+            if (class_exists('\Automattic\WooCommerce\Utilities\FeaturesUtil')) {
+                \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility(
+                    'custom_order_tables', 
+                    AIA_PLUGIN_FILE, 
+                    true
+                );
+                
+                // Also declare compatibility with new Cart and Checkout blocks
+                \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility(
+                    'cart_checkout_blocks', 
+                    AIA_PLUGIN_FILE, 
+                    true
+                );
+            }
+        });
     }
     
     /**

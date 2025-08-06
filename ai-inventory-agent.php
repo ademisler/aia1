@@ -8,11 +8,11 @@
  * Author URI: https://example.com
  * Text Domain: ai-inventory-agent
  * Domain Path: /languages
- * Requires at least: 5.0
- * Tested up to: 6.4
- * Requires PHP: 7.4
- * WC requires at least: 5.0
- * WC tested up to: 8.0
+ * Requires at least: 6.0
+ * Tested up to: 6.6
+ * Requires PHP: 8.0
+ * WC requires at least: 8.0
+ * WC tested up to: 10.0
  * License: GPL v2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  */

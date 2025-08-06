@@ -14,15 +14,15 @@ class Activator {
      */
     public static function activate() {
         // Check WordPress version
-        if (version_compare(get_bloginfo('version'), '5.0', '<')) {
+        if (version_compare(get_bloginfo('version'), '6.0', '<')) {
             deactivate_plugins(AIA_PLUGIN_BASENAME);
-            wp_die(__('AI Inventory Agent requires WordPress version 5.0 or higher.', 'ai-inventory-agent'));
+            wp_die(__('AI Inventory Agent requires WordPress version 6.0 or higher.', 'ai-inventory-agent'));
         }
         
         // Check PHP version
-        if (version_compare(PHP_VERSION, '7.4', '<')) {
+        if (version_compare(PHP_VERSION, '8.0', '<')) {
             deactivate_plugins(AIA_PLUGIN_BASENAME);
-            wp_die(__('AI Inventory Agent requires PHP version 7.4 or higher.', 'ai-inventory-agent'));
+            wp_die(__('AI Inventory Agent requires PHP version 8.0 or higher.', 'ai-inventory-agent'));
         }
         
         // Check memory limit
