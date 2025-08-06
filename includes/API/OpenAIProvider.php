@@ -272,37 +272,4 @@ class OpenAIProvider implements AIProviderInterface {
             'error_rate' => 0
         ];
     }
-    
-    /**
-     * Test connection to provider
-     * 
-     * @return array Test result
-     */
-    public function test_connection() {
-        try {
-            // Simple test with minimal token usage
-            $test_conversation = [
-                ['role' => 'user', 'content' => 'Hello']
-            ];
-            
-            $response = $this->generate_response($test_conversation, [
-                'max_tokens' => 5,
-                'temperature' => 0
-            ]);
-            
-            return [
-                'success' => true,
-                'message' => 'Connection successful',
-                'response_time' => $response['response_time'] ?? 0,
-                'tokens_used' => $response['tokens_used'] ?? 0
-            ];
-            
-        } catch (\Exception $e) {
-            return [
-                'success' => false,
-                'message' => $e->getMessage(),
-                'error_code' => $e->getCode()
-            ];
-        }
-    }
 }
