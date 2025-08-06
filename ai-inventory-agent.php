@@ -88,8 +88,11 @@ register_deactivation_hook(__FILE__, function() {
 });
 
 // Uninstall hook
-register_uninstall_hook(__FILE__, function() {
+register_uninstall_hook(__FILE__, 'aia_uninstall_plugin');
+
+// Uninstall callback function
+function aia_uninstall_plugin() {
     if (class_exists('AIA\\Core\\Uninstaller')) {
         AIA\Core\Uninstaller::uninstall();
     }
-});
+}
