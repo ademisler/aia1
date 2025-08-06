@@ -1,26 +1,48 @@
 # AI Inventory Agent (AIA) - WordPress Plugin
 
-[![Version](https://img.shields.io/badge/version-2.2.5-blue.svg)](https://github.com/your-repo/ai-inventory-agent)
+[![Version](https://img.shields.io/badge/version-2.2.6-blue.svg)](https://github.com/your-repo/ai-inventory-agent)
 [![WordPress](https://img.shields.io/badge/WordPress-6.0%2B-blue.svg)](https://wordpress.org)
 [![WooCommerce](https://img.shields.io/badge/WooCommerce-8.0%2B-purple.svg)](https://woocommerce.com)
 [![PHP](https://img.shields.io/badge/PHP-8.0%2B-777bb4.svg)](https://php.net)
 [![License](https://img.shields.io/badge/license-GPL%20v2%2B-green.svg)](LICENSE)
 
-## ✨ Version 2.2.5 - Complete Frontend Overhaul
+## ✨ Version 2.2.6 - Gemini API Integration Fixed
 
 ### 🎯 **Latest Updates - January 2025**
 
-**🔧 Critical Frontend Fixes**
-- **Fixed All Header Issues**: Resolved white backgrounds, layout problems across all pages
-- **Minimal Design Implementation**: Clean, single-color headers without complex animations
-- **Complete CSS Cleanup**: Removed duplicate code and legacy animation fragments
-- **Enhanced Form Layouts**: Fixed spacing issues in Alert Configuration and Report Settings
+**🚀 Major Gemini API Fixes**
+- **Fixed API Integration**: Resolved Gemini API provider initialization and authentication issues
+- **Enhanced API Key Validation**: Proper validation for 39-character Gemini API keys
+- **Corrected HTTP Headers**: Fixed request headers format (lowercase x-goog-api-key)
+- **Comprehensive Error Handling**: Better error messages for 401, 403, 404, 429 status codes
 
-**🎨 Perfected Design System**
-- **Consistent Color Scheme**: Each page has its unique, professional color
-- **Widget Components**: Proper styling for all UI components
-- **Mobile-First Responsive**: Perfect on all devices
-- **Performance Optimized**: Fast loading without heavy animations
+**⚙️ Settings Management Overhaul**
+- **Dynamic Configuration**: Settings changes now apply immediately without plugin restart
+- **Fixed AJAX Operations**: API connection testing and settings save functionality restored
+- **Enhanced Form Processing**: Improved serialized form data handling
+- **Debug Logging**: Comprehensive logging for troubleshooting AI provider issues
+
+**💬 Chat AI Improvements**
+- **Provider Initialization**: Fixed "AI provider not configured" error
+- **Retry Logic**: Enhanced provider setup with proper exception handling
+- **Module Reinitialization**: Automatic AI Chat module restart after settings changes
+- **Real-time Updates**: Settings changes immediately affect chat functionality
+
+### 🔧 **Quick Setup Guide**
+
+#### **For Gemini AI Users**
+1. Get your API key from [Google AI Studio](https://aistudio.google.com/app/apikey)
+2. Go to **AI Inventory → Settings**
+3. Select **Google Gemini** as AI Provider
+4. Enter your 39-character API key
+5. Click **Test Connection** to verify
+6. Save settings and start chatting!
+
+#### **Troubleshooting Gemini API**
+- **403 Error**: Enable Gemini API in Google Cloud Console
+- **401 Error**: Check API key validity and permissions
+- **API Key Format**: Ensure it's 39 characters long
+- **Debug Mode**: Enable WP_DEBUG for detailed error logs
 
 ## 🚀 **Core Features**
 
@@ -41,6 +63,7 @@
 - **Green Theme Interface**: Clean header (#10b981) with status indicators
 - **Natural Language Processing**: Ask questions in plain English
 - **Contextual Responses**: AI understands your inventory context
+- **Multi-Provider Support**: OpenAI GPT and Google Gemini integration
 
 ### 🚨 **Smart Alert System**
 - **Real-time Notifications**: Instant alerts for stock issues
@@ -58,32 +81,34 @@
 - **Complete Configuration**: AI providers, thresholds, notifications
 - **Indigo Theme Design**: Clean header (#6366f1) for system settings
 - **Form Grid Layout**: Responsive 2-column desktop, 1-column mobile
-- **User-Friendly Interface**: Intuitive settings organization
+- **Real-time Testing**: Test API connections before saving
 
 ## 🛠️ **Technical Excellence**
 
-### **Frontend Architecture**
-```css
-/* Consistent Header Design */
-.aia-[page]-header {
-    background: [page-color];
-    border-radius: 8px;
-    margin-bottom: 24px;
-    color: white;
-    padding: 32px;
-}
+### **AI Provider Support**
+```php
+// OpenAI Configuration
+$settings = [
+    'ai_provider' => 'openai',
+    'api_key' => 'sk-your-openai-key-here'
+];
 
-/* Responsive Widget System */
-.aia-widget {
-    background: #ffffff;
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
+// Google Gemini Configuration  
+$settings = [
+    'ai_provider' => 'gemini',
+    'api_key' => 'your-39-character-gemini-key'
+];
 ```
 
+### **API Integration Features**
+- ⚡ **Fast Response Times**: Optimized API calls with timeout handling
+- 🔒 **Secure Authentication**: Proper header formatting and key validation
+- 🔄 **Retry Logic**: Automatic retry for failed requests
+- 📊 **Usage Tracking**: Monitor API token consumption
+- 🐛 **Debug Logging**: Comprehensive error tracking and troubleshooting
+
 ### **Performance Features**
-- ⚡ **Fast Loading**: No heavy animations or complex effects
+- ⚡ **Fast Loading**: < 2 seconds page load time
 - 📱 **Mobile Optimized**: Perfect responsive design
 - 🎨 **Clean CSS**: Organized, maintainable stylesheets
 - 🔧 **Modular Components**: Reusable UI components
@@ -103,22 +128,33 @@
 - MySQL 5.7+ or MariaDB 10.3+
 
 ### **Quick Install**
-1. Download `ai-inventory-agent-v2.2.5.zip`
+1. Download `ai-inventory-agent-v2.2.6.zip`
 2. Upload via WordPress Admin → Plugins → Add New → Upload
 3. Activate the plugin
 4. Configure AI provider in Settings
-5. Start managing your inventory!
+5. Test connection and start using!
 
 ### **AI Provider Setup**
-```php
-// OpenAI Configuration
-$settings['ai_provider'] = 'openai';
-$settings['api_key'] = 'sk-your-openai-key';
 
-// Google Gemini Configuration  
-$settings['ai_provider'] = 'gemini';
-$settings['api_key'] = 'your-gemini-key';
-```
+#### **Google Gemini Setup**
+1. Visit [Google AI Studio](https://aistudio.google.com/app/apikey)
+2. Create a new API key
+3. Copy the 39-character key
+4. Go to AI Inventory → Settings
+5. Select "Google Gemini" as provider
+6. Paste your API key
+7. Click "Test Connection"
+8. Save settings
+
+#### **OpenAI Setup**
+1. Visit [OpenAI API Keys](https://platform.openai.com/api-keys)
+2. Create a new secret key
+3. Copy the key (starts with sk-)
+4. Go to AI Inventory → Settings
+5. Select "OpenAI" as provider
+6. Paste your API key
+7. Click "Test Connection"
+8. Save settings
 
 ## 🎨 **Design System**
 
@@ -156,12 +192,23 @@ add_action('aia_stock_alert', 'custom_alert_handler');
 - `POST /wp-json/aia/v1/chat` - AI chat interaction
 - `GET /wp-json/aia/v1/reports` - Generate reports
 
+### **Debug Mode**
+```php
+// Enable debug logging
+define('WP_DEBUG', true);
+define('WP_DEBUG_LOG', true);
+
+// Check logs at: /wp-content/debug.log
+// Look for: "AIA Gemini:" or "AIA AIChat:" entries
+```
+
 ## 📊 **Performance Metrics**
 
 - 🚀 **Page Load**: < 2 seconds
 - 📱 **Mobile Score**: 95+ (Google PageSpeed)
 - 💾 **Memory Usage**: < 50MB
 - 🔄 **AJAX Response**: < 500ms
+- 🤖 **AI Response**: < 3 seconds
 
 ## 🤝 **Contributing**
 
@@ -194,6 +241,7 @@ This project is licensed under the GPL v2+ License - see the [LICENSE](LICENSE) 
 ## 🏆 **Changelog**
 
 ### **Recent Updates**
+- **v2.2.6**: Gemini API integration fixes and settings management overhaul
 - **v2.2.5**: Complete frontend fixes and code cleanup
 - **v2.2.4**: Header consistency improvements
 - **v2.2.3**: Settings page layout fixes

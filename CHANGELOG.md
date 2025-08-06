@@ -5,6 +5,33 @@ All notable changes to AI Inventory Agent will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.6] - 2025-01-08
+
+### Fixed
+- **Gemini API Integration**: Fixed API provider initialization and authentication issues
+- **API Key Validation**: Enhanced validation for Gemini API keys (39-character format)
+- **Settings Management**: Fixed settings loading and reloading mechanism
+- **AJAX Functionality**: Fixed API connection testing and settings save operations
+- **Chat AI Response**: Resolved "AI provider not configured" error with proper provider initialization
+
+### Improved
+- **HTTP Request Headers**: Corrected Gemini API header format (lowercase x-goog-api-key)
+- **Error Handling**: Enhanced error messages for common API issues (401, 403, 404, 429)
+- **Debug Logging**: Comprehensive logging for API requests, responses, and troubleshooting
+- **Settings Persistence**: Immediate application of settings changes to AI providers
+- **Form Data Processing**: Better handling of serialized form data in AJAX requests
+
+### Technical
+- **AI Provider Initialization**: Added retry logic and proper exception handling
+- **Settings Reload**: Dynamic configuration updates without plugin restart
+- **AJAX Integration**: Fixed JavaScript variable references and fallback mechanisms
+- **Module Management**: Enhanced AI Chat module reinitialization after settings changes
+
+### Developer
+- **Debug Information**: Added comprehensive debug logging for troubleshooting
+- **API Testing**: Improved connection test functionality with detailed error reporting
+- **Code Quality**: Better error handling and validation throughout the codebase
+
 ## [2.2.5] - 2025-01-08
 
 ### Fixed
