@@ -19,30 +19,22 @@ $summary = $inventory_analysis ? $inventory_analysis->get_inventory_summary() : 
     <!-- Skip Link for Accessibility -->
     <a href="#aia-main-content" class="aia-sr-only aia-skip-link"><?php _e('Skip to main content', 'ai-inventory-agent'); ?></a>
     
-    <!-- Modern Dashboard Header -->
+    <!-- Minimal Dashboard Header -->
     <div class="aia-dashboard-header">
-        <div class="aia-dashboard-header-bg">
-            <div class="aia-dashboard-gradient-overlay"></div>
-            <div class="aia-dashboard-pattern-overlay"></div>
-        </div>
-        
         <div class="aia-dashboard-header-content">
             <div class="aia-dashboard-title-section">
                 <div class="aia-dashboard-icon-wrapper">
-                    <div class="aia-dashboard-icon-bg">
-                        <svg class="aia-dashboard-icon" aria-hidden="true" viewBox="0 0 24 24">
-                            <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
-                        </svg>
-                    </div>
+                    <svg class="aia-dashboard-icon" viewBox="0 0 24 24">
+                        <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
+                    </svg>
                 </div>
                 
                 <div class="aia-dashboard-text-content">
                     <h1 class="aia-dashboard-main-title">
                         <?php esc_html_e('Inventory Dashboard', 'ai-inventory-agent'); ?>
-                        <span class="aia-dashboard-title-accent"><?php esc_html_e('AI-Powered', 'ai-inventory-agent'); ?></span>
                     </h1>
                     <p class="aia-dashboard-subtitle">
-                        <?php esc_html_e('Real-time insights and intelligent inventory management at your fingertips', 'ai-inventory-agent'); ?>
+                        <?php esc_html_e('Real-time insights and intelligent inventory management', 'ai-inventory-agent'); ?>
                     </p>
                 </div>
             </div>
@@ -63,20 +55,6 @@ $summary = $inventory_analysis ? $inventory_analysis->get_inventory_summary() : 
                     </svg>
                     <?php esc_html_e('AI Assistant', 'ai-inventory-agent'); ?>
                 </a>
-                
-                <div class="aia-dashboard-quick-stats">
-                    <div class="aia-dashboard-stat-item">
-                        <div class="aia-dashboard-stat-value"><?php echo esc_html($summary['total_products'] ?? '0'); ?></div>
-                        <div class="aia-dashboard-stat-label"><?php esc_html_e('Products', 'ai-inventory-agent'); ?></div>
-                    </div>
-                    <div class="aia-dashboard-stat-divider"></div>
-                    <div class="aia-dashboard-stat-item">
-                        <div class="aia-dashboard-stat-value aia-dashboard-stat-value--warning">
-                            <?php echo esc_html($summary['low_stock_count'] ?? '0'); ?>
-                        </div>
-                        <div class="aia-dashboard-stat-label"><?php esc_html_e('Low Stock', 'ai-inventory-agent'); ?></div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>

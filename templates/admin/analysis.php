@@ -35,85 +35,23 @@ $trend_data = [
     <!-- Skip Link for Accessibility -->
     <a href="#aia-main-content" class="aia-sr-only aia-skip-link"><?php _e('Skip to main content', 'ai-inventory-agent'); ?></a>
     
-    <!-- Modern Analysis Header -->
+    <!-- Minimal Analysis Header -->
     <div class="aia-analysis-header">
-        <div class="aia-analysis-header-bg">
-            <div class="aia-analysis-gradient-overlay"></div>
-            <div class="aia-analysis-particles">
-                <div class="aia-analysis-particle"></div>
-                <div class="aia-analysis-particle"></div>
-                <div class="aia-analysis-particle"></div>
-                <div class="aia-analysis-particle"></div>
-                <div class="aia-analysis-particle"></div>
-            </div>
-        </div>
-        
         <div class="aia-analysis-header-content">
             <div class="aia-analysis-title-section">
-                <div class="aia-analysis-icon-container">
-                    <div class="aia-analysis-icon-bg">
-                        <svg class="aia-analysis-icon" viewBox="0 0 24 24">
-                            <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
-                        </svg>
-                    </div>
-                    <div class="aia-analysis-icon-pulse"></div>
+                <div class="aia-analysis-icon-wrapper">
+                    <svg class="aia-analysis-icon" viewBox="0 0 24 24">
+                        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+                    </svg>
                 </div>
                 
                 <div class="aia-analysis-text-content">
                     <h1 class="aia-analysis-main-title">
                         <?php esc_html_e('Inventory Analysis', 'ai-inventory-agent'); ?>
-                        <span class="aia-analysis-title-badge">
-                            <svg class="aia-analysis-badge-icon" viewBox="0 0 24 24">
-                                <path d="M9 11H7v6h2v-6zm4 0h-2v6h2v-6zm4 0h-2v6h2v-6zM2 20h20v2H2z"/>
-                            </svg>
-                            <?php esc_html_e('Analytics', 'ai-inventory-agent'); ?>
-                        </span>
                     </h1>
                     <p class="aia-analysis-subtitle">
-                        <?php esc_html_e('Advanced analytics and deep insights to optimize your inventory performance', 'ai-inventory-agent'); ?>
+                        <?php esc_html_e('Advanced analytics and insights for your inventory', 'ai-inventory-agent'); ?>
                     </p>
-                </div>
-            </div>
-            
-            <div class="aia-analysis-header-metrics">
-                <div class="aia-analysis-metric-card">
-                    <div class="aia-analysis-metric-icon">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/>
-                        </svg>
-                    </div>
-                    <div class="aia-analysis-metric-content">
-                        <div class="aia-analysis-metric-value"><?php echo esc_html($summary['total_value'] ?? '$0'); ?></div>
-                        <div class="aia-analysis-metric-label"><?php esc_html_e('Total Value', 'ai-inventory-agent'); ?></div>
-                    </div>
-                </div>
-                
-                <div class="aia-analysis-metric-card">
-                    <div class="aia-analysis-metric-icon aia-analysis-metric-icon--warning">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
-                        </svg>
-                    </div>
-                    <div class="aia-analysis-metric-content">
-                        <div class="aia-analysis-metric-value aia-analysis-metric-value--warning">
-                            <?php echo esc_html($summary['low_stock_count'] ?? '0'); ?>
-                        </div>
-                        <div class="aia-analysis-metric-label"><?php esc_html_e('Alerts', 'ai-inventory-agent'); ?></div>
-                    </div>
-                </div>
-                
-                <div class="aia-analysis-metric-card">
-                    <div class="aia-analysis-metric-icon aia-analysis-metric-icon--success">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
-                        </svg>
-                    </div>
-                    <div class="aia-analysis-metric-content">
-                        <div class="aia-analysis-metric-value aia-analysis-metric-value--success">
-                            <?php echo esc_html(($summary['total_products'] ?? 0) - ($summary['low_stock_count'] ?? 0)); ?>
-                        </div>
-                        <div class="aia-analysis-metric-label"><?php esc_html_e('Healthy', 'ai-inventory-agent'); ?></div>
-                    </div>
                 </div>
             </div>
             

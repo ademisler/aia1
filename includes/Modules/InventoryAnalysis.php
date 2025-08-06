@@ -198,7 +198,7 @@ class InventoryAnalysis {
      * 
      * @return array Low stock products
      */
-    private function get_low_stock_products() {
+    public function get_low_stock_products() {
         global $wpdb;
         
         // Ensure plugin instance is available
@@ -234,7 +234,7 @@ class InventoryAnalysis {
      * 
      * @return array Out of stock products
      */
-    private function get_out_of_stock_products() {
+    public function get_out_of_stock_products() {
         global $wpdb;
         
         // Ensure plugin instance is available

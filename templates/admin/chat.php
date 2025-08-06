@@ -21,99 +21,30 @@ $summary = $inventory_analysis ? $inventory_analysis->get_inventory_summary() : 
 ?>
 
 <div class="wrap aia-chat-light">
-    <!-- Modern AI Chat Header -->
+    <!-- Minimal Chat Header -->
     <div class="aia-chat-header">
-        <div class="aia-chat-header-bg">
-            <div class="aia-chat-gradient-overlay"></div>
-            <div class="aia-chat-neural-network">
-                <div class="aia-chat-node"></div>
-                <div class="aia-chat-node"></div>
-                <div class="aia-chat-node"></div>
-                <div class="aia-chat-connection"></div>
-                <div class="aia-chat-connection"></div>
-                <div class="aia-chat-connection"></div>
-            </div>
-        </div>
-        
         <div class="aia-chat-header-content">
             <div class="aia-chat-title-section">
-                <div class="aia-chat-ai-avatar">
-                    <div class="aia-chat-avatar-bg">
-                        <svg class="aia-chat-avatar-icon" viewBox="0 0 24 24">
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                        </svg>
-                        <div class="aia-chat-avatar-pulse"></div>
-                    </div>
-                    <?php if ($is_configured): ?>
-                    <div class="aia-chat-status-indicator">
-                        <div class="aia-chat-status-dot"></div>
-                        <span class="aia-chat-status-text"><?php esc_html_e('Online', 'ai-inventory-agent'); ?></span>
-                    </div>
-                    <?php endif; ?>
+                <div class="aia-chat-icon-wrapper">
+                    <svg class="aia-chat-icon" viewBox="0 0 24 24">
+                        <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-3 12H7v-2h10v2zm0-3H7V9h10v2zm0-3H7V6h10v2z"/>
+                    </svg>
                 </div>
                 
                 <div class="aia-chat-text-content">
                     <h1 class="aia-chat-main-title">
                         <?php esc_html_e('AI Assistant', 'ai-inventory-agent'); ?>
-                        <div class="aia-chat-typing-indicator">
-                            <span class="aia-chat-dot"></span>
-                            <span class="aia-chat-dot"></span>
-                            <span class="aia-chat-dot"></span>
-                        </div>
                     </h1>
                     <p class="aia-chat-subtitle">
-                        <?php esc_html_e('Your intelligent inventory companion - Ask anything about your stock, sales, or get personalized recommendations', 'ai-inventory-agent'); ?>
+                        <?php esc_html_e('Get intelligent insights and recommendations for your inventory', 'ai-inventory-agent'); ?>
                     </p>
-                    
-                    <?php if ($is_configured): ?>
-                    <div class="aia-chat-capabilities">
-                        <div class="aia-chat-capability">
-                            <svg class="aia-chat-capability-icon" viewBox="0 0 24 24">
-                                <path d="M9 11H7v6h2v-6zm4 0h-2v6h2v-6zm4 0h-2v6h2v-6zM2 20h20v2H2z"/>
-                            </svg>
-                            <?php esc_html_e('Analytics', 'ai-inventory-agent'); ?>
-                        </div>
-                        <div class="aia-chat-capability">
-                            <svg class="aia-chat-capability-icon" viewBox="0 0 24 24">
-                                <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
-                            </svg>
-                            <?php esc_html_e('Alerts', 'ai-inventory-agent'); ?>
-                        </div>
-                        <div class="aia-chat-capability">
-                            <svg class="aia-chat-capability-icon" viewBox="0 0 24 24">
-                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                            </svg>
-                            <?php esc_html_e('Recommendations', 'ai-inventory-agent'); ?>
-                        </div>
-                    </div>
-                    <?php endif; ?>
                 </div>
             </div>
             
             <?php if ($is_configured): ?>
-            <div class="aia-chat-header-actions">
-                <div class="aia-chat-quick-actions">
-                    <button class="aia-chat-quick-btn" data-query="Show me low stock products">
-                        <svg class="aia-chat-quick-icon" viewBox="0 0 24 24">
-                            <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
-                        </svg>
-                        <?php esc_html_e('Low Stock', 'ai-inventory-agent'); ?>
-                    </button>
-                    
-                    <button class="aia-chat-quick-btn" data-query="What are my best selling products?">
-                        <svg class="aia-chat-quick-icon" viewBox="0 0 24 24">
-                            <path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/>
-                        </svg>
-                        <?php esc_html_e('Top Sellers', 'ai-inventory-agent'); ?>
-                    </button>
-                    
-                    <button class="aia-chat-quick-btn" data-query="Give me inventory recommendations">
-                        <svg class="aia-chat-quick-icon" viewBox="0 0 24 24">
-                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                        </svg>
-                        <?php esc_html_e('Recommendations', 'ai-inventory-agent'); ?>
-                    </button>
-                </div>
+            <div class="aia-chat-status-badge">
+                <div class="aia-chat-status-dot"></div>
+                <span class="aia-chat-status-text"><?php esc_html_e('AI Ready', 'ai-inventory-agent'); ?></span>
             </div>
             <?php endif; ?>
         </div>

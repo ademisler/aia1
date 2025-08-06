@@ -22,105 +22,43 @@
   box-sizing: border-box;
 }
 
-/* Modern Dashboard Header Styles */
+/* Minimal Dashboard Header Styles */
 .aia-dashboard-header {
-    position: relative;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #667eea 100%);
-    border-radius: 16px;
-    margin-bottom: 32px;
-    overflow: hidden;
-    box-shadow: 0 20px 40px rgba(102, 126, 234, 0.15);
-    min-height: 200px;
-}
-
-.aia-dashboard-header-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-}
-
-.aia-dashboard-gradient-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, 
-        rgba(102, 126, 234, 0.9) 0%, 
-        rgba(118, 75, 162, 0.8) 50%, 
-        rgba(102, 126, 234, 0.9) 100%
-    );
-    animation: gradientShift 6s ease-in-out infinite;
-}
-
-.aia-dashboard-pattern-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-image: 
-        radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.05) 0%, transparent 50%);
-    animation: patternFloat 8s ease-in-out infinite;
+    background: #3b82f6;
+    border-radius: 8px;
+    margin-bottom: 24px;
+    color: white;
+    padding: 32px;
 }
 
 .aia-dashboard-header-content {
-    position: relative;
-    z-index: 10;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 40px;
-    gap: 32px;
+    gap: 24px;
 }
 
 .aia-dashboard-title-section {
     display: flex;
     align-items: center;
-    gap: 24px;
+    gap: 16px;
     flex: 1;
 }
 
 .aia-dashboard-icon-wrapper {
-    position: relative;
-}
-
-.aia-dashboard-icon-bg {
-    width: 80px;
-    height: 80px;
-    background: rgba(255, 255, 255, 0.15);
-    border-radius: 20px;
+    width: 48px;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
     display: flex;
     align-items: center;
     justify-content: center;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    position: relative;
-    overflow: hidden;
-}
-
-.aia-dashboard-icon-bg::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-    transform: rotate(45deg);
-    animation: shimmer 3s ease-in-out infinite;
 }
 
 .aia-dashboard-icon {
-    width: 40px;
-    height: 40px;
+    width: 24px;
+    height: 24px;
     fill: white;
-    position: relative;
-    z-index: 2;
 }
 
 .aia-dashboard-text-content {
@@ -128,85 +66,61 @@
 }
 
 .aia-dashboard-main-title {
-    font-size: 2.5rem;
+    font-size: 1.875rem;
     font-weight: 700;
     color: white;
-    margin: 0 0 8px 0;
+    margin: 0 0 4px 0;
     line-height: 1.2;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    flex-wrap: wrap;
-}
-
-.aia-dashboard-title-accent {
-    font-size: 1.2rem;
-    font-weight: 500;
-    background: rgba(255, 255, 255, 0.2);
-    padding: 4px 12px;
-    border-radius: 20px;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .aia-dashboard-subtitle {
-    font-size: 1.1rem;
-    color: rgba(255, 255, 255, 0.9);
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.8);
     margin: 0;
-    line-height: 1.5;
-    max-width: 600px;
+    line-height: 1.4;
 }
 
 .aia-dashboard-header-actions {
     display: flex;
     align-items: center;
-    gap: 20px;
-    flex-wrap: wrap;
+    gap: 12px;
 }
 
 .aia-dashboard-btn {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    padding: 12px 20px;
-    border-radius: 12px;
-    font-weight: 600;
-    font-size: 0.9rem;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 0.875rem;
     text-decoration: none;
     border: none;
     cursor: pointer;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
-    position: relative;
-    overflow: hidden;
+    transition: background-color 0.2s;
 }
 
 .aia-dashboard-btn--primary {
     background: rgba(255, 255, 255, 0.2);
     color: white;
-    border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .aia-dashboard-btn--primary:hover {
     background: rgba(255, 255, 255, 0.3);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
 .aia-dashboard-btn--secondary {
     background: rgba(255, 255, 255, 0.1);
     color: white;
-    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .aia-dashboard-btn--secondary:hover {
     background: rgba(255, 255, 255, 0.2);
-    transform: translateY(-2px);
 }
 
 .aia-dashboard-btn-icon {
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
     fill: currentColor;
 }
 
@@ -279,11 +193,14 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    .aia-dashboard-header {
+        padding: 20px;
+    }
+    
     .aia-dashboard-header-content {
         flex-direction: column;
         align-items: stretch;
-        gap: 24px;
-        padding: 24px;
+        gap: 16px;
     }
     
     .aia-dashboard-title-section {
@@ -291,17 +208,10 @@
     }
     
     .aia-dashboard-main-title {
-        font-size: 2rem;
-        justify-content: center;
+        font-size: 1.5rem;
     }
     
     .aia-dashboard-header-actions {
-        justify-content: center;
-        flex-direction: column;
-    }
-    
-    .aia-dashboard-quick-stats {
-        order: -1;
         justify-content: center;
     }
 }
