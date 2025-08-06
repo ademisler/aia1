@@ -637,6 +637,24 @@ class AdminInterface {
             true
         );
         
+        // Enqueue Chart.js from CDN
+        wp_enqueue_script(
+            'chartjs',
+            'https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js',
+            [],
+            '4.4.0',
+            true
+        );
+        
+        // Enqueue charts script
+        wp_enqueue_script(
+            'aia-charts',
+            AIA_PLUGIN_URL . 'assets/js/charts.js',
+            ['jquery', 'chartjs'],
+            AIA_VERSION,
+            true
+        );
+        
         // Localize script
         wp_localize_script('aia-admin-script', 'aia_admin', [
             'ajax_url' => admin_url('admin-ajax.php'),

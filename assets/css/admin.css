@@ -8,6 +8,9 @@
 @import url('components.css');
 @import url('dashboard.css');
 @import url('chat.css');
+@import url('animations.css');
+@import url('data-visualization.css');
+@import url('forms-advanced.css');
 
 /* General Plugin Styles */
 .aia-admin-page {
