@@ -516,7 +516,7 @@
     /**
      * Initialize all components
      */
-    $(document).ready(function() {
+    jQuery(document).ready(function($) {
         AIA.UI.Dropdown.init();
         AIA.UI.EnhancedDropdown.init();
         AIA.UI.Tooltip.init();

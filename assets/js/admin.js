@@ -9,7 +9,7 @@
     window.AIA = window.AIA || {};
 
     // Initialize when document is ready
-    $(document).ready(function() {
+    jQuery(document).ready(function($) {
         AIA.init();
     });
 
