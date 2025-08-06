@@ -5,6 +5,22 @@ All notable changes to AI Inventory Agent will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.3.1] - 2025-01-08
+
+### 🔧 Critical Syntax Fixes
+
+#### Fixed
+- **PHP Syntax Errors**: Fixed fatal "Cannot redeclare" errors preventing plugin activation
+  - Removed duplicate `test_connection()` method in `OpenAIProvider.php` (line 281)
+  - Removed duplicate `get_table_name()` method in `Database.php` (line 753)
+- **Plugin Activation**: Plugin now activates successfully without PHP fatal errors
+- **Code Quality**: All PHP files now pass syntax validation
+
+#### Technical
+- **Syntax Validation**: Comprehensive PHP syntax check across all 34 plugin files
+- **Method Duplication**: Resolved method redeclaration conflicts in core classes
+- **Error Prevention**: Enhanced code quality to prevent similar issues in future releases
+
 ## [2.3.0] - 2025-01-08
 
 ### 🚀 Major Frontend Optimization & Template Fixes

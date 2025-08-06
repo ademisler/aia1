@@ -1,9 +1,9 @@
 # AI Inventory Agent - Releases
 
-## Latest Version: 2.3.0 🚀
+## Latest Version: 2.3.1 🔧
 
 ### Download
-- [ai-inventory-agent-v2.3.0.zip](ai-inventory-agent-v2.3.0.zip) - **MAJOR FRONTEND OPTIMIZATION**: 86% CSS reduction, complete template fixes, modern responsive design
+- [ai-inventory-agent-v2.3.1.zip](ai-inventory-agent-v2.3.1.zip) - **CRITICAL HOTFIX**: Fixed PHP syntax errors preventing plugin activation
 
 ### Installation
 1. Download the latest ZIP file
@@ -15,6 +15,12 @@
 Older versions are available in the [archive](archive/) folder.
 
 ### Version History
+
+#### v2.3.1 (2025-01-08) - 🔧 CRITICAL SYNTAX FIXES
+- **🐛 PHP FATAL ERROR FIXES**: Resolved "Cannot redeclare" errors in OpenAIProvider.php and Database.php
+- **✅ PLUGIN ACTIVATION**: Plugin now activates successfully without PHP syntax errors
+- **🔍 QUALITY ASSURANCE**: Comprehensive syntax validation across all 34 PHP files
+- **📦 HOTFIX RELEASE**: Critical fix for plugin activation failures
 
 #### v2.3.0 (2025-01-08) - 🚀 MAJOR FRONTEND OPTIMIZATION & TEMPLATE FIXES
 - **📦 ASSET OPTIMIZATION**: 86% CSS size reduction (330KB → 46KB), 95% HTTP request reduction (21 → 1)
