@@ -4,6 +4,8 @@ namespace AIA\Core;
 
 use AIA\Core\ModuleManager;
 use AIA\Core\Database;
+use AIA\Core\MemoryManager;
+use AIA\Core\SettingsManager;
 use AIA\Admin\AdminInterface;
 use AIA\Utils\RateLimiter;
 
@@ -43,9 +45,10 @@ class Plugin {
     private $admin_interface;
     
     /**
-     * Plugin settings
+     * Plugin settings (deprecated - use SettingsManager)
      * 
      * @var array
+     * @deprecated Use SettingsManager::get_settings() instead
      */
     private $settings;
     
@@ -56,9 +59,9 @@ class Plugin {
      */
     public static function get_instance() {
         if (self::$instance === null) {
-            // Add memory protection
-            if (memory_get_usage() > (1024 * 1024 * 900)) { // 900MB threshold
-                error_log('AIA: Memory usage too high, preventing initialization');
+            // Memory protection using centralized manager
+            if (!MemoryManager::should_continue_loading()) {
+                MemoryManager::log_usage('singleton_initialization_blocked');
                 return null;
             }
             
@@ -70,6 +73,7 @@ class Plugin {
             }
             
             $initializing = true;
+            MemoryManager::log_usage('plugin_instance_creation');
             self::$instance = new self();
             $initializing = false;
         }
@@ -87,9 +91,9 @@ class Plugin {
      * Initialize plugin components
      */
     private function init() {
-        // Prevent initialization if memory usage is too high
-        if (memory_get_usage() > (1024 * 1024 * 700)) { // 700MB threshold
-            error_log('AIA: Memory usage too high during plugin initialization');
+        // Memory check using centralized manager
+        if (!MemoryManager::can_initialize_modules()) {
+            MemoryManager::log_usage('plugin_init_blocked');
             return;
         }
         
@@ -115,11 +119,13 @@ class Plugin {
             // Register WordPress hooks
             $this->register_hooks();
             
-            // Initialize modules with memory check
-            if (memory_get_usage() < (1024 * 1024 * 600)) { // 600MB threshold for modules
+            // Initialize modules with memory check using centralized manager
+            if (MemoryManager::can_initialize_modules()) {
+                MemoryManager::log_usage('before_module_initialization');
                 $this->init_modules();
+                MemoryManager::log_usage('after_module_initialization');
             } else {
-                error_log('AIA: Skipping module initialization due to high memory usage');
+                MemoryManager::log_usage('module_initialization_skipped');
             }
             
         } catch (\Exception $e) {
@@ -152,23 +158,13 @@ class Plugin {
      * Load plugin settings
      */
     private function load_settings() {
-        $this->settings = get_option('aia_settings', [
-            'ai_provider' => 'openai',
-            'api_key' => '',
-            'chat_enabled' => true,
-            'forecasting_enabled' => true,
-            'notifications_enabled' => true,
-            'reports_enabled' => true,
-            'low_stock_threshold' => 5,
-            'critical_stock_threshold' => 1,
-            'notification_email' => get_option('admin_email'),
-            'report_frequency' => 'weekly',
-            'system_prompt' => 'You are an AI inventory management assistant. Help users manage their WooCommerce store inventory efficiently.',
-        ]);
+        // Use centralized settings manager
+        $this->settings = SettingsManager::get_settings();
         
         // Debug logging
         if (defined('WP_DEBUG') && WP_DEBUG) {
-            error_log('AIA Plugin: Settings loaded - AI Provider: ' . ($this->settings['ai_provider'] ?? 'not set') . ', API Key Length: ' . strlen($this->settings['api_key'] ?? ''));
+            MemoryManager::log_usage('settings_loaded');
+            error_log('AIA Plugin: Settings loaded via SettingsManager - AI Provider: ' . ($this->settings['ai_provider'] ?? 'not set') . ', API Key Length: ' . strlen($this->settings['api_key'] ?? ''));
         }
     }
     
@@ -176,10 +172,12 @@ class Plugin {
      * Reload plugin settings (force refresh from database)
      */
     public function reload_settings() {
-        $this->load_settings();
+        // Force refresh from SettingsManager
+        $this->settings = SettingsManager::get_settings(true);
         
         if (defined('WP_DEBUG') && WP_DEBUG) {
-            error_log('AIA Plugin: Settings reloaded - AI Provider: ' . ($this->settings['ai_provider'] ?? 'not set') . ', API Key Length: ' . strlen($this->settings['api_key'] ?? ''));
+            MemoryManager::log_usage('settings_reloaded');
+            error_log('AIA Plugin: Settings reloaded via SettingsManager - AI Provider: ' . ($this->settings['ai_provider'] ?? 'not set') . ', API Key Length: ' . strlen($this->settings['api_key'] ?? ''));
         }
     }
     
@@ -495,10 +493,12 @@ class Plugin {
      */
     public function get_setting($key = null) {
         if ($key === null) {
-            return $this->settings;
+            // Return all settings via SettingsManager
+            return SettingsManager::get_settings();
         }
         
-        return $this->settings[$key] ?? null;
+        // Use SettingsManager for consistent access
+        return SettingsManager::get_setting($key);
     }
     
     /**

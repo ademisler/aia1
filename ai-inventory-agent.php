@@ -89,9 +89,13 @@ add_action('plugins_loaded', function() {
         return;
     }
     
-    // Memory check before initialization
-    if (memory_get_usage() > (1024 * 1024 * 600)) { // 600MB threshold
-        error_log('AIA: Memory usage too high before plugin initialization: ' . memory_get_usage());
+    // Memory check before initialization using centralized manager
+    if (!class_exists('AIA\\Core\\MemoryManager')) {
+        require_once AIA_PLUGIN_DIR . 'includes/Core/MemoryManager.php';
+    }
+    
+    if (!\AIA\Core\MemoryManager::should_continue_loading()) {
+        \AIA\Core\MemoryManager::log_usage('plugin_initialization_blocked');
         return;
     }
     

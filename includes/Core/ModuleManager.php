@@ -2,6 +2,8 @@
 
 namespace AIA\Core;
 
+use AIA\Core\MemoryManager;
+
 /**
  * Module Manager Class
  * 
@@ -66,9 +68,9 @@ class ModuleManager {
      * Initialize all modules
      */
     public function init_modules() {
-        // Prevent initialization if memory usage is too high
-        if (memory_get_usage() > (1024 * 1024 * 800)) { // 800MB threshold
-            error_log('AIA: Memory usage too high, skipping module initialization');
+        // Memory protection using centralized manager
+        if (!MemoryManager::can_initialize_modules()) {
+            MemoryManager::log_usage('module_manager_init_blocked');
             return;
         }
         
@@ -80,6 +82,7 @@ class ModuleManager {
         }
         
         $initializing = true;
+        MemoryManager::log_usage('module_manager_init_start');
         
         try {
             // Sort modules by dependencies
