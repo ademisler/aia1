@@ -494,12 +494,49 @@ class AdminInterface {
             wp_send_json_error(__('Insufficient permissions.', 'ai-inventory-agent'));
         }
         
-        $settings = $_POST['settings'] ?? [];
-        $sanitized_settings = $this->sanitize_settings($settings);
+        // Parse the serialized form data
+        $form_data = [];
+        parse_str($_POST['aia_settings'] ?? '', $form_data);
+        
+        // If aia_settings is not in the parsed data, try to get it directly from POST
+        $settings_data = $form_data['aia_settings'] ?? $_POST['aia_settings'] ?? [];
+        
+        if (empty($settings_data)) {
+            // Fallback: try to parse all POST data that starts with aia_settings
+            foreach ($_POST as $key => $value) {
+                if (strpos($key, 'aia_settings[') === 0) {
+                    $setting_key = str_replace(['aia_settings[', ']'], '', $key);
+                    $settings_data[$setting_key] = $value;
+                }
+            }
+        }
+        
+        if (empty($settings_data)) {
+            wp_send_json_error(__('No settings data received.', 'ai-inventory-agent'));
+        }
+        
+        // Debug logging
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log('AIA Settings Save: Received data: ' . print_r($settings_data, true));
+        }
+        
+        $sanitized_settings = $this->sanitize_settings($settings_data);
         
         // Update settings
         foreach ($sanitized_settings as $key => $value) {
             $this->plugin->update_setting($key, $value);
+        }
+        
+        // Force reload settings to ensure AI provider gets updated
+        $this->plugin->reload_settings();
+        
+        // Try to reinitialize AI Chat module if it exists
+        $module_manager = $this->plugin->get_module_manager();
+        if ($module_manager && $module_manager->is_module_loaded('ai_chat')) {
+            $ai_chat = $module_manager->get_module('ai_chat');
+            if ($ai_chat && method_exists($ai_chat, 'init')) {
+                $ai_chat->init();
+            }
         }
         
         wp_send_json_success(__('Settings saved successfully!', 'ai-inventory-agent'));

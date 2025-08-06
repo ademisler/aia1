@@ -158,6 +158,22 @@ class Plugin {
             'report_frequency' => 'weekly',
             'system_prompt' => 'You are an AI inventory management assistant. Help users manage their WooCommerce store inventory efficiently.',
         ]);
+        
+        // Debug logging
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log('AIA Plugin: Settings loaded - AI Provider: ' . ($this->settings['ai_provider'] ?? 'not set') . ', API Key Length: ' . strlen($this->settings['api_key'] ?? ''));
+        }
+    }
+    
+    /**
+     * Reload plugin settings (force refresh from database)
+     */
+    public function reload_settings() {
+        $this->load_settings();
+        
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log('AIA Plugin: Settings reloaded - AI Provider: ' . ($this->settings['ai_provider'] ?? 'not set') . ', API Key Length: ' . strlen($this->settings['api_key'] ?? ''));
+        }
     }
     
     /**

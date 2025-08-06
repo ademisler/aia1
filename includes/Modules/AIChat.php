@@ -84,8 +84,24 @@ class AIChat {
      * Initialize AI provider based on settings
      */
     private function init_ai_provider() {
+        // Ensure plugin instance is available
+        if (!$this->plugin) {
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                error_log('AIA AIChat: Plugin instance not available for AI provider initialization');
+            }
+            return;
+        }
+        
+        // Force reload settings to ensure we have the latest values
+        $this->plugin->reload_settings();
+        
         $provider = $this->plugin->get_setting('ai_provider');
         $api_key = $this->plugin->get_setting('api_key');
+        
+        // Debug logging
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log("AIA AIChat: Initializing AI provider - Provider: {$provider}, API Key Length: " . strlen($api_key ?: ''));
+        }
         
         if (empty($api_key)) {
             if (defined('WP_DEBUG') && WP_DEBUG) {
@@ -95,16 +111,34 @@ class AIChat {
             return;
         }
         
-        switch ($provider) {
-            case 'openai':
-                $this->ai_provider = new OpenAIProvider($api_key);
-                break;
-            case 'gemini':
-                $this->ai_provider = new GeminiProvider($api_key);
-                break;
-            default:
-                error_log("AIA: Unknown AI provider: {$provider}");
-                break;
+        if (empty($provider)) {
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                error_log('AIA AIChat: No AI provider selected, defaulting to OpenAI');
+            }
+            $provider = 'openai';
+        }
+        
+        try {
+            switch ($provider) {
+                case 'openai':
+                    $this->ai_provider = new \AIA\API\OpenAIProvider($api_key);
+                    if (defined('WP_DEBUG') && WP_DEBUG) {
+                        error_log('AIA AIChat: OpenAI provider initialized successfully');
+                    }
+                    break;
+                case 'gemini':
+                    $this->ai_provider = new \AIA\API\GeminiProvider($api_key);
+                    if (defined('WP_DEBUG') && WP_DEBUG) {
+                        error_log('AIA AIChat: Gemini provider initialized successfully');
+                    }
+                    break;
+                default:
+                    error_log("AIA AIChat: Unknown AI provider: {$provider}");
+                    break;
+            }
+        } catch (\Exception $e) {
+            error_log("AIA AIChat: Error initializing AI provider ({$provider}): " . $e->getMessage());
+            $this->ai_provider = null;
         }
     }
     

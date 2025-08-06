@@ -480,23 +480,39 @@ jQuery(document).ready(function($) {
         $button.text('Testing...').prop('disabled', true);
         
         $.ajax({
-            url: aia_admin.ajax_url,
+            url: ajaxurl, // Use WordPress global ajaxurl
             type: 'POST',
             data: {
                 action: 'aia_test_api_connection',
-                nonce: aia_admin.nonce,
+                nonce: '<?php echo wp_create_nonce('aia_ajax_nonce'); ?>',
                 provider: $('input[name="aia_settings[ai_provider]"]:checked').val(),
                 api_key: $('#api_key').val()
             },
             success: function(response) {
+                console.log('API Test Response:', response); // Debug log
                 if (response.success) {
-                    AIA.UI.Toast.show('API connection successful!', 'success');
+                    if (typeof AIA !== 'undefined' && AIA.UI && AIA.UI.Toast) {
+                        AIA.UI.Toast.show('API connection successful!', 'success');
+                    } else {
+                        alert('API connection successful!');
+                    }
                 } else {
-                    AIA.UI.Toast.show('API connection failed: ' + response.data, 'error');
+                    const errorMsg = response.data || 'Unknown error occurred';
+                    if (typeof AIA !== 'undefined' && AIA.UI && AIA.UI.Toast) {
+                        AIA.UI.Toast.show('API connection failed: ' + errorMsg, 'error');
+                    } else {
+                        alert('API connection failed: ' + errorMsg);
+                    }
                 }
             },
-            error: function() {
-                AIA.UI.Toast.show('An error occurred while testing the connection.', 'error');
+            error: function(xhr, status, error) {
+                console.error('API Test AJAX Error:', error, xhr.responseText);
+                const errorMsg = 'An error occurred while testing the connection.';
+                if (typeof AIA !== 'undefined' && AIA.UI && AIA.UI.Toast) {
+                    AIA.UI.Toast.show(errorMsg, 'error');
+                } else {
+                    alert(errorMsg);
+                }
             },
             complete: function() {
                 $button.text(originalText).prop('disabled', false);
@@ -509,31 +525,50 @@ jQuery(document).ready(function($) {
         e.preventDefault();
         
         const $form = $(this);
-        const $submitButton = $form.find('button[type="submit"]');
-        const originalText = $submitButton.text();
+        const $submitBtn = $form.find('button[type="submit"]');
+        const originalText = $submitBtn.text();
         
-        $submitButton.html('<span class="aia-spinner aia-spinner-sm"></span> Saving...').prop('disabled', true);
+        $submitBtn.text('Saving...').prop('disabled', true);
+        
+        // Get form data
+        const formData = new FormData($form[0]);
+        formData.append('action', 'aia_save_settings');
+        formData.append('nonce', '<?php echo wp_create_nonce('aia_ajax_nonce'); ?>');
         
         $.ajax({
-            url: aia_admin.ajax_url,
+            url: ajaxurl,
             type: 'POST',
-            data: {
-                action: 'aia_save_settings',
-                nonce: aia_admin.nonce,
-                settings: $form.serialize()
-            },
+            data: formData,
+            processData: false,
+            contentType: false,
             success: function(response) {
+                console.log('Settings Save Response:', response); // Debug log
                 if (response.success) {
-                    AIA.UI.Toast.show('Settings saved successfully!', 'success');
+                    if (typeof AIA !== 'undefined' && AIA.UI && AIA.UI.Toast) {
+                        AIA.UI.Toast.show('Settings saved successfully!', 'success');
+                    } else {
+                        alert('Settings saved successfully!');
+                    }
                 } else {
-                    AIA.UI.Toast.show('Failed to save settings: ' + response.data, 'error');
+                    const errorMsg = response.data || 'Failed to save settings';
+                    if (typeof AIA !== 'undefined' && AIA.UI && AIA.UI.Toast) {
+                        AIA.UI.Toast.show('Error: ' + errorMsg, 'error');
+                    } else {
+                        alert('Error: ' + errorMsg);
+                    }
                 }
             },
-            error: function() {
-                AIA.UI.Toast.show('An error occurred while saving settings.', 'error');
+            error: function(xhr, status, error) {
+                console.error('Settings Save AJAX Error:', error, xhr.responseText);
+                const errorMsg = 'An error occurred while saving settings.';
+                if (typeof AIA !== 'undefined' && AIA.UI && AIA.UI.Toast) {
+                    AIA.UI.Toast.show(errorMsg, 'error');
+                } else {
+                    alert(errorMsg);
+                }
             },
             complete: function() {
-                $submitButton.html(originalText).prop('disabled', false);
+                $submitBtn.text(originalText).prop('disabled', false);
             }
         });
     });

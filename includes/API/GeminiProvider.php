@@ -135,11 +135,17 @@ class GeminiProvider {
      * @throws Exception
      */
     private function make_request($endpoint, $body) {
+        // Debug logging
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log('AIA Gemini: Making request to ' . $endpoint);
+            error_log('AIA Gemini: Request body: ' . json_encode($body, JSON_PRETTY_PRINT));
+        }
+        
         $args = [
             'headers' => [
                 'Content-Type' => 'application/json',
-                'X-goog-api-key' => $this->api_key,
-                'User-Agent' => 'AI-Inventory-Agent/1.0.6'
+                'x-goog-api-key' => $this->api_key,  // Ensure lowercase header name
+                'User-Agent' => 'AI-Inventory-Agent/2.2.5'
             ],
             'body' => json_encode($body),
             'method' => 'POST',
@@ -150,11 +156,21 @@ class GeminiProvider {
         $response = wp_remote_request($endpoint, $args);
         
         if (is_wp_error($response)) {
-            throw new \Exception('HTTP Error: ' . $response->get_error_message());
+            $error_message = 'HTTP Error: ' . $response->get_error_message();
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                error_log('AIA Gemini: ' . $error_message);
+            }
+            throw new \Exception($error_message);
         }
         
         $status_code = wp_remote_retrieve_response_code($response);
         $response_body = wp_remote_retrieve_body($response);
+        
+        // Debug logging
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log('AIA Gemini: Response status: ' . $status_code);
+            error_log('AIA Gemini: Response body: ' . $response_body);
+        }
         
         if ($status_code !== 200) {
             $error_data = json_decode($response_body, true);
@@ -174,9 +190,15 @@ class GeminiProvider {
             } elseif ($status_code === 401) {
                 $error_message = "Authentication failed: Invalid API key. Please check your Gemini API key.";
             } elseif ($status_code === 403) {
-                $error_message = "Access forbidden: {$error_message}. Please check your API key permissions.";
+                $error_message = "Access forbidden: {$error_message}. Please check your API key permissions and ensure the Gemini API is enabled.";
             } elseif ($status_code === 429) {
                 $error_message = "Rate limit exceeded: {$error_message}. Please try again later.";
+            } elseif ($status_code === 404) {
+                $error_message = "API endpoint not found. Please check if you're using the correct Gemini API model.";
+            }
+            
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                error_log("AIA Gemini: API Error ({$status_code}): {$error_message}");
             }
             
             throw new \Exception("Gemini API Error ({$status_code}): {$error_message}");
@@ -185,7 +207,11 @@ class GeminiProvider {
         $decoded_response = json_decode($response_body, true);
         
         if (json_last_error() !== JSON_ERROR_NONE) {
-            throw new \Exception('Invalid JSON response from Gemini API');
+            $error_message = 'Invalid JSON response from Gemini API: ' . json_last_error_msg();
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                error_log('AIA Gemini: ' . $error_message);
+            }
+            throw new \Exception($error_message);
         }
         
         return $decoded_response;
@@ -217,8 +243,14 @@ class GeminiProvider {
                 throw new \Exception('API key is empty');
             }
             
-            if (strlen($this->api_key) < 20) {
-                throw new \Exception('API key seems too short. Please check your Gemini API key.');
+            // Gemini API keys are typically 39 characters long and start with "AI"
+            if (strlen($this->api_key) < 30) {
+                throw new \Exception('API key seems too short. Gemini API keys are typically 39 characters long.');
+            }
+            
+            // More flexible validation - just check if it looks like a valid API key
+            if (!preg_match('/^[A-Za-z0-9_-]+$/', $this->api_key)) {
+                throw new \Exception('API key contains invalid characters. Please check your Gemini API key format.');
             }
             
             $test_conversation = [
@@ -238,15 +270,17 @@ class GeminiProvider {
                 'message' => 'Connection successful! Model: ' . $response['model'],
                 'model' => $response['model'],
                 'response' => $response['content'],
-                'api_key_length' => strlen($this->api_key)
+                'api_key_length' => strlen($this->api_key),
+                'tokens_used' => $response['tokens'] ?? 0
             ];
             
         } catch (\Exception $e) {
             // Add debugging information
             $debug_info = [
                 'api_key_length' => strlen($this->api_key),
-                'api_key_starts_with' => substr($this->api_key, 0, 10) . '...',
-                'endpoint' => $this->api_endpoint . $this->default_model . ':generateContent'
+                'api_key_starts_with' => substr($this->api_key, 0, 6) . '...',
+                'endpoint' => $this->api_endpoint . $this->default_model . ':generateContent',
+                'error_message' => $e->getMessage()
             ];
             
             return [
