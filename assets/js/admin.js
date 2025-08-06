@@ -157,11 +157,11 @@
                     if (response.success) {
                         // Remove loading message and add AI response
                         $('#' + loadingId).remove();
-                        self.addChatMessage('assistant', response.data.response);
+                        AIA_Admin.addChatMessage('assistant', response.data.response);
                         
                         // Update session ID if provided
                         if (response.data.session_id) {
-                            self.chat.sessionId = response.data.session_id;
+                            AIA_Admin.chat.sessionId = response.data.session_id;
                         }
                     } else {
                         $('#' + loadingId).remove();
@@ -170,18 +170,18 @@
                             errorMsg = response.data.message || JSON.stringify(response.data);
                         }
                         console.error('Chat Error:', response.data);
-                        self.addChatMessage('assistant', 'Error: ' + errorMsg);
+                        AIA_Admin.addChatMessage('assistant', 'Error: ' + errorMsg);
                     }
                 },
                 error: function(xhr, status, error) {
                     $('#' + loadingId).remove();
                     console.error('Chat AJAX Error:', status, error, xhr.responseText);
-                    self.addChatMessage('assistant', aia_ajax.strings.error + ' (' + status + ')');
+                    AIA_Admin.addChatMessage('assistant', 'Connection error. Please try again.');
                 },
                 complete: function() {
-                    self.chat.isLoading = false;
-                    self.chat.sendBtn.prop('disabled', false);
-                    self.chat.input.focus();
+                    AIA_Admin.chat.isLoading = false;
+                    AIA_Admin.chat.sendBtn.prop('disabled', false);
+                    AIA_Admin.chat.input.focus();
                 }
             });
         },

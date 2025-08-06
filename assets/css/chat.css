@@ -559,11 +559,13 @@
   display: flex;
   align-items: flex-end;
   gap: 12px;
-  padding: 12px;
+  padding: 16px;
   background: #f9fafb;
   border: 2px solid #e5e7eb;
   border-radius: 16px;
   transition: all 0.2s ease;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .aia-input-container:focus-within {
@@ -583,6 +585,9 @@
   font-family: inherit;
   min-height: 24px;
   max-height: 120px;
+  width: 100%;
+  padding: 8px 0;
+  box-sizing: border-box;
 }
 
 .aia-chat-input::placeholder {

@@ -113,102 +113,14 @@ $summary = $inventory_analysis ? $inventory_analysis->get_inventory_summary() : 
                             </div>
                             <div class="aia-message-meta">
                                 <span class="aia-message-time"><?php echo current_time('H:i'); ?></span>
-                                <div class="aia-confidence-indicator">
-                                    <span class="aia-confidence-label"><?php esc_html_e('Confidence', 'ai-inventory-agent'); ?></span>
-                                    <div class="aia-confidence-bar">
-                                        <div class="aia-confidence-fill" style="width: 95%"></div>
-                                    </div>
-                                    <span class="aia-confidence-value">95%</span>
-                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Capabilities Card -->
-                    <div class="aia-capabilities-card">
-                        <div class="aia-capabilities-header">
-                            <div class="aia-capabilities-icon">
-                                <svg class="aia-icon aia-icon--lg" aria-hidden="true">
-                                    <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#aia-zap"></use>
-                                </svg>
-                            </div>
-                            <h3><?php esc_html_e('What I Can Help You With', 'ai-inventory-agent'); ?></h3>
-                        </div>
-                        <div class="aia-capabilities-grid">
-                            <div class="aia-capability-item">
-                                <div class="aia-capability-icon">
-                                    <svg class="aia-icon aia-icon--md" aria-hidden="true">
-                                        <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#aia-analytics"></use>
-                                    </svg>
-                                </div>
-                                <div class="aia-capability-content">
-                                    <h4><?php esc_html_e('Stock Analysis', 'ai-inventory-agent'); ?></h4>
-                                    <p><?php esc_html_e('Real-time inventory levels and trends', 'ai-inventory-agent'); ?></p>
-                                </div>
-                            </div>
-                            <div class="aia-capability-item">
-                                <div class="aia-capability-icon">
-                                    <svg class="aia-icon aia-icon--md" aria-hidden="true">
-                                        <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#aia-trending-up"></use>
-                                    </svg>
-                                </div>
-                                <div class="aia-capability-content">
-                                    <h4><?php esc_html_e('Sales Insights', 'ai-inventory-agent'); ?></h4>
-                                    <p><?php esc_html_e('Top products and performance metrics', 'ai-inventory-agent'); ?></p>
-                                </div>
-                            </div>
-                            <div class="aia-capability-item">
-                                <div class="aia-capability-icon">
-                                    <svg class="aia-icon aia-icon--md" aria-hidden="true">
-                                        <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#aia-alert-triangle"></use>
-                                    </svg>
-                                </div>
-                                <div class="aia-capability-content">
-                                    <h4><?php esc_html_e('Reorder Alerts', 'ai-inventory-agent'); ?></h4>
-                                    <p><?php esc_html_e('Smart recommendations for restocking', 'ai-inventory-agent'); ?></p>
-                                </div>
-                            </div>
-                            <div class="aia-capability-item">
-                                <div class="aia-capability-icon">
-                                    <svg class="aia-icon aia-icon--md" aria-hidden="true">
-                                        <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#aia-settings"></use>
-                                    </svg>
-                                </div>
-                                <div class="aia-capability-content">
-                                    <h4><?php esc_html_e('Optimization', 'ai-inventory-agent'); ?></h4>
-                                    <p><?php esc_html_e('Strategies to improve efficiency', 'ai-inventory-agent'); ?></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
 
-                <!-- Quick Suggestions -->
-                <div class="aia-quick-suggestions">
-                    <div class="aia-suggestions-header">
-                        <span class="aia-suggestions-label"><?php esc_html_e('Quick Questions', 'ai-inventory-agent'); ?></span>
-                    </div>
-                    <div class="aia-suggestions-list">
-                        <button class="aia-suggestion-chip" data-message="What products need reordering?">
-                            <svg class="aia-icon aia-icon--xs" aria-hidden="true">
-                                <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#aia-alert"></use>
-                            </svg>
-                            <?php esc_html_e('Reorder Alerts', 'ai-inventory-agent'); ?>
-                        </button>
-                        <button class="aia-suggestion-chip" data-message="Show me top selling products">
-                            <svg class="aia-icon aia-icon--xs" aria-hidden="true">
-                                <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#aia-trending-up"></use>
-                            </svg>
-                            <?php esc_html_e('Top Sellers', 'ai-inventory-agent'); ?>
-                        </button>
-                        <button class="aia-suggestion-chip" data-message="Analyze inventory turnover">
-                            <svg class="aia-icon aia-icon--xs" aria-hidden="true">
-                                <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#aia-bar-chart"></use>
-                            </svg>
-                            <?php esc_html_e('Turnover Analysis', 'ai-inventory-agent'); ?>
-                        </button>
-                    </div>
-                </div>
+
 
                 <!-- Chat Input -->
                 <div class="aia-chat-input-section">
@@ -229,14 +141,7 @@ $summary = $inventory_analysis ? $inventory_analysis->get_inventory_summary() : 
                                     <span class="aia-sr-only"><?php esc_html_e('Send message', 'ai-inventory-agent'); ?></span>
                                 </button>
                             </div>
-                            <div class="aia-input-footer">
-                                <span class="aia-input-hint">
-                                    <?php printf(
-                                        esc_html__('Powered by %s • Press Enter to send', 'ai-inventory-agent'),
-                                        esc_html(ucfirst($ai_provider))
-                                    ); ?>
-                                </span>
-                            </div>
+
                         </div>
                     </form>
                 </div>
