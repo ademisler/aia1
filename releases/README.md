@@ -1,9 +1,9 @@
 # AI Inventory Agent - Releases
 
-## Latest Version: 2.0.0
+## Latest Version: 2.1.0
 
 ### Download
-- [ai-inventory-agent-v2.0.0.zip](ai-inventory-agent-v2.0.0.zip) - Latest stable release with enterprise-level UI/UX transformation
+- [ai-inventory-agent-v2.1.0.zip](ai-inventory-agent-v2.1.0.zip) - Latest stable release with professional light theme redesign
 
 ### Installation
 1. Download the latest ZIP file
@@ -15,6 +15,22 @@
 Older versions are available in the [archive](archive/) folder.
 
 ### Version History
+
+#### v2.1.0 (2025-01-08) - PROFESSIONAL LIGHT THEME REDESIGN
+- **🎨 COMPLETE LIGHT THEME IMPLEMENTATION**: Professional, clean interface across all admin pages
+- **NEW**: Dashboard with modern light theme design and consistent styling
+- **NEW**: AI Chat interface with professional styling and improved user experience
+- **NEW**: Advanced Analysis page with clean data visualization and light theme
+- **NEW**: Modern Alerts system with status indicators and professional action buttons
+- **NEW**: Professional Reports interface with enterprise-grade export functionality
+- **NEW**: Settings page with advanced form components and provider selection cards
+- **IMPROVED**: Unified color palette with consistent light theme (#fafbfc background, #ffffff cards)
+- **IMPROVED**: Standardized SVG icon system with proper aia- prefix naming conventions
+- **IMPROVED**: Typography harmony with consistent font hierarchy throughout
+- **IMPROVED**: Button system with unified primary, light, warning, and outline variants
+- **IMPROVED**: Mobile-first responsive design optimized for all device sizes
+- **IMPROVED**: WCAG compliance with proper color contrast and keyboard navigation
+- This update transforms all admin pages into a cohesive, professional light theme interface
 
 #### v2.0.0 (2025-01-08) - ENTERPRISE-LEVEL UI/UX TRANSFORMATION
 - **🌟 COMPLETE SYSTEM OVERHAUL**: Enterprise-grade UI/UX with advanced design system v2.0

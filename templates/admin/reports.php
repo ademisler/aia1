@@ -1,8 +1,8 @@
 <?php
 /**
- * Admin Reports Page Template
+ * Admin Reports Template - Light Theme
  * 
- * @package AIA
+ * @package AI_Inventory_Agent
  */
 
 // Prevent direct access
@@ -33,8 +33,8 @@ $settings = get_option('aia_settings', []);
     <div class="aia-reports-page-header">
         <div class="aia-reports-title-section">
             <h1 class="aia-reports-main-title">
-                <svg class="aia-title-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#bar-chart-3"></use>
+                <svg class="aia-icon aia-icon--lg" aria-hidden="true">
+                    <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#aia-bar-chart"></use>
                 </svg>
                 <?php _e('Inventory Reports', 'ai-inventory-agent'); ?>
             </h1>
@@ -42,14 +42,14 @@ $settings = get_option('aia_settings', []);
         </div>
         <div class="aia-reports-actions">
             <button type="button" class="aia-btn aia-btn--light aia-btn--sm" onclick="window.print()">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#printer"></use>
+                <svg class="aia-icon aia-icon--sm" aria-hidden="true">
+                    <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#aia-printer"></use>
                 </svg>
                 <?php _e('Print', 'ai-inventory-agent'); ?>
             </button>
             <button type="button" class="aia-btn aia-btn--primary aia-btn--sm" onclick="exportAllReports()">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#download"></use>
+                <svg class="aia-icon aia-icon--sm" aria-hidden="true">
+                    <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#aia-download"></use>
                 </svg>
                 <?php _e('Export All', 'ai-inventory-agent'); ?>
             </button>
