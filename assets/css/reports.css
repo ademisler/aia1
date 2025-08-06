@@ -68,37 +68,106 @@
     box-sizing: border-box;
 }
 
-/* Modern Reports Header Styles */
+/* Minimal Reports Header Styles */
 .aia-reports-header {
-    position: relative;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-    border-radius: 16px;
-    margin-bottom: 32px;
-    overflow: hidden;
-    box-shadow: 0 20px 40px rgba(118, 75, 162, 0.15);
-    min-height: 260px;
+    background: #f59e0b;
+    border-radius: 8px;
+    margin-bottom: 24px;
+    color: white;
+    padding: 32px;
 }
 
-.aia-reports-header-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+.aia-reports-header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
 }
 
-.aia-reports-gradient-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, 
-        rgba(102, 126, 234, 0.9) 0%, 
-        rgba(118, 75, 162, 0.8) 50%, 
-        rgba(240, 147, 251, 0.9) 100%
-    );
-    animation: reportsGradientShift 10s ease-in-out infinite;
+.aia-reports-title-section {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex: 1;
+}
+
+.aia-reports-icon-wrapper {
+    width: 48px;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.aia-reports-icon {
+    width: 24px;
+    height: 24px;
+    fill: white;
+}
+
+.aia-reports-text-content {
+    flex: 1;
+}
+
+.aia-reports-main-title {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: white;
+    margin: 0 0 4px 0;
+    line-height: 1.2;
+}
+
+.aia-reports-subtitle {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0;
+    line-height: 1.4;
+}
+
+.aia-reports-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.aia-reports-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 0.875rem;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.aia-reports-btn--outline {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.aia-reports-btn--outline:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.aia-reports-btn--primary {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.aia-reports-btn--primary:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.aia-reports-btn-icon {
+    width: 16px;
+    height: 16px;
+    fill: currentColor;
 }
 
 .aia-reports-chart-pattern {

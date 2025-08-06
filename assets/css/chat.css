@@ -21,83 +21,106 @@
   box-sizing: border-box;
 }
 
-/* Modern AI Chat Header Styles */
+/* Minimal Chat Header Styles */
 .aia-chat-header {
-    position: relative;
-    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 50%, #4facfe 100%);
-    border-radius: 16px;
-    margin-bottom: 32px;
-    overflow: hidden;
-    box-shadow: 0 20px 40px rgba(79, 172, 254, 0.15);
-    min-height: 240px;
+    background: #10b981;
+    border-radius: 8px;
+    margin-bottom: 24px;
+    color: white;
+    padding: 32px;
 }
 
-.aia-chat-header-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+.aia-chat-header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
 }
 
-.aia-chat-gradient-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, 
-        rgba(79, 172, 254, 0.9) 0%, 
-        rgba(0, 242, 254, 0.8) 50%, 
-        rgba(79, 172, 254, 0.9) 100%
-    );
-    animation: chatGradientShift 10s ease-in-out infinite;
+.aia-chat-title-section {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex: 1;
 }
 
-.aia-chat-neural-network {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+.aia-chat-icon-wrapper {
+    width: 48px;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.aia-chat-node {
-    position: absolute;
+.aia-chat-icon {
+    width: 24px;
+    height: 24px;
+    fill: white;
+}
+
+.aia-chat-text-content {
+    flex: 1;
+}
+
+.aia-chat-main-title {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: white;
+    margin: 0 0 4px 0;
+    line-height: 1.2;
+}
+
+.aia-chat-subtitle {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0;
+    line-height: 1.4;
+}
+
+.aia-chat-status-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.aia-chat-status-dot {
     width: 8px;
     height: 8px;
-    background: rgba(255, 255, 255, 0.4);
+    background: #22c55e;
     border-radius: 50%;
-    animation: nodeGlow 3s ease-in-out infinite;
+    animation: pulse 2s infinite;
 }
 
-.aia-chat-node:nth-child(1) {
-    top: 25%;
-    left: 15%;
-    animation-delay: 0s;
+.aia-chat-status-text {
+    color: white;
 }
 
-.aia-chat-node:nth-child(2) {
-    top: 45%;
-    right: 20%;
-    animation-delay: 1s;
-}
-
-.aia-chat-node:nth-child(3) {
-    bottom: 30%;
-    left: 25%;
-    animation-delay: 2s;
-}
-
-.aia-chat-connection {
-    position: absolute;
-    height: 1px;
-    background: linear-gradient(90deg, 
-        transparent 0%, 
-        rgba(255, 255, 255, 0.3) 50%, 
-        transparent 100%
-    );
-    animation: connectionFlow 4s ease-in-out infinite;
+/* Responsive Design */
+@media (max-width: 768px) {
+    .aia-chat-header {
+        padding: 20px;
+    }
+    
+    .aia-chat-header-content {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+    }
+    
+    .aia-chat-title-section {
+        text-align: center;
+    }
+    
+    .aia-chat-main-title {
+        font-size: 1.5rem;
+    }
 }
 
 .aia-chat-connection:nth-child(4) {
