@@ -743,18 +743,4 @@ class Database {
         
         return QueryOptimizer::optimize_tables($table_names);
     }
-    
-    /**
-     * Get table name by key
-     * 
-     * @param string $table_key Table key
-     * @return string Table name
-     */
-    private function get_table_name($table_key) {
-        if (!isset($this->tables[$table_key])) {
-            throw new \Exception("Unknown table key: {$table_key}");
-        }
-        
-        return $this->tables[$table_key]['name'];
-    }
 }
