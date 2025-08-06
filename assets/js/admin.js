@@ -168,15 +168,21 @@
          * Add message to chat
          */
         addChatMessage: function(type, content) {
-            var avatar = type === 'user' ? '👤' : '🤖';
             var time = new Date().toLocaleTimeString();
+            var messageClass = type === 'user' ? 'aia-message aia-message--user' : 'aia-message aia-message--ai';
             
             var messageHtml = `
-                <div class="aia-chat-message ${type}">
-                    <div class="aia-chat-avatar ${type}">${avatar}</div>
-                    <div>
+                <div class="${messageClass}">
+                    <div class="aia-message-avatar">
+                        <svg class="aia-icon aia-icon--md" aria-hidden="true">
+                            <use href="${aia_ajax.plugin_url}assets/icons/sprite.svg#${type === 'user' ? 'aia-user' : 'aia-bot'}"></use>
+                        </svg>
+                    </div>
+                    <div class="aia-message-bubble ${type === 'user' ? 'aia-message-bubble--user' : ''}">
                         <div class="aia-message-content">${this.formatMessage(content)}</div>
-                        <div class="aia-message-time">${time}</div>
+                        <div class="aia-message-meta">
+                            <span class="aia-message-time">${time}</span>
+                        </div>
                     </div>
                 </div>
             `;
@@ -191,14 +197,18 @@
         addLoadingMessage: function() {
             var loadingId = 'loading-' + Date.now();
             var loadingHtml = `
-                <div class="aia-chat-message assistant" id="${loadingId}">
-                    <div class="aia-chat-avatar assistant">🤖</div>
-                    <div>
+                <div class="aia-message aia-message--ai" id="${loadingId}">
+                    <div class="aia-message-avatar">
+                        <svg class="aia-icon aia-icon--md" aria-hidden="true">
+                            <use href="${aia_ajax.plugin_url}assets/icons/sprite.svg#aia-bot"></use>
+                        </svg>
+                    </div>
+                    <div class="aia-message-bubble">
                         <div class="aia-message-content">
-                            <div class="aia-loading">
-                                <div class="aia-loading-dot"></div>
-                                <div class="aia-loading-dot"></div>
-                                <div class="aia-loading-dot"></div>
+                            <div class="aia-typing-indicator">
+                                <div class="aia-typing-dot"></div>
+                                <div class="aia-typing-dot"></div>
+                                <div class="aia-typing-dot"></div>
                             </div>
                         </div>
                     </div>

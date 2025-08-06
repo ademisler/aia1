@@ -86,6 +86,42 @@
   50% { opacity: 0.7; transform: scale(0.9); }
 }
 
+/* ===== Typing Indicator ===== */
+
+.aia-typing-indicator {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 0;
+}
+
+.aia-typing-dot {
+  width: 8px;
+  height: 8px;
+  background: #9ca3af;
+  border-radius: 50%;
+  animation: aia-typing 1.4s infinite ease-in-out;
+}
+
+.aia-typing-dot:nth-child(1) {
+  animation-delay: -0.32s;
+}
+
+.aia-typing-dot:nth-child(2) {
+  animation-delay: -0.16s;
+}
+
+@keyframes aia-typing {
+  0%, 80%, 100% {
+    opacity: 0.3;
+    transform: scale(0.8);
+  }
+  40% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 /* ===== Configuration Notice ===== */
 
 .aia-config-notice {

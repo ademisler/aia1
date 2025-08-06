@@ -675,6 +675,7 @@ class AdminInterface {
         wp_localize_script('aia-admin-script', 'aia_ajax', [
             'ajax_url' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('aia_ajax_nonce'),
+            'plugin_url' => AIA_PLUGIN_URL,
             'strings' => [
                 'confirm_delete' => __('Are you sure you want to delete this item?', 'ai-inventory-agent'),
                 'loading' => __('Loading...', 'ai-inventory-agent'),

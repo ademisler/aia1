@@ -643,6 +643,104 @@
     to { transform: rotate(360deg); }
 }
 
+/* ===== REPORT HISTORY ===== */
+.aia-report-history-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--aia-color-background-subtle);
+    border: 1px solid var(--aia-color-border-light);
+    border-radius: var(--aia-radius-md);
+    margin-bottom: 0.75rem;
+    transition: all var(--aia-transition-fast) var(--aia-easing-smooth);
+}
+
+.aia-report-history-item:hover {
+    background: var(--aia-color-background-primary);
+    border-color: var(--aia-color-border-medium);
+    transform: translateY(-1px);
+    box-shadow: var(--aia-shadow-sm);
+}
+
+.aia-report-history-icon {
+    background: var(--aia-color-primary-50);
+    border: 1px solid var(--aia-color-primary-200);
+    border-radius: var(--aia-radius-md);
+    padding: 0.5rem;
+    color: var(--aia-color-primary-600);
+    flex-shrink: 0;
+}
+
+.aia-report-history-content {
+    flex: 1;
+}
+
+.aia-report-history-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--aia-color-text-primary);
+    margin: 0 0 0.25rem 0;
+    line-height: 1.4;
+}
+
+.aia-report-history-meta {
+    font-size: 0.75rem;
+    color: var(--aia-color-text-tertiary);
+    margin: 0;
+}
+
+.aia-report-history-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+/* ===== PROGRESS BAR ===== */
+.aia-progress-bar {
+    width: 100%;
+    height: 8px;
+    background: var(--aia-color-background-subtle);
+    border-radius: var(--aia-radius-full);
+    overflow: hidden;
+    margin: 1rem 0;
+}
+
+.aia-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--aia-color-primary-500) 0%, var(--aia-color-primary-600) 100%);
+    border-radius: var(--aia-radius-full);
+    transition: width 0.3s ease;
+    width: 0%;
+}
+
+.aia-progress-text {
+    text-align: center;
+    margin-top: 0.5rem;
+}
+
+.aia-progress-text span {
+    font-size: 0.875rem;
+    color: var(--aia-color-text-secondary);
+    font-weight: 500;
+}
+
+/* ===== REPORT GENERATION ===== */
+.aia-report-generation {
+    text-align: center;
+    padding: 2rem 1rem;
+}
+
+.aia-generation-icon {
+    margin-bottom: 1.5rem;
+}
+
+.aia-generation-text p {
+    font-size: 1rem;
+    color: var(--aia-color-text-secondary);
+    margin: 0 0 1.5rem 0;
+    line-height: 1.6;
+}
+
 /* ===== RESPONSIVE DESIGN ===== */
 @media (max-width: 1200px) {
     .aia-reports-content-grid {
