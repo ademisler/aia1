@@ -3,6 +3,13 @@
  * Professional, clean and cohesive light theme design
  */
 
+/* ===== Global Box Sizing Fix ===== */
+.aia-dashboard-light *,
+.aia-dashboard-light *::before,
+.aia-dashboard-light *::after {
+  box-sizing: border-box;
+}
+
 /* ===== Light Theme Foundation ===== */
 
 .aia-dashboard-light {
@@ -11,6 +18,8 @@
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   color: var(--aia-gray-800, #1f2937);
   line-height: 1.5;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 /* ===== Professional Header ===== */
@@ -21,15 +30,18 @@
   border-bottom: 1px solid var(--aia-border-light, #e5e7eb);
   margin-bottom: 40px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 24px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .aia-dashboard-title-section {
   flex: 1;
   min-width: 300px;
+  box-sizing: border-box;
 }
 
 .aia-dashboard-main-title {
@@ -61,6 +73,8 @@
   display: flex;
   gap: 12px;
   align-items: center;
+  flex-shrink: 0;
+  box-sizing: border-box;
 }
 
 /* ===== Light Theme Button System ===== */
@@ -79,6 +93,8 @@
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   line-height: 1.4;
   letter-spacing: 0.025em;
+  box-sizing: border-box;
+  flex-shrink: 0;
 }
 
 .aia-btn--primary {
@@ -237,6 +253,8 @@
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: var(--aia-space-6, 24px);
   margin-bottom: var(--aia-space-8, 32px);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .aia-metric-card {
@@ -250,6 +268,8 @@
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .aia-metric-card::before {
@@ -354,12 +374,16 @@
   grid-template-columns: 1fr 1fr;
   gap: 32px;
   margin-bottom: 48px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .aia-content-column {
   display: flex;
   flex-direction: column;
   gap: 32px;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 /* ===== Widget System ===== */
@@ -371,6 +395,8 @@
   overflow: hidden;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .aia-widget:hover {
@@ -421,6 +447,8 @@
 
 .aia-widget-content {
   padding: 32px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .aia-widget-content--no-padding {
@@ -660,11 +688,14 @@
 
 .aia-table-wrapper {
   overflow-x: auto;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .aia-table {
   width: 100%;
   border-collapse: collapse;
+  box-sizing: border-box;
 }
 
 .aia-table--modern th {
@@ -799,6 +830,7 @@
   .aia-dashboard-actions {
     width: 100%;
     justify-content: flex-start;
+    box-sizing: border-box;
   }
   
   .aia-metrics-grid {

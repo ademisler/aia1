@@ -3,6 +3,13 @@
  * Professional analytics and reporting interface with dashboard consistency
  */
 
+/* ===== Global Box Sizing Fix ===== */
+.aia-analysis-light *,
+.aia-analysis-light *::before,
+.aia-analysis-light *::after {
+  box-sizing: border-box;
+}
+
 /* ===== Analysis Light Theme Foundation ===== */
 
 .aia-analysis-light {
@@ -11,6 +18,7 @@
   font-family: var(--aia-font-primary, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif);
   color: var(--aia-text-primary, #1f2937);
   line-height: var(--aia-leading-normal, 1.5);
+  width: 100%;
 }
 
 /* ===== Page Header ===== */
@@ -21,15 +29,17 @@
   border-bottom: 1px solid #e5e7eb;
   margin-bottom: 40px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 24px;
+  width: 100%;
 }
 
 .aia-analysis-title-section {
   flex: 1;
   min-width: 300px;
+  min-width: 0;
 }
 
 .aia-analysis-main-title {
@@ -61,6 +71,7 @@
   display: flex;
   gap: 12px;
   align-items: center;
+  flex-shrink: 0;
 }
 
 /* ===== Metrics Section ===== */
@@ -93,6 +104,7 @@
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: var(--aia-space-6, 24px);
   margin-bottom: var(--aia-space-8, 32px);
+  width: 100%;
 }
 
 .aia-metric-card {
@@ -106,6 +118,7 @@
   transition: all 0.2s ease;
   position: relative;
   overflow: hidden;
+  width: 100%;
 }
 
 .aia-metric-card::before {
@@ -223,6 +236,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 32px;
+  width: 100%;
 }
 
 .aia-value-card {
@@ -232,6 +246,7 @@
   overflow: hidden;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 100%;
 }
 
 .aia-value-card:hover {
@@ -298,12 +313,14 @@
   grid-template-columns: 1fr 1fr;
   gap: 32px;
   margin-bottom: 48px;
+  width: 100%;
 }
 
 .aia-analysis-column {
   display: flex;
   flex-direction: column;
   gap: 32px;
+  min-width: 0;
 }
 
 /* ===== Widget System ===== */
@@ -315,6 +332,7 @@
   overflow: hidden;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 100%;
 }
 
 .aia-widget:hover {
@@ -330,8 +348,10 @@
   border-bottom: 1px solid #f3f4f6;
   background: #fafbfc;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
 }
 
 .aia-widget-header-content {
