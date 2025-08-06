@@ -15,10 +15,31 @@ $inventory_analysis = $this->plugin->get_module_manager()->get_module('inventory
 $summary = $inventory_analysis ? $inventory_analysis->get_inventory_summary() : [];
 ?>
 
-<div class="wrap aia-dashboard">
-    <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
-    
-    <div class="aia-dashboard-grid">
+<div class="aia-dashboard">
+    <div class="aia-dashboard-container">
+        <!-- Dashboard Header -->
+        <div class="aia-dashboard-header">
+            <div class="aia-dashboard-title">
+                <div class="aia-stat-icon">
+                    <span>🤖</span>
+                </div>
+                <div>
+                    <h1><?php echo esc_html(get_admin_page_title()); ?></h1>
+                    <p class="aia-dashboard-subtitle"><?php esc_html_e('AI-powered inventory management at your fingertips', 'ai-inventory-agent'); ?></p>
+                </div>
+            </div>
+            <div class="aia-dashboard-actions">
+                <button class="aia-btn aia-btn-ghost aia-btn-sm" onclick="location.reload()">
+                    <span>🔄</span> <?php esc_html_e('Refresh', 'ai-inventory-agent'); ?>
+                </button>
+                <a href="<?php echo esc_url(admin_url('admin.php?page=ai-inventory-agent-chat')); ?>" class="aia-btn aia-btn-primary">
+                    <span>💬</span> <?php esc_html_e('Open AI Chat', 'ai-inventory-agent'); ?>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Stats Grid -->
+        <div class="aia-stats-grid">
         <!-- Inventory Overview -->
         <div class="aia-dashboard-widget">
             <h2><?php esc_html_e('Inventory Overview', 'ai-inventory-agent'); ?></h2>

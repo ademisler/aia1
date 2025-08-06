@@ -1,6 +1,13 @@
 /**
  * AI Inventory Agent - Admin Styles
+ * Modern UI/UX Design System
  */
+
+/* Import Design System */
+@import url('design-tokens.css');
+@import url('components.css');
+@import url('dashboard.css');
+@import url('chat.css');
 
 /* General Plugin Styles */
 .aia-admin-page {

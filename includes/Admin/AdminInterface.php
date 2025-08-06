@@ -34,6 +34,7 @@ class AdminInterface {
         add_action('admin_init', [$this, 'register_settings']);
         add_action('admin_notices', [$this, 'show_admin_notices']);
         add_action('wp_dashboard_setup', [$this, 'add_dashboard_widgets']);
+        add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_assets']);
         
         // AJAX handlers
         add_action('wp_ajax_aia_save_settings', [$this, 'handle_save_settings']);
@@ -596,5 +597,56 @@ class AdminInterface {
             // Single site check
             return in_array('woocommerce/woocommerce.php', (array) get_option('active_plugins', []));
         }
+    }
+    
+    /**
+     * Enqueue admin assets
+     * 
+     * @param string $hook Current admin page hook
+     */
+    public function enqueue_admin_assets($hook) {
+        // Only load on our plugin pages
+        if (strpos($hook, 'ai-inventory-agent') === false && 
+            strpos($hook, 'aia-') === false) {
+            return;
+        }
+        
+        // Enqueue modern CSS
+        wp_enqueue_style(
+            'aia-admin-style',
+            AIA_PLUGIN_URL . 'assets/css/admin.css',
+            [],
+            AIA_VERSION
+        );
+        
+        // Enqueue admin scripts
+        wp_enqueue_script(
+            'aia-admin-script',
+            AIA_PLUGIN_URL . 'assets/js/admin.js',
+            ['jquery'],
+            AIA_VERSION,
+            true
+        );
+        
+        // Enqueue UI components
+        wp_enqueue_script(
+            'aia-ui-components',
+            AIA_PLUGIN_URL . 'assets/js/ui-components.js',
+            ['jquery'],
+            AIA_VERSION,
+            true
+        );
+        
+        // Localize script
+        wp_localize_script('aia-admin-script', 'aia_admin', [
+            'ajax_url' => admin_url('admin-ajax.php'),
+            'nonce' => wp_create_nonce('aia_ajax_nonce'),
+            'i18n' => [
+                'confirm_delete' => __('Are you sure you want to delete this item?', 'ai-inventory-agent'),
+                'loading' => __('Loading...', 'ai-inventory-agent'),
+                'error' => __('An error occurred. Please try again.', 'ai-inventory-agent'),
+                'success' => __('Operation completed successfully.', 'ai-inventory-agent')
+            ]
+        ]);
     }
 }
