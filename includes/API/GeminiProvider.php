@@ -28,7 +28,7 @@ class GeminiProvider {
      * 
      * @var string
      */
-    private $default_model = 'gemini-pro';
+    private $default_model = 'gemini-2.0-flash';
     
     /**
      * Constructor
@@ -74,7 +74,7 @@ class GeminiProvider {
             ];
         }
         
-        $endpoint = $this->api_endpoint . $model . ':generateContent?key=' . $this->api_key;
+        $endpoint = $this->api_endpoint . $model . ':generateContent';
         
         $response = $this->make_request($endpoint, $request_body);
         
@@ -138,7 +138,8 @@ class GeminiProvider {
         $args = [
             'headers' => [
                 'Content-Type' => 'application/json',
-                'User-Agent' => 'AI-Inventory-Agent/1.0.0'
+                'X-goog-api-key' => $this->api_key,
+                'User-Agent' => 'AI-Inventory-Agent/1.0.6'
             ],
             'body' => json_encode($body),
             'method' => 'POST',
@@ -177,10 +178,10 @@ class GeminiProvider {
      */
     public function get_available_models() {
         return [
-            'gemini-pro' => 'Gemini Pro',
-            'gemini-pro-vision' => 'Gemini Pro Vision',
+            'gemini-2.0-flash' => 'Gemini 2.0 Flash (Latest)',
             'gemini-1.5-pro' => 'Gemini 1.5 Pro',
-            'gemini-1.5-flash' => 'Gemini 1.5 Flash'
+            'gemini-1.5-flash' => 'Gemini 1.5 Flash',
+            'gemini-pro' => 'Gemini Pro (Legacy)'
         ];
     }
     
@@ -194,25 +195,26 @@ class GeminiProvider {
             $test_conversation = [
                 [
                     'role' => 'user',
-                    'content' => 'Hello, this is a test message.'
+                    'content' => 'Say "Hello" in one word.'
                 ]
             ];
             
             $response = $this->generate_response($test_conversation, [
-                'max_tokens' => 10,
+                'max_tokens' => 20,
                 'temperature' => 0
             ]);
             
             return [
                 'success' => true,
-                'message' => 'Connection successful',
-                'model' => $response['model']
+                'message' => 'Connection successful! Model: ' . $response['model'],
+                'model' => $response['model'],
+                'response' => $response['content']
             ];
             
         } catch (\Exception $e) {
             return [
                 'success' => false,
-                'message' => $e->getMessage()
+                'message' => 'Connection failed: ' . $e->getMessage()
             ];
         }
     }

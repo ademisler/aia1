@@ -329,6 +329,12 @@ The plugin is fully translatable:
 
 ## 📝 Changelog
 
+### Version 1.0.6
+- **CRITICAL JAVASCRIPT & API FIXES**: Fixed DOM validation errors and JavaScript issues
+- Fixed "aia_ajax is not defined" error preventing API connection tests
+- Updated Gemini API to v1beta with proper authentication headers
+- Updated to latest Gemini 2.0 Flash model with improved error handling
+
 ### Version 1.0.5
 - **CRITICAL ADMIN INTERFACE FIX**: Fixed null plugin instance errors in InventoryAnalysis module
 - Fixed missing template files causing admin page errors

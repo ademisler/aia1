@@ -1,9 +1,9 @@
 # AI Inventory Agent - Releases
 
-## Latest Version: 1.0.5
+## Latest Version: 1.0.6
 
 ### Download
-- [ai-inventory-agent-v1.0.5.zip](ai-inventory-agent-v1.0.5.zip) - Latest stable release
+- [ai-inventory-agent-v1.0.6.zip](ai-inventory-agent-v1.0.6.zip) - Latest stable release
 
 ### Installation
 1. Download the latest ZIP file
@@ -15,6 +15,14 @@
 Older versions are available in the [archive](archive/) folder.
 
 ### Version History
+
+#### v1.0.6 (2025-01-08) - CRITICAL JAVASCRIPT & API FIXES
+- **FIXED**: DOM validation errors with duplicate HTML IDs in admin forms
+- **FIXED**: "aia_ajax is not defined" JavaScript error preventing API tests
+- **UPDATED**: Gemini API to v1beta with X-goog-api-key header authentication
+- **UPDATED**: Default Gemini model to latest 'gemini-2.0-flash'
+- **IMPROVED**: API connection testing with better error messages
+- All JavaScript functions and API tests now work correctly
 
 #### v1.0.5 (2025-01-08) - CRITICAL ADMIN INTERFACE FIX
 - **FIXED**: Fatal error "Call to a member function get_setting() on null" in InventoryAnalysis.php

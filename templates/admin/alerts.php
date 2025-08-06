@@ -42,11 +42,11 @@ if ($inventory_analysis) {
                 <table class="form-table">
                     <tr>
                         <th scope="row">
-                            <label for="low_stock_threshold"><?php _e('Low Stock Threshold', 'ai-inventory-agent'); ?></label>
+                            <label for="alerts_low_stock_threshold"><?php _e('Low Stock Threshold', 'ai-inventory-agent'); ?></label>
                         </th>
                         <td>
                             <input type="number" 
-                                   id="low_stock_threshold" 
+                                   id="alerts_low_stock_threshold" 
                                    name="aia_settings[low_stock_threshold]" 
                                    value="<?php echo esc_attr($settings['low_stock_threshold'] ?? 5); ?>" 
                                    min="1" />
@@ -55,11 +55,11 @@ if ($inventory_analysis) {
                     </tr>
                     <tr>
                         <th scope="row">
-                            <label for="critical_stock_threshold"><?php _e('Critical Stock Threshold', 'ai-inventory-agent'); ?></label>
+                            <label for="alerts_critical_stock_threshold"><?php _e('Critical Stock Threshold', 'ai-inventory-agent'); ?></label>
                         </th>
                         <td>
                             <input type="number" 
-                                   id="critical_stock_threshold" 
+                                   id="alerts_critical_stock_threshold" 
                                    name="aia_settings[critical_stock_threshold]" 
                                    value="<?php echo esc_attr($settings['critical_stock_threshold'] ?? 1); ?>" 
                                    min="0" />
@@ -68,11 +68,11 @@ if ($inventory_analysis) {
                     </tr>
                     <tr>
                         <th scope="row">
-                            <label for="notification_email"><?php _e('Notification Email', 'ai-inventory-agent'); ?></label>
+                            <label for="alerts_notification_email"><?php _e('Notification Email', 'ai-inventory-agent'); ?></label>
                         </th>
                         <td>
                             <input type="email" 
-                                   id="notification_email" 
+                                   id="alerts_notification_email" 
                                    name="aia_settings[notification_email]" 
                                    value="<?php echo esc_attr($settings['notification_email'] ?? get_option('admin_email')); ?>" 
                                    class="regular-text" />
@@ -84,9 +84,9 @@ if ($inventory_analysis) {
                             <?php _e('Enable Notifications', 'ai-inventory-agent'); ?>
                         </th>
                         <td>
-                            <label for="notifications_enabled">
+                            <label for="alerts_notifications_enabled">
                                 <input type="checkbox" 
-                                       id="notifications_enabled" 
+                                       id="alerts_notifications_enabled" 
                                        name="aia_settings[notifications_enabled]" 
                                        value="1" 
                                        <?php checked($settings['notifications_enabled'] ?? true); ?> />

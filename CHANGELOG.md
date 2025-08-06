@@ -5,6 +5,42 @@ All notable changes to AI Inventory Agent will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.6] - 2025-01-08
+
+### 🚨 Critical JavaScript & API Fixes
+
+#### Fixed
+- **Duplicate HTML IDs Error**
+  - Fixed DOM validation errors: "Found 2 elements with non-unique id"
+  - Renamed duplicate form field IDs in alerts.php template to avoid conflicts
+  - Fixed ai_provider, api_key, critical_stock_threshold, low_stock_threshold, notification_email, and system_prompt duplicates
+  - All admin pages now validate correctly without DOM warnings
+
+- **Missing JavaScript Object Error**
+  - Fixed "Uncaught ReferenceError: aia_ajax is not defined" in admin.js line 405
+  - Corrected JavaScript localization from 'aia_admin' to 'aia_ajax' in AdminInterface.php
+  - API connection test button now works correctly
+
+- **Gemini API Configuration**
+  - Updated to latest Gemini API v1beta endpoint with correct headers
+  - Changed API authentication from query parameter to X-goog-api-key header
+  - Updated default model from 'gemini-pro' to 'gemini-2.0-flash' (latest)
+  - Added support for Gemini 2.0 Flash model
+  - Improved error handling and connection testing
+
+#### Technical Details
+- **alerts.php**: Renamed all form field IDs with 'alerts_' prefix to prevent conflicts
+- **AdminInterface.php**: Fixed wp_localize_script object name from 'aia_admin' to 'aia_ajax'
+- **GeminiProvider.php**: 
+  - Updated API endpoint to use X-goog-api-key header instead of query parameter
+  - Updated default model to 'gemini-2.0-flash'
+  - Improved test_connection() method with better error messages
+  - Updated available models list with latest Gemini models
+
+#### New Features
+- **Enhanced API Testing**: Better connection test with detailed success/error messages
+- **Latest Gemini Models**: Support for Gemini 2.0 Flash and updated model selection
+
 ## [1.0.5] - 2025-01-08
 
 ### 🚨 Critical Admin Interface Fix
