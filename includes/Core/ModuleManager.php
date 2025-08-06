@@ -3,6 +3,8 @@
 namespace AIA\Core;
 
 use AIA\Core\MemoryManager;
+use AIA\Core\ServiceContainer;
+use AIA\Core\SettingsManager;
 
 /**
  * Module Manager Class
@@ -33,10 +35,20 @@ class ModuleManager {
     private $dependencies = [];
     
     /**
-     * Constructor
+     * Service container instance
+     * 
+     * @var ServiceContainer
      */
-    public function __construct() {
-        // Module manager initialization
+    private $container;
+    
+    /**
+     * Constructor
+     * 
+     * @param ServiceContainer $container Service container instance
+     */
+    public function __construct(ServiceContainer $container = null) {
+        $this->container = $container ?: ServiceContainer::getInstance();
+        $this->register_default_modules();
     }
     
     /**
@@ -85,12 +97,12 @@ class ModuleManager {
         MemoryManager::log_usage('module_manager_init_start');
         
         try {
-            // Sort modules by dependencies
-            $sorted_modules = $this->sort_modules_by_dependencies();
+            // Register modules in service container
+            $this->register_modules_in_container();
             
-            foreach ($sorted_modules as $module_id) {
-                $this->init_module($module_id);
-            }
+            // Initialize modules using service container
+            $this->initialize_modules_via_container();
+            
         } finally {
             $initializing = false;
         }
@@ -378,5 +390,134 @@ class ModuleManager {
         }
         
         return $info;
+    }
+    
+    /**
+     * Register default modules configuration
+     */
+    private function register_default_modules() {
+        $default_modules = [
+            'inventory_analysis' => [
+                'class' => '\\AIA\\Modules\\InventoryAnalysis',
+                'dependencies' => []
+            ],
+            'ai_chat' => [
+                'class' => '\\AIA\\Modules\\AIChat',
+                'dependencies' => []
+            ],
+            'demand_forecasting' => [
+                'class' => '\\AIA\\Modules\\DemandForecasting',
+                'dependencies' => ['inventory_analysis']
+            ],
+            'supplier_analysis' => [
+                'class' => '\\AIA\\Modules\\SupplierAnalysis',
+                'dependencies' => []
+            ],
+            'notifications' => [
+                'class' => '\\AIA\\Modules\\Notifications',
+                'dependencies' => ['inventory_analysis']
+            ],
+            'reporting' => [
+                'class' => '\\AIA\\Modules\\Reporting',
+                'dependencies' => ['inventory_analysis']
+            ]
+        ];
+        
+        foreach ($default_modules as $module_id => $config) {
+            $this->register_module($module_id, $config['class'], $config['dependencies']);
+        }
+    }
+    
+    /**
+     * Register modules in service container
+     */
+    private function register_modules_in_container() {
+        $modules_config = [];
+        
+        foreach ($this->modules as $module_id => $module_info) {
+            // Check if module is enabled
+            if (!$this->is_module_enabled($module_id)) {
+                continue;
+            }
+            
+            $modules_config[$module_id] = [
+                'class' => $module_info['class'],
+                'dependencies' => $this->map_dependencies_to_services($module_info['dependencies'])
+            ];
+        }
+        
+        // Register in container
+        $this->container->register_modules($modules_config);
+    }
+    
+    /**
+     * Initialize modules via service container
+     */
+    private function initialize_modules_via_container() {
+        foreach ($this->modules as $module_id => $module_info) {
+            if (!$this->is_module_enabled($module_id)) {
+                continue;
+            }
+            
+            try {
+                // Get module instance from container
+                $instance = $this->container->get_module($module_id);
+                
+                if ($instance && method_exists($instance, 'init')) {
+                    $instance->init();
+                    
+                    // Update module info
+                    $this->modules[$module_id]['instance'] = $instance;
+                    $this->modules[$module_id]['active'] = true;
+                    $this->active_modules[$module_id] = $instance;
+                    
+                    MemoryManager::log_usage("module_{$module_id}_initialized");
+                    
+                    if (defined('WP_DEBUG') && WP_DEBUG) {
+                        error_log("AIA: Successfully initialized module '{$module_id}' via container");
+                    }
+                }
+                
+            } catch (\Exception $e) {
+                error_log("AIA: Failed to initialize module '{$module_id}' via container: " . $e->getMessage());
+                $this->modules[$module_id]['active'] = false;
+            }
+        }
+    }
+    
+    /**
+     * Map module dependencies to service names
+     * 
+     * @param array $dependencies Module dependencies
+     * @return array Service names
+     */
+    private function map_dependencies_to_services($dependencies) {
+        $service_deps = [];
+        
+        foreach ($dependencies as $dep) {
+            // Map module dependencies to service container names
+            if (isset($this->modules[$dep])) {
+                $service_deps[] = "module_{$dep}";
+            }
+        }
+        
+        return $service_deps;
+    }
+    
+    /**
+     * Get module instance via container
+     * 
+     * @param string $module_id Module ID
+     * @return mixed|null Module instance
+     */
+    public function get_module_via_container($module_id) {
+        try {
+            return $this->container->get_module($module_id);
+        } catch (\Exception $e) {
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                error_log("AIA: Failed to get module '{$module_id}' from container: " . $e->getMessage());
+            }
+            return null;
+        }
     }
 }

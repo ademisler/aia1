@@ -6,6 +6,7 @@ use AIA\Core\ModuleManager;
 use AIA\Core\Database;
 use AIA\Core\MemoryManager;
 use AIA\Core\SettingsManager;
+use AIA\Core\ServiceContainer;
 use AIA\Admin\AdminInterface;
 use AIA\Utils\RateLimiter;
 
@@ -53,6 +54,13 @@ class Plugin {
     private $settings;
     
     /**
+     * Service container instance
+     * 
+     * @var ServiceContainer
+     */
+    private $container;
+    
+    /**
      * Get plugin instance (Singleton pattern)
      * 
      * @return Plugin
@@ -98,23 +106,14 @@ class Plugin {
         }
         
         try {
+            // Initialize service container first
+            $this->container = ServiceContainer::getInstance();
+            
             // Load text domain for translations
             add_action('init', [$this, 'load_textdomain']);
             
-            // Initialize database
-            $this->database = new Database();
-            
-            // Initialize module manager
-            $this->module_manager = new ModuleManager();
-            
-            // Load plugin settings
-            $this->load_settings();
-            
-            // Initialize admin interface
-            if (is_admin()) {
-                $this->admin_interface = new \AIA\Admin\AdminInterface();
-                $this->admin_interface->set_plugin_instance($this);
-            }
+            // Initialize services via container
+            $this->initialize_services();
             
             // Register WordPress hooks
             $this->register_hooks();
@@ -529,5 +528,102 @@ class Plugin {
      */
     public function get_database() {
         return $this->database;
+    }
+    
+    /**
+     * Initialize services via service container
+     */
+    private function initialize_services() {
+        // Get services from container
+        $this->database = $this->container->get('database');
+        $this->module_manager = $this->container->get('module_manager');
+        
+        // Load plugin settings
+        $this->load_settings();
+        
+        // Initialize admin interface
+        if (is_admin()) {
+            $this->admin_interface = $this->container->get('admin_interface');
+            if ($this->admin_interface) {
+                $this->admin_interface->set_plugin_instance($this);
+            }
+        }
+        
+        MemoryManager::log_usage('services_initialized');
+    }
+    
+    /**
+     * Get service container instance
+     * 
+     * @return ServiceContainer
+     */
+    public function get_container() {
+        return $this->container;
+    }
+    
+    /**
+     * Get service from container
+     * 
+     * @param string $service_name Service name
+     * @return mixed Service instance
+     */
+    public function get_service($service_name) {
+        return $this->container->get($service_name);
+    }
+    
+    /**
+     * Run system health check
+     * 
+     * @return array Health check results
+     */
+    public function run_health_check() {
+        try {
+            $validator = $this->container->get('integration_validator');
+            return $validator->quick_health_check();
+        } catch (\Exception $e) {
+            return [
+                'overall_healthy' => false,
+                'error' => $e->getMessage()
+            ];
+        }
+    }
+    
+    /**
+     * Run full integration validation
+     * 
+     * @return array Validation results
+     */
+    public function run_integration_validation() {
+        try {
+            $validator = $this->container->get('integration_validator');
+            return $validator->validate_all();
+        } catch (\Exception $e) {
+            return [
+                'summary' => [
+                    'overall_status' => 'FAIL',
+                    'error' => $e->getMessage()
+                ]
+            ];
+        }
+    }
+    
+    /**
+     * Get system performance statistics
+     * 
+     * @return array Performance statistics
+     */
+    public function get_performance_stats() {
+        return [
+            'memory' => MemoryManager::get_stats(),
+            'queries' => $this->database->get_query_statistics(),
+            'settings_cache' => [
+                'enabled' => true,
+                'expiration' => SettingsManager::CACHE_EXPIRATION
+            ],
+            'modules' => [
+                'registered' => count($this->module_manager->get_registered_modules()),
+                'active' => count($this->module_manager->get_active_modules())
+            ]
+        ];
     }
 }

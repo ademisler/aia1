@@ -7,7 +7,7 @@ namespace AIA\API;
  * 
  * Handles communication with OpenAI API
  */
-class OpenAIProvider {
+class OpenAIProvider implements AIProviderInterface {
     
     /**
      * API key
@@ -191,6 +191,117 @@ class OpenAIProvider {
             return [
                 'success' => false,
                 'message' => $e->getMessage()
+            ];
+        }
+    }
+    
+    /**
+     * Get available models
+     * 
+     * @return array List of available models
+     */
+    public function get_models() {
+        return [
+            'gpt-4' => 'GPT-4',
+            'gpt-4-turbo' => 'GPT-4 Turbo',
+            'gpt-3.5-turbo' => 'GPT-3.5 Turbo',
+            'gpt-3.5-turbo-16k' => 'GPT-3.5 Turbo 16K'
+        ];
+    }
+    
+    /**
+     * Get provider name
+     * 
+     * @return string Provider name
+     */
+    public function get_name() {
+        return 'OpenAI';
+    }
+    
+    /**
+     * Get provider capabilities
+     * 
+     * @return array Provider capabilities
+     */
+    public function get_capabilities() {
+        return [
+            'chat' => true,
+            'completion' => true,
+            'embedding' => true,
+            'image_generation' => true,
+            'function_calling' => true,
+            'streaming' => true,
+            'max_tokens' => 4096,
+            'context_length' => 16384
+        ];
+    }
+    
+    /**
+     * Get rate limits information
+     * 
+     * @return array Rate limits
+     */
+    public function get_rate_limits() {
+        return [
+            'requests_per_minute' => 3500,
+            'tokens_per_minute' => 90000,
+            'requests_per_day' => 10000
+        ];
+    }
+    
+    /**
+     * Check if provider is available
+     * 
+     * @return bool True if available
+     */
+    public function is_available() {
+        return !empty($this->api_key);
+    }
+    
+    /**
+     * Get usage statistics
+     * 
+     * @return array Usage statistics
+     */
+    public function get_usage_stats() {
+        // In a real implementation, this would track actual usage
+        return [
+            'requests_today' => 0,
+            'tokens_used_today' => 0,
+            'last_request' => null,
+            'error_rate' => 0
+        ];
+    }
+    
+    /**
+     * Test connection to provider
+     * 
+     * @return array Test result
+     */
+    public function test_connection() {
+        try {
+            // Simple test with minimal token usage
+            $test_conversation = [
+                ['role' => 'user', 'content' => 'Hello']
+            ];
+            
+            $response = $this->generate_response($test_conversation, [
+                'max_tokens' => 5,
+                'temperature' => 0
+            ]);
+            
+            return [
+                'success' => true,
+                'message' => 'Connection successful',
+                'response_time' => $response['response_time'] ?? 0,
+                'tokens_used' => $response['tokens_used'] ?? 0
+            ];
+            
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'message' => $e->getMessage(),
+                'error_code' => $e->getCode()
             ];
         }
     }
