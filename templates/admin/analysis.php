@@ -32,6 +32,9 @@ $trend_data = [
 ?>
 
 <div class="wrap aia-analysis-light">
+    <!-- Skip Link for Accessibility -->
+    <a href="#aia-main-content" class="aia-sr-only aia-skip-link"><?php _e('Skip to main content', 'ai-inventory-agent'); ?></a>
+    
     <!-- Professional Header -->
     <div class="aia-analysis-page-header">
         <div class="aia-analysis-title-section">
@@ -64,7 +67,7 @@ $trend_data = [
     </div>
 
     <!-- Key Metrics Grid -->
-    <div class="aia-metrics-section">
+    <main id="aia-main-content" class="aia-metrics-section">
         <div class="aia-section-header">
             <h2 class="aia-section-title"><?php esc_html_e('Key Performance Indicators', 'ai-inventory-agent'); ?></h2>
             <p class="aia-section-description"><?php esc_html_e('Real-time overview of your inventory performance', 'ai-inventory-agent'); ?></p>
@@ -483,7 +486,7 @@ jQuery(document).ready(function($) {
                 datasets: [{
                     label: '<?php esc_js_e('Stock Level %', 'ai-inventory-agent'); ?>',
                     data: <?php echo json_encode($trend_data['stock_levels']['data']); ?>,
-                    borderColor: '#2563eb',
+                    borderColor: 'var(--aia-primary-600, #2563eb)',
                     backgroundColor: 'rgba(37, 99, 235, 0.1)',
                     borderWidth: 3,
                     fill: true,

@@ -6,11 +6,11 @@
 /* ===== Analysis Light Theme Foundation ===== */
 
 .aia-analysis-light {
-  background: #fafbfc;
+  background: var(--aia-gray-50, #fafbfc);
   min-height: 100vh;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  color: #1f2937;
-  line-height: 1.5;
+  font-family: var(--aia-font-primary, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif);
+  color: var(--aia-text-primary, #1f2937);
+  line-height: var(--aia-leading-normal, 1.5);
 }
 
 /* ===== Page Header ===== */
@@ -90,8 +90,9 @@
 
 .aia-metrics-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: var(--aia-space-6, 24px);
+  margin-bottom: var(--aia-space-8, 32px);
 }
 
 .aia-metric-card {
@@ -379,6 +380,15 @@
   position: relative;
   height: 300px;
   width: 100%;
+  background: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.aia-chart-container canvas {
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
 
 .aia-chart-loading {
@@ -390,9 +400,24 @@
   flex-direction: column;
   align-items: center;
   gap: 12px;
-  color: #6b7280;
+  color: var(--aia-text-secondary, #6b7280);
   font-size: 14px;
   font-weight: 500;
+  z-index: 10;
+}
+
+.aia-chart-loading .aia-loading-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--aia-gray-200, #e5e7eb);
+  border-top: 3px solid var(--aia-primary-600, #2563eb);
+  border-radius: 50%;
+  animation: chart-loading-spin 1s linear infinite;
+}
+
+@keyframes chart-loading-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
 /* ===== Performance List ===== */
@@ -756,6 +781,21 @@
   }
 }
 
+@media (max-width: 1024px) {
+  .aia-metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  
+  .aia-analysis-content-grid {
+    gap: 24px;
+  }
+  
+  .aia-chart-container {
+    height: 280px;
+  }
+}
+
 @media (max-width: 768px) {
   .aia-analysis-page-header {
     flex-direction: column;
@@ -876,5 +916,36 @@
   .aia-table--modern th,
   .aia-table--modern td {
     padding: 12px 16px;
+  }
+  
+  /* Touch-friendly improvements */
+  .aia-btn {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  .aia-table-actions .aia-btn {
+    padding: 8px 12px;
+  }
+  
+  /* Chart touch interactions */
+  .aia-chart-container {
+    touch-action: pan-x pan-y;
+  }
+}
+
+/* ===== Touch Device Optimizations ===== */
+
+@media (hover: none) and (pointer: coarse) {
+  .aia-metric-card:hover {
+    transform: none;
+  }
+  
+  .aia-performance-item:hover {
+    transform: none;
+  }
+  
+  .aia-btn:hover {
+    transform: none;
   }
 }
