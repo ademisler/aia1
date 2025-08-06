@@ -4,6 +4,9 @@ This folder contains older versions of the AI Inventory Agent plugin.
 
 ## Archived Versions
 
+### Stable Releases
+- [ai-inventory-agent-v1.0.0.zip](ai-inventory-agent-v1.0.0.zip) - Initial release (2024-01-15)
+
 ### Beta Releases
 - No beta releases archived yet
 
