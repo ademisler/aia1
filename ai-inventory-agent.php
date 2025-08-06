@@ -3,7 +3,7 @@
  * Plugin Name: AI Inventory Agent (AIA)
  * Plugin URI: https://example.com/ai-inventory-agent
  * Description: AI-powered inventory management plugin for WooCommerce stores with intelligent stock analysis, demand forecasting, and automated recommendations.
- * Version: 2.2.8
+ * Version: 2.3.0
  * Author: Your Name
  * Author URI: https://example.com
  * Text Domain: ai-inventory-agent
@@ -26,7 +26,7 @@ if (!defined('ABSPATH')) {
 define('AIA_PLUGIN_FILE', __FILE__);
 define('AIA_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('AIA_PLUGIN_URL', plugin_dir_url(__FILE__));
-define('AIA_PLUGIN_VERSION', '2.2.8');
+define('AIA_PLUGIN_VERSION', '2.3.0');
 define('AIA_PLUGIN_BASENAME', plugin_basename(__FILE__));
 
 // Check if WooCommerce is active
@@ -89,9 +89,13 @@ add_action('plugins_loaded', function() {
         return;
     }
     
-    // Memory check before initialization
-    if (memory_get_usage() > (1024 * 1024 * 600)) { // 600MB threshold
-        error_log('AIA: Memory usage too high before plugin initialization: ' . memory_get_usage());
+    // Memory check before initialization using centralized manager
+    if (!class_exists('AIA\\Core\\MemoryManager')) {
+        require_once AIA_PLUGIN_DIR . 'includes/Core/MemoryManager.php';
+    }
+    
+    if (!\AIA\Core\MemoryManager::should_continue_loading()) {
+        \AIA\Core\MemoryManager::log_usage('plugin_initialization_blocked');
         return;
     }
     

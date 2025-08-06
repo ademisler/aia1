@@ -702,159 +702,95 @@ class AdminInterface {
             return;
         }
         
-        // Enqueue CSS files in proper order
-        // Base styles first
+        // Check if asset optimization is enabled
+        $settings = get_option('aia_settings', []);
+        $use_optimization = !empty($settings['enable_asset_optimization']) && !defined('WP_DEBUG');
+        
+        if ($use_optimization && class_exists('AIA\Core\AssetOptimizer')) {
+            // Use optimized assets
+            \AIA\Core\AssetOptimizer::optimize_admin_assets();
+            return;
+        }
+        
+        // Fallback: Use combined CSS file instead of multiple files
         wp_enqueue_style(
-            'aia-design-tokens',
-            AIA_PLUGIN_URL . 'assets/css/design-tokens.css',
+            'aia-combined-css',
+            AIA_PLUGIN_URL . 'assets/css/aia-combined.css',
             [],
             AIA_PLUGIN_VERSION
         );
         
-        wp_enqueue_style(
-            'aia-icons',
-            AIA_PLUGIN_URL . 'assets/css/icons.css',
-            ['aia-design-tokens'],
-            AIA_PLUGIN_VERSION
-        );
-        
-        wp_enqueue_style(
-            'aia-layout',
-            AIA_PLUGIN_URL . 'assets/css/layout.css',
-            ['aia-design-tokens'],
-            AIA_PLUGIN_VERSION
-        );
-        
-        wp_enqueue_style(
-            'aia-components',
-            AIA_PLUGIN_URL . 'assets/css/components.css',
-            ['aia-design-tokens', 'aia-layout'],
-            AIA_PLUGIN_VERSION
-        );
-        
-        // Page-specific styles
-        wp_enqueue_style(
-            'aia-dashboard',
-            AIA_PLUGIN_URL . 'assets/css/dashboard.css',
-            ['aia-components'],
-            AIA_PLUGIN_VERSION
-        );
-        
-        wp_enqueue_style(
-            'aia-chat',
-            AIA_PLUGIN_URL . 'assets/css/chat.css',
-            ['aia-components'],
-            AIA_PLUGIN_VERSION
-        );
-        
-        wp_enqueue_style(
-            'aia-analysis',
-            AIA_PLUGIN_URL . 'assets/css/analysis.css',
-            ['aia-components'],
-            AIA_PLUGIN_VERSION
-        );
-        
-        wp_enqueue_style(
-            'aia-alerts',
-            AIA_PLUGIN_URL . 'assets/css/alerts.css',
-            ['aia-components'],
-            AIA_PLUGIN_VERSION
-        );
-        
-        wp_enqueue_style(
-            'aia-reports',
-            AIA_PLUGIN_URL . 'assets/css/reports.css',
-            ['aia-components'],
-            AIA_PLUGIN_VERSION
-        );
-        
-        wp_enqueue_style(
-            'aia-settings',
-            AIA_PLUGIN_URL . 'assets/css/settings.css',
-            ['aia-components'],
-            AIA_PLUGIN_VERSION
-        );
-        
-        // Enhancement styles - load with lower priority for performance
-        wp_enqueue_style(
-            'aia-animations',
-            AIA_PLUGIN_URL . 'assets/css/animations.css',
-            ['aia-components'],
-            AIA_PLUGIN_VERSION
-        );
-        wp_style_add_data('aia-animations', 'priority', 'low');
-        
-        wp_enqueue_style(
-            'aia-responsive',
-            AIA_PLUGIN_URL . 'assets/css/responsive.css',
-            ['aia-components'],
-            AIA_PLUGIN_VERSION
-        );
-        
-        // Main admin styles (without imports)
-        wp_enqueue_style(
-            'aia-admin-style',
-            AIA_PLUGIN_URL . 'assets/css/admin.css',
-            ['aia-chat', 'aia-dashboard', 'aia-analysis', 'aia-alerts', 'aia-reports', 'aia-settings', 'aia-animations', 'aia-responsive'],
-            AIA_PLUGIN_VERSION
-        );
-        
-        // Enqueue admin scripts
+        // Use optimized JavaScript
         wp_enqueue_script(
-            'aia-admin-script',
-            AIA_PLUGIN_URL . 'assets/js/admin.js',
-            ['jquery'],
-            AIA_PLUGIN_VERSION,
-            true
-        );
-        
-        // Enqueue UI components
-        wp_enqueue_script(
-            'aia-ui-components',
-            AIA_PLUGIN_URL . 'assets/js/ui-components.js',
-            ['jquery'],
-            AIA_PLUGIN_VERSION,
-            true
-        );
-        
-        // Enqueue Advanced components
-        wp_enqueue_script(
-            'aia-advanced-components',
-            AIA_PLUGIN_URL . 'assets/js/advanced-components.js',
-            ['jquery', 'aia-ui-components'],
-            AIA_PLUGIN_VERSION,
-            true
-        );
-        
-        // Enqueue Chart.js from CDN
-        wp_enqueue_script(
-            'chartjs',
-            'https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js',
+            'aia-optimized-js',
+            AIA_PLUGIN_URL . 'assets/js/aia-optimized.js',
             [],
-            '4.4.0',
-            true
-        );
-        
-        // Enqueue charts script
-        wp_enqueue_script(
-            'aia-charts',
-            AIA_PLUGIN_URL . 'assets/js/charts.js',
-            ['jquery', 'chartjs'],
             AIA_PLUGIN_VERSION,
             true
         );
         
-        // Localize script
-        wp_localize_script('aia-admin-script', 'aia_ajax', [
+        // Chart.js only when needed
+        if (in_array($hook, ['toplevel_page_ai-inventory-agent', 'ai-inventory-agent_page_aia-analysis', 'ai-inventory-agent_page_aia-reports'])) {
+            wp_enqueue_script(
+                'chartjs',
+                'https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js',
+                [],
+                '4.4.0',
+                true
+            );
+        }
+        
+        // Localize script data
+        wp_localize_script('aia-optimized-js', 'aia_ajax', [
             'ajax_url' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('aia_ajax_nonce'),
-            'plugin_url' => AIA_PLUGIN_URL,
             'strings' => [
-                'confirm_delete' => __('Are you sure you want to delete this item?', 'ai-inventory-agent'),
                 'loading' => __('Loading...', 'ai-inventory-agent'),
                 'error' => __('An error occurred. Please try again.', 'ai-inventory-agent'),
-                'success' => __('Operation completed successfully.', 'ai-inventory-agent')
+                'success' => __('Operation completed successfully.', 'ai-inventory-agent'),
+                'confirm' => __('Are you sure?', 'ai-inventory-agent'),
+                'cancel' => __('Cancel', 'ai-inventory-agent'),
+                'save' => __('Save', 'ai-inventory-agent'),
+            ],
+            'settings' => [
+                'optimization_enabled' => $use_optimization,
+                'debug_mode' => defined('WP_DEBUG') && WP_DEBUG
             ]
         ]);
+    }
+    
+    /**
+     * Legacy method - kept for backwards compatibility
+     * Now redirects to optimized asset loading
+     */
+    private function enqueue_legacy_assets() {
+        // This method is now deprecated
+        // Assets are loaded via the optimized system above
+    }
+    
+    /**
+     * Add asset optimization setting to SettingsManager defaults
+     */
+    public function add_optimization_setting() {
+        // Add asset optimization setting to defaults
+        $settings = get_option('aia_settings', []);
+        if (!isset($settings['enable_asset_optimization'])) {
+            $settings['enable_asset_optimization'] = true;
+            update_option('aia_settings', $settings);
+        }
+    }
+    
+    /**
+     * Get asset optimization statistics
+     */
+    public function get_asset_statistics() {
+        if (class_exists('AIA\Core\AssetOptimizer')) {
+            return \AIA\Core\AssetOptimizer::get_statistics();
+        }
+        
+        return [
+            'enabled' => false,
+            'message' => 'Asset optimization not available'
+        ];
     }
 }

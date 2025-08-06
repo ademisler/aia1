@@ -2,6 +2,9 @@
 
 namespace AIA\Core;
 
+use AIA\Core\MemoryManager;
+use AIA\Core\QueryOptimizer;
+
 /**
  * Database Class
  * 
@@ -41,10 +44,11 @@ class Database {
         $this->define_tables();
         
         // Only create tables during activation or when needed
-        // Add memory check to prevent issues during initialization
+        // Memory check using centralized manager
         if (is_admin() && 
-            memory_get_usage() < (1024 * 1024 * 800) && // Less than 800MB
+            MemoryManager::is_safe_for_operation('database_table_creation', MemoryManager::LEVEL_WARNING) && 
             (current_user_can('activate_plugins') || get_option('aia_db_version') !== AIA_PLUGIN_VERSION)) {
+            MemoryManager::log_usage('database_table_creation');
             $this->create_tables();
         }
         
@@ -563,5 +567,194 @@ class Database {
         }
         
         return $status;
+    }
+    
+    /**
+     * Execute optimized query with caching
+     * 
+     * @param string $query SQL query
+     * @param array $params Query parameters
+     * @param int $cache_expiration Cache expiration in seconds
+     * @return array Query results
+     */
+    public function execute_cached_query($query, $params = [], $cache_expiration = 3600) {
+        return QueryOptimizer::execute_cached_query($query, $params, $cache_expiration);
+    }
+    
+    /**
+     * Get optimized count with caching
+     * 
+     * @param string $table_key Table key
+     * @param array $conditions WHERE conditions
+     * @param int $cache_expiration Cache expiration
+     * @return int Count result
+     */
+    public function get_cached_count($table_key, $conditions = [], $cache_expiration = 3600) {
+        $table_name = $this->get_table_name($table_key);
+        return QueryOptimizer::get_count($table_name, $conditions, $cache_expiration);
+    }
+    
+    /**
+     * Execute batch insert with optimization
+     * 
+     * @param string $table_key Table key
+     * @param array $data Array of data to insert
+     * @param int $batch_size Batch size
+     * @return bool Success status
+     */
+    public function batch_insert($table_key, $data, $batch_size = 100) {
+        $table_name = $this->get_table_name($table_key);
+        return QueryOptimizer::batch_insert($table_name, $data, $batch_size);
+    }
+    
+    /**
+     * Get inventory logs with caching
+     * 
+     * @param int $product_id Product ID (optional)
+     * @param int $limit Limit
+     * @param int $offset Offset
+     * @return array Inventory logs
+     */
+    public function get_inventory_logs_cached($product_id = null, $limit = 50, $offset = 0) {
+        $table_name = $this->get_table_name('inventory_logs');
+        
+        if ($product_id) {
+            $query = "SELECT * FROM {$table_name} WHERE product_id = %d ORDER BY created_at DESC LIMIT %d OFFSET %d";
+            $params = [$product_id, $limit, $offset];
+        } else {
+            $query = "SELECT * FROM {$table_name} ORDER BY created_at DESC LIMIT %d OFFSET %d";
+            $params = [$limit, $offset];
+        }
+        
+        return $this->execute_cached_query($query, $params, 1800); // 30 minutes cache
+    }
+    
+    /**
+     * Get demand forecasts with caching
+     * 
+     * @param int $product_id Product ID (optional)
+     * @param string $date_from Date from (optional)
+     * @param string $date_to Date to (optional)
+     * @return array Demand forecasts
+     */
+    public function get_demand_forecasts_cached($product_id = null, $date_from = null, $date_to = null) {
+        $table_name = $this->get_table_name('demand_forecasts');
+        $conditions = [];
+        $params = [];
+        
+        if ($product_id) {
+            $conditions[] = 'product_id = %d';
+            $params[] = $product_id;
+        }
+        
+        if ($date_from) {
+            $conditions[] = 'forecast_date >= %s';
+            $params[] = $date_from;
+        }
+        
+        if ($date_to) {
+            $conditions[] = 'forecast_date <= %s';
+            $params[] = $date_to;
+        }
+        
+        $where_clause = !empty($conditions) ? 'WHERE ' . implode(' AND ', $conditions) : '';
+        $query = "SELECT * FROM {$table_name} {$where_clause} ORDER BY forecast_date ASC";
+        
+        return $this->execute_cached_query($query, $params, 3600); // 1 hour cache
+    }
+    
+    /**
+     * Get supplier performance data with caching
+     * 
+     * @param string $supplier_id Supplier ID (optional)
+     * @return array Supplier performance data
+     */
+    public function get_supplier_performance_cached($supplier_id = null) {
+        $table_name = $this->get_table_name('supplier_performance');
+        
+        if ($supplier_id) {
+            $query = "SELECT * FROM {$table_name} WHERE supplier_id = %s ORDER BY updated_at DESC";
+            $params = [$supplier_id];
+        } else {
+            $query = "SELECT * FROM {$table_name} ORDER BY reliability_score DESC";
+            $params = [];
+        }
+        
+        return $this->execute_cached_query($query, $params, 7200); // 2 hours cache
+    }
+    
+    /**
+     * Get AI conversations with caching
+     * 
+     * @param string $session_id Session ID (optional)
+     * @param int $limit Limit
+     * @return array AI conversations
+     */
+    public function get_ai_conversations_cached($session_id = null, $limit = 50) {
+        $table_name = $this->get_table_name('ai_conversations');
+        
+        if ($session_id) {
+            $query = "SELECT * FROM {$table_name} WHERE session_id = %s ORDER BY created_at ASC LIMIT %d";
+            $params = [$session_id, $limit];
+        } else {
+            $query = "SELECT * FROM {$table_name} ORDER BY created_at DESC LIMIT %d";
+            $params = [$limit];
+        }
+        
+        return $this->execute_cached_query($query, $params, 900); // 15 minutes cache
+    }
+    
+    /**
+     * Clear all database caches
+     */
+    public function clear_all_caches() {
+        QueryOptimizer::clear_all_caches();
+    }
+    
+    /**
+     * Clear cache for specific table
+     * 
+     * @param string $table_key Table key
+     */
+    public function clear_table_cache($table_key) {
+        $table_name = $this->get_table_name($table_key);
+        QueryOptimizer::clear_table_cache($table_name);
+    }
+    
+    /**
+     * Get database query statistics
+     * 
+     * @return array Query statistics
+     */
+    public function get_query_statistics() {
+        return QueryOptimizer::get_statistics();
+    }
+    
+    /**
+     * Optimize database tables
+     * 
+     * @return array Optimization results
+     */
+    public function optimize_tables() {
+        $table_names = [];
+        foreach ($this->tables as $table_info) {
+            $table_names[] = $table_info['name'];
+        }
+        
+        return QueryOptimizer::optimize_tables($table_names);
+    }
+    
+    /**
+     * Get table name by key
+     * 
+     * @param string $table_key Table key
+     * @return string Table name
+     */
+    private function get_table_name($table_key) {
+        if (!isset($this->tables[$table_key])) {
+            throw new \Exception("Unknown table key: {$table_key}");
+        }
+        
+        return $this->tables[$table_key]['name'];
     }
 }

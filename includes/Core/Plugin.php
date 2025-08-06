@@ -4,6 +4,9 @@ namespace AIA\Core;
 
 use AIA\Core\ModuleManager;
 use AIA\Core\Database;
+use AIA\Core\MemoryManager;
+use AIA\Core\SettingsManager;
+use AIA\Core\ServiceContainer;
 use AIA\Admin\AdminInterface;
 use AIA\Utils\RateLimiter;
 
@@ -43,11 +46,19 @@ class Plugin {
     private $admin_interface;
     
     /**
-     * Plugin settings
+     * Plugin settings (deprecated - use SettingsManager)
      * 
      * @var array
+     * @deprecated Use SettingsManager::get_settings() instead
      */
     private $settings;
+    
+    /**
+     * Service container instance
+     * 
+     * @var ServiceContainer
+     */
+    private $container;
     
     /**
      * Get plugin instance (Singleton pattern)
@@ -56,9 +67,9 @@ class Plugin {
      */
     public static function get_instance() {
         if (self::$instance === null) {
-            // Add memory protection
-            if (memory_get_usage() > (1024 * 1024 * 900)) { // 900MB threshold
-                error_log('AIA: Memory usage too high, preventing initialization');
+            // Memory protection using centralized manager
+            if (!MemoryManager::should_continue_loading()) {
+                MemoryManager::log_usage('singleton_initialization_blocked');
                 return null;
             }
             
@@ -70,6 +81,7 @@ class Plugin {
             }
             
             $initializing = true;
+            MemoryManager::log_usage('plugin_instance_creation');
             self::$instance = new self();
             $initializing = false;
         }
@@ -87,39 +99,32 @@ class Plugin {
      * Initialize plugin components
      */
     private function init() {
-        // Prevent initialization if memory usage is too high
-        if (memory_get_usage() > (1024 * 1024 * 700)) { // 700MB threshold
-            error_log('AIA: Memory usage too high during plugin initialization');
+        // Memory check using centralized manager
+        if (!MemoryManager::can_initialize_modules()) {
+            MemoryManager::log_usage('plugin_init_blocked');
             return;
         }
         
         try {
+            // Initialize service container first
+            $this->container = ServiceContainer::getInstance();
+            
             // Load text domain for translations
             add_action('init', [$this, 'load_textdomain']);
             
-            // Initialize database
-            $this->database = new Database();
-            
-            // Initialize module manager
-            $this->module_manager = new ModuleManager();
-            
-            // Load plugin settings
-            $this->load_settings();
-            
-            // Initialize admin interface
-            if (is_admin()) {
-                $this->admin_interface = new \AIA\Admin\AdminInterface();
-                $this->admin_interface->set_plugin_instance($this);
-            }
+            // Initialize services via container
+            $this->initialize_services();
             
             // Register WordPress hooks
             $this->register_hooks();
             
-            // Initialize modules with memory check
-            if (memory_get_usage() < (1024 * 1024 * 600)) { // 600MB threshold for modules
+            // Initialize modules with memory check using centralized manager
+            if (MemoryManager::can_initialize_modules()) {
+                MemoryManager::log_usage('before_module_initialization');
                 $this->init_modules();
+                MemoryManager::log_usage('after_module_initialization');
             } else {
-                error_log('AIA: Skipping module initialization due to high memory usage');
+                MemoryManager::log_usage('module_initialization_skipped');
             }
             
         } catch (\Exception $e) {
@@ -152,23 +157,13 @@ class Plugin {
      * Load plugin settings
      */
     private function load_settings() {
-        $this->settings = get_option('aia_settings', [
-            'ai_provider' => 'openai',
-            'api_key' => '',
-            'chat_enabled' => true,
-            'forecasting_enabled' => true,
-            'notifications_enabled' => true,
-            'reports_enabled' => true,
-            'low_stock_threshold' => 5,
-            'critical_stock_threshold' => 1,
-            'notification_email' => get_option('admin_email'),
-            'report_frequency' => 'weekly',
-            'system_prompt' => 'You are an AI inventory management assistant. Help users manage their WooCommerce store inventory efficiently.',
-        ]);
+        // Use centralized settings manager
+        $this->settings = SettingsManager::get_settings();
         
         // Debug logging
         if (defined('WP_DEBUG') && WP_DEBUG) {
-            error_log('AIA Plugin: Settings loaded - AI Provider: ' . ($this->settings['ai_provider'] ?? 'not set') . ', API Key Length: ' . strlen($this->settings['api_key'] ?? ''));
+            MemoryManager::log_usage('settings_loaded');
+            error_log('AIA Plugin: Settings loaded via SettingsManager - AI Provider: ' . ($this->settings['ai_provider'] ?? 'not set') . ', API Key Length: ' . strlen($this->settings['api_key'] ?? ''));
         }
     }
     
@@ -176,10 +171,12 @@ class Plugin {
      * Reload plugin settings (force refresh from database)
      */
     public function reload_settings() {
-        $this->load_settings();
+        // Force refresh from SettingsManager
+        $this->settings = SettingsManager::get_settings(true);
         
         if (defined('WP_DEBUG') && WP_DEBUG) {
-            error_log('AIA Plugin: Settings reloaded - AI Provider: ' . ($this->settings['ai_provider'] ?? 'not set') . ', API Key Length: ' . strlen($this->settings['api_key'] ?? ''));
+            MemoryManager::log_usage('settings_reloaded');
+            error_log('AIA Plugin: Settings reloaded via SettingsManager - AI Provider: ' . ($this->settings['ai_provider'] ?? 'not set') . ', API Key Length: ' . strlen($this->settings['api_key'] ?? ''));
         }
     }
     
@@ -495,10 +492,12 @@ class Plugin {
      */
     public function get_setting($key = null) {
         if ($key === null) {
-            return $this->settings;
+            // Return all settings via SettingsManager
+            return SettingsManager::get_settings();
         }
         
-        return $this->settings[$key] ?? null;
+        // Use SettingsManager for consistent access
+        return SettingsManager::get_setting($key);
     }
     
     /**
@@ -529,5 +528,102 @@ class Plugin {
      */
     public function get_database() {
         return $this->database;
+    }
+    
+    /**
+     * Initialize services via service container
+     */
+    private function initialize_services() {
+        // Get services from container
+        $this->database = $this->container->get('database');
+        $this->module_manager = $this->container->get('module_manager');
+        
+        // Load plugin settings
+        $this->load_settings();
+        
+        // Initialize admin interface
+        if (is_admin()) {
+            $this->admin_interface = $this->container->get('admin_interface');
+            if ($this->admin_interface) {
+                $this->admin_interface->set_plugin_instance($this);
+            }
+        }
+        
+        MemoryManager::log_usage('services_initialized');
+    }
+    
+    /**
+     * Get service container instance
+     * 
+     * @return ServiceContainer
+     */
+    public function get_container() {
+        return $this->container;
+    }
+    
+    /**
+     * Get service from container
+     * 
+     * @param string $service_name Service name
+     * @return mixed Service instance
+     */
+    public function get_service($service_name) {
+        return $this->container->get($service_name);
+    }
+    
+    /**
+     * Run system health check
+     * 
+     * @return array Health check results
+     */
+    public function run_health_check() {
+        try {
+            $validator = $this->container->get('integration_validator');
+            return $validator->quick_health_check();
+        } catch (\Exception $e) {
+            return [
+                'overall_healthy' => false,
+                'error' => $e->getMessage()
+            ];
+        }
+    }
+    
+    /**
+     * Run full integration validation
+     * 
+     * @return array Validation results
+     */
+    public function run_integration_validation() {
+        try {
+            $validator = $this->container->get('integration_validator');
+            return $validator->validate_all();
+        } catch (\Exception $e) {
+            return [
+                'summary' => [
+                    'overall_status' => 'FAIL',
+                    'error' => $e->getMessage()
+                ]
+            ];
+        }
+    }
+    
+    /**
+     * Get system performance statistics
+     * 
+     * @return array Performance statistics
+     */
+    public function get_performance_stats() {
+        return [
+            'memory' => MemoryManager::get_stats(),
+            'queries' => $this->database->get_query_statistics(),
+            'settings_cache' => [
+                'enabled' => true,
+                'expiration' => SettingsManager::CACHE_EXPIRATION
+            ],
+            'modules' => [
+                'registered' => count($this->module_manager->get_registered_modules()),
+                'active' => count($this->module_manager->get_active_modules())
+            ]
+        ];
     }
 }
