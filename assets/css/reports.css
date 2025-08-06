@@ -812,6 +812,22 @@ body.aia-modal-open {
     }
 }
 
+@media (max-width: 1024px) {
+    .aia-metrics-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.25rem;
+    }
+    
+    .aia-report-types-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.25rem;
+    }
+    
+    .aia-content-grid {
+        gap: 1.5rem;
+    }
+}
+
 @media (max-width: 768px) {
     .aia-reports-page-header {
         padding: 1.5rem 0;
@@ -890,4 +906,127 @@ body.aia-modal-open {
     .aia-widget-content {
         padding: 1rem;
     }
+}
+
+/* ===== Print Styles ===== */
+
+@media print {
+    .aia-reports-light {
+        background: white !important;
+        color: black !important;
+    }
+    
+    .aia-reports-actions,
+    .aia-modal,
+    .aia-btn {
+        display: none !important;
+    }
+    
+    .aia-reports-page-header {
+        border-bottom: 2px solid #000;
+        margin-bottom: 20px;
+        padding-bottom: 20px;
+    }
+    
+    .aia-reports-main-title {
+        color: black !important;
+        font-size: 24pt;
+    }
+    
+    .aia-metric-card {
+        border: 1px solid #ccc;
+        break-inside: avoid;
+        margin-bottom: 10px;
+    }
+    
+    .aia-metric-card::before {
+        background: #666 !important;
+    }
+    
+    .aia-report-card {
+        border: 1px solid #ccc;
+        break-inside: avoid;
+        margin-bottom: 15px;
+    }
+    
+    .aia-widget {
+        border: 1px solid #ccc;
+        break-inside: avoid;
+        margin-bottom: 20px;
+    }
+    
+    .aia-section-title {
+        color: black !important;
+        border-bottom: 1px solid #ccc;
+                 padding-bottom: 5px;
+     }
+ }
+
+/* ===== Error States ===== */
+
+.aia-error-state {
+    text-align: center;
+    padding: 2rem;
+    color: var(--aia-color-text-secondary);
+}
+
+.aia-error-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 1rem;
+    color: var(--aia-color-error-500);
+}
+
+.aia-error-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--aia-color-text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.aia-error-message {
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.aia-retry-button {
+    background: var(--aia-color-primary-600);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--aia-radius-md);
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.aia-retry-button:hover {
+    background: var(--aia-color-primary-700);
+}
+
+/* Report generation states */
+.aia-report-card.is-generating {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.aia-report-card.is-generating .aia-generate-report {
+    position: relative;
+    overflow: hidden;
+}
+
+.aia-report-card.is-generating .aia-generate-report::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    animation: loading-shimmer 1.5s infinite;
+}
+
+@keyframes loading-shimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
 }
