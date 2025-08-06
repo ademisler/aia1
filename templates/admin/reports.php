@@ -148,12 +148,14 @@ $settings = get_option('aia_settings', []);
                                         <h4 class="aia-report-title"><?php _e('Inventory Summary', 'ai-inventory-agent'); ?></h4>
                                         <span class="aia-report-status aia-report-status--available"><?php _e('Available', 'ai-inventory-agent'); ?></span>
                                     </div>
-                                    <button class="aia-btn aia-btn--primary aia-btn--sm aia-generate-report" data-type="summary">
-                                        <svg class="aia-icon aia-icon--sm" aria-hidden="true">
-                                            <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#aia-play"></use>
-                                        </svg>
-                                        <?php _e('Generate', 'ai-inventory-agent'); ?>
-                                    </button>
+                                    <div class="aia-report-actions">
+                                        <button class="aia-btn aia-btn--primary aia-btn--sm aia-generate-report" data-type="summary">
+                                            <svg class="aia-icon aia-icon--sm" aria-hidden="true">
+                                                <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#aia-play"></use>
+                                            </svg>
+                                            <?php _e('Generate', 'ai-inventory-agent'); ?>
+                                        </button>
+                                    </div>
                                 </div>
                                 <p class="aia-report-description"><?php _e('Complete overview of your inventory including stock levels, categories, and performance metrics.', 'ai-inventory-agent'); ?></p>
                             </div>
@@ -170,12 +172,14 @@ $settings = get_option('aia_settings', []);
                                         <h4 class="aia-report-title"><?php _e('Low Stock Alert', 'ai-inventory-agent'); ?></h4>
                                         <span class="aia-report-status aia-report-status--available"><?php _e('Available', 'ai-inventory-agent'); ?></span>
                                     </div>
-                                    <button class="aia-btn aia-btn--primary aia-btn--sm aia-generate-report" data-type="low-stock">
-                                        <svg class="aia-icon aia-icon--sm" aria-hidden="true">
-                                            <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#aia-play"></use>
-                                        </svg>
-                                        <?php _e('Generate', 'ai-inventory-agent'); ?>
-                                    </button>
+                                    <div class="aia-report-actions">
+                                        <button class="aia-btn aia-btn--primary aia-btn--sm aia-generate-report" data-type="low-stock">
+                                            <svg class="aia-icon aia-icon--sm" aria-hidden="true">
+                                                <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#aia-play"></use>
+                                            </svg>
+                                            <?php _e('Generate', 'ai-inventory-agent'); ?>
+                                        </button>
+                                    </div>
                                 </div>
                                 <p class="aia-report-description"><?php _e('Detailed list of products running low on stock with recommended reorder quantities.', 'ai-inventory-agent'); ?></p>
                             </div>
@@ -192,12 +196,14 @@ $settings = get_option('aia_settings', []);
                                         <h4 class="aia-report-title"><?php _e('Stock Movement', 'ai-inventory-agent'); ?></h4>
                                         <span class="aia-report-status aia-report-status--available"><?php _e('Available', 'ai-inventory-agent'); ?></span>
                                     </div>
-                                    <button class="aia-btn aia-btn--primary aia-btn--sm aia-generate-report" data-type="movement">
-                                        <svg class="aia-icon aia-icon--sm" aria-hidden="true">
-                                            <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#aia-play"></use>
-                                        </svg>
-                                        <?php _e('Generate', 'ai-inventory-agent'); ?>
-                                    </button>
+                                    <div class="aia-report-actions">
+                                        <button class="aia-btn aia-btn--primary aia-btn--sm aia-generate-report" data-type="movement">
+                                            <svg class="aia-icon aia-icon--sm" aria-hidden="true">
+                                                <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#aia-play"></use>
+                                            </svg>
+                                            <?php _e('Generate', 'ai-inventory-agent'); ?>
+                                        </button>
+                                    </div>
                                 </div>
                                 <p class="aia-report-description"><?php _e('Track product movement patterns, turnover rates, and identify fast/slow-moving items.', 'ai-inventory-agent'); ?></p>
                             </div>
@@ -214,12 +220,14 @@ $settings = get_option('aia_settings', []);
                                         <h4 class="aia-report-title"><?php _e('Performance Analysis', 'ai-inventory-agent'); ?></h4>
                                         <span class="aia-report-status aia-report-status--available"><?php _e('Available', 'ai-inventory-agent'); ?></span>
                                     </div>
-                                    <button class="aia-btn aia-btn--primary aia-btn--sm aia-generate-report" data-type="performance">
-                                        <svg class="aia-icon aia-icon--sm" aria-hidden="true">
-                                            <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#aia-play"></use>
-                                        </svg>
-                                        <?php _e('Generate', 'ai-inventory-agent'); ?>
-                                    </button>
+                                    <div class="aia-report-actions">
+                                        <button class="aia-btn aia-btn--primary aia-btn--sm aia-generate-report" data-type="performance">
+                                            <svg class="aia-icon aia-icon--sm" aria-hidden="true">
+                                                <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#aia-play"></use>
+                                            </svg>
+                                            <?php _e('Generate', 'ai-inventory-agent'); ?>
+                                        </button>
+                                    </div>
                                 </div>
                                 <p class="aia-report-description"><?php _e('Comprehensive performance metrics including ROI, profit margins, and efficiency analysis.', 'ai-inventory-agent'); ?></p>
                             </div>

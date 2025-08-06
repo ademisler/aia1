@@ -15,9 +15,26 @@
 }
 
 .aia-page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 2rem;
   margin-bottom: var(--aia-space-8);
-  padding-bottom: var(--aia-space-6);
+  padding: 2.5rem 0;
   border-bottom: 1px solid var(--aia-border-light);
+  background: var(--aia-bg-primary, #ffffff);
+}
+
+.aia-page-header-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.aia-page-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
 }
 
 .aia-page-header__content {
@@ -27,12 +44,30 @@
 .aia-page-title {
   display: flex;
   align-items: center;
-  gap: var(--aia-space-3);
-  margin-bottom: var(--aia-space-2);
+  gap: 1rem;
+  margin: 0 0 0.5rem 0;
+  font-size: var(--aia-text-3xl, 2rem);
+  font-weight: var(--aia-font-bold, 700);
+  color: var(--aia-text-primary, #1f2937);
+  line-height: var(--aia-leading-tight, 1.25);
+}
+
+.aia-page-title .aia-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  color: var(--aia-primary-600, #2563eb);
+  flex-shrink: 0;
 }
 
 .aia-page-title h1 {
   margin: 0;
+}
+
+.aia-page-subtitle {
+  font-size: var(--aia-text-lg, 1.125rem);
+  color: var(--aia-text-secondary, #6b7280);
+  margin: 0;
+  line-height: var(--aia-leading-relaxed, 1.625);
 }
 
 .aia-main-content {
@@ -88,6 +123,10 @@
 }
 
 .aia-card__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
   padding: var(--aia-space-6);
   border-bottom: 1px solid var(--aia-border-light);
   background: var(--aia-bg-secondary);
@@ -345,6 +384,20 @@
 /* ===== Responsive Design ===== */
 
 @media (max-width: 1024px) {
+  .aia-page-header {
+    gap: 1.5rem;
+    padding: 2rem 0;
+  }
+  
+  .aia-page-title {
+    font-size: var(--aia-text-2xl, 1.5rem);
+  }
+  
+  .aia-page-title .aia-icon {
+    width: 2rem;
+    height: 2rem;
+  }
+  
   .aia-layout-grid {
     grid-template-columns: 1fr;
     gap: var(--aia-space-6);
@@ -362,8 +415,17 @@
   }
   
   .aia-page-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
     margin-bottom: var(--aia-space-6);
-    padding-bottom: var(--aia-space-4);
+    padding: 1.5rem 0;
+  }
+  
+  .aia-page-header-actions {
+    width: 100%;
+    justify-content: flex-start;
+    flex-wrap: wrap;
   }
   
   .aia-page-title {

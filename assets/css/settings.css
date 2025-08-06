@@ -106,6 +106,10 @@
 }
 
 .aia-widget-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
     padding: 2rem 2rem 1.5rem 2rem;
     border-bottom: 1px solid #f3f4f6;
     background: #fafbfc;

@@ -557,6 +557,7 @@
   border: 2px solid var(--aia-gray-300);
   border-radius: var(--aia-radius-lg);
   transition: all var(--aia-transition-base) var(--aia-ease-in-out);
+  box-sizing: border-box;
 }
 
 .aia-input:focus {

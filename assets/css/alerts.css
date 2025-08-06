@@ -221,6 +221,7 @@
   color: #111827;
   background: #ffffff;
   transition: all 0.2s ease;
+  box-sizing: border-box;
 }
 
 .aia-form-input:focus {
