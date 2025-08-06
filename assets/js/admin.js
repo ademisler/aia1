@@ -142,6 +142,9 @@
             var loadingId = this.addLoadingMessage();
             console.log('Loading message ID:', loadingId);
 
+            // Store reference to this for use in callbacks
+            var self = this;
+            
             // Send AJAX request
             $.ajax({
                 url: aia_ajax.ajax_url,
@@ -150,18 +153,18 @@
                     action: 'aia_chat',
                     nonce: aia_ajax.nonce,
                     message: message,
-                    session_id: this.chat.sessionId
+                    session_id: self.chat.sessionId
                 },
                 success: function(response) {
                     console.log('Chat Response:', response);
                     if (response.success) {
                         // Remove loading message and add AI response
                         $('#' + loadingId).remove();
-                        AIA_Admin.addChatMessage('assistant', response.data.response);
+                        self.addChatMessage('assistant', response.data.response);
                         
                         // Update session ID if provided
                         if (response.data.session_id) {
-                            AIA_Admin.chat.sessionId = response.data.session_id;
+                            self.chat.sessionId = response.data.session_id;
                         }
                     } else {
                         $('#' + loadingId).remove();
@@ -170,18 +173,18 @@
                             errorMsg = response.data.message || JSON.stringify(response.data);
                         }
                         console.error('Chat Error:', response.data);
-                        AIA_Admin.addChatMessage('assistant', 'Error: ' + errorMsg);
+                        self.addChatMessage('assistant', 'Error: ' + errorMsg);
                     }
                 },
                 error: function(xhr, status, error) {
                     $('#' + loadingId).remove();
                     console.error('Chat AJAX Error:', status, error, xhr.responseText);
-                    AIA_Admin.addChatMessage('assistant', 'Connection error. Please try again.');
+                    self.addChatMessage('assistant', 'Connection error. Please try again.');
                 },
                 complete: function() {
-                    AIA_Admin.chat.isLoading = false;
-                    AIA_Admin.chat.sendBtn.prop('disabled', false);
-                    AIA_Admin.chat.input.focus();
+                    self.chat.isLoading = false;
+                    self.chat.sendBtn.prop('disabled', false);
+                    self.chat.input.focus();
                 }
             });
         },
