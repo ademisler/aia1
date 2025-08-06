@@ -644,6 +644,15 @@ class AdminInterface {
             true
         );
         
+        // Enqueue Advanced components
+        wp_enqueue_script(
+            'aia-advanced-components',
+            AIA_PLUGIN_URL . 'assets/js/advanced-components.js',
+            ['jquery', 'aia-ui-components'],
+            AIA_PLUGIN_VERSION,
+            true
+        );
+        
         // Enqueue Chart.js from CDN
         wp_enqueue_script(
             'chartjs',

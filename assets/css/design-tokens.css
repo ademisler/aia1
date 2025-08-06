@@ -1,25 +1,48 @@
 /**
- * AI Inventory Agent - Design Tokens
- * Modern, scalable design system foundation
+ * AI Inventory Agent - Premium Design System v2.0
+ * Enterprise-grade design tokens with advanced theming support
+ * Based on 2024-2025 dashboard design trends and accessibility standards
  */
 
-/* Import Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+/* Import Premium Typography */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700;800&display=swap');
+
+/* CSS Custom Properties Level 4 Support */
+@supports (color: color(display-p3 1 0 0)) {
+  :root {
+    color-gamut: p3;
+  }
+}
 
 :root {
-  /* ===== Color Palette ===== */
+  /* ===== Premium Color System ===== */
   
-  /* Primary Colors - Enhanced with better contrast */
+  /* Brand Colors - Enterprise Grade with P3 Color Gamut Support */
+  --aia-brand-50: color(display-p3 0.937 0.965 1);
+  --aia-brand-100: color(display-p3 0.859 0.918 0.996);
+  --aia-brand-200: color(display-p3 0.749 0.859 0.996);
+  --aia-brand-300: color(display-p3 0.576 0.773 0.992);
+  --aia-brand-400: color(display-p3 0.376 0.647 0.980);
+  --aia-brand-500: color(display-p3 0.231 0.510 0.965); /* Primary Brand */
+  --aia-brand-600: color(display-p3 0.149 0.388 0.922);
+  --aia-brand-700: color(display-p3 0.114 0.306 0.847);
+  --aia-brand-800: color(display-p3 0.118 0.251 0.686);
+  --aia-brand-900: color(display-p3 0.118 0.227 0.541);
+  --aia-brand-950: color(display-p3 0.078 0.149 0.361);
+  
+  /* Primary Colors - Fallback for non-P3 displays */
   --aia-primary-50: #eff6ff;
   --aia-primary-100: #dbeafe;
   --aia-primary-200: #bfdbfe;
   --aia-primary-300: #93c5fd;
   --aia-primary-400: #60a5fa;
-  --aia-primary-500: #3b82f6; /* Main Primary - Better contrast */
+  --aia-primary-500: #3b82f6;
   --aia-primary-600: #2563eb;
   --aia-primary-700: #1d4ed8;
   --aia-primary-800: #1e40af;
   --aia-primary-900: #1e3a8a;
+  --aia-primary-950: #172554;
   
   /* Secondary Colors - AI Purple */
   --aia-secondary-50: #f3e6ff;
@@ -95,10 +118,16 @@
   
   /* ===== Typography ===== */
   
-  /* Font Families */
-  --aia-font-primary: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
-  --aia-font-display: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --aia-font-mono: "JetBrains Mono", "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Courier New", monospace;
+  /* Premium Typography Stack */
+  --aia-font-primary: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --aia-font-display: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --aia-font-mono: "JetBrains Mono", "Fira Code", "SF Mono", Monaco, "Cascadia Code", "Roboto Mono", Consolas, "Liberation Mono", "Menlo", "Courier New", monospace;
+  --aia-font-brand: "Inter", system-ui, sans-serif;
+  
+  /* Advanced Typography Features */
+  --aia-font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  --aia-font-variant-numeric: tabular-nums;
+  --aia-font-optical-sizing: auto;
   
   /* Typography Scale - Improved readability */
   --aia-heading-1: var(--aia-text-4xl);
@@ -195,17 +224,41 @@
   --aia-shadow-warning: 0 10px 20px -5px rgba(255, 184, 0, 0.2);
   --aia-shadow-danger: 0 10px 20px -5px rgba(230, 0, 25, 0.2);
   
-  /* ===== Transitions ===== */
+  /* ===== Advanced Motion System ===== */
   
+  /* Transition Durations */
+  --aia-transition-instant: 0ms;
   --aia-transition-fast: 150ms;
   --aia-transition-base: 200ms;
   --aia-transition-slow: 300ms;
   --aia-transition-slower: 500ms;
+  --aia-transition-slowest: 750ms;
   
+  /* Premium Easing Functions */
+  --aia-ease-linear: cubic-bezier(0, 0, 1, 1);
   --aia-ease-in: cubic-bezier(0.4, 0, 1, 1);
   --aia-ease-out: cubic-bezier(0, 0, 0.2, 1);
   --aia-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
   --aia-ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --aia-ease-elastic: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --aia-ease-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --aia-ease-anticipate: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --aia-ease-overshoot: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  
+  /* Advanced Animation Properties */
+  --aia-animation-duration-short: 200ms;
+  --aia-animation-duration-medium: 300ms;
+  --aia-animation-duration-long: 500ms;
+  --aia-animation-duration-extra-long: 1000ms;
+  
+  /* Motion Preferences */
+  --aia-motion-reduce: 0.01ms;
+  --aia-motion-normal: var(--aia-transition-base);
+  
+  /* Spring Animation Values */
+  --aia-spring-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --aia-spring-wobbly: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --aia-spring-gentle: cubic-bezier(0.25, 0.46, 0.45, 0.94);
   
   /* ===== Z-Index Scale ===== */
   
@@ -233,15 +286,107 @@
   --aia-screen-2xl: 1536px;
 }
 
-/* Dark Mode Support */
+/* ===== Advanced Theming System ===== */
+
+/* Light Theme (Default) */
+:root {
+  --aia-theme-bg-primary: var(--aia-bg-primary);
+  --aia-theme-bg-secondary: var(--aia-bg-secondary);
+  --aia-theme-bg-tertiary: var(--aia-bg-tertiary);
+  --aia-theme-text-primary: var(--aia-text-primary);
+  --aia-theme-text-secondary: var(--aia-text-secondary);
+  --aia-theme-text-tertiary: var(--aia-text-tertiary);
+  --aia-theme-border: var(--aia-border-light);
+  --aia-theme-accent: var(--aia-primary-500);
+  --aia-theme-surface: var(--aia-gray-50);
+  --aia-theme-elevation: var(--aia-shadow-sm);
+}
+
+/* Dark Theme */
 @media (prefers-color-scheme: dark) {
   :root {
-    /* Override colors for dark mode */
-    --aia-bg-primary: var(--aia-gray-900);
-    --aia-bg-secondary: var(--aia-gray-800);
-    --aia-text-primary: var(--aia-gray-100);
-    --aia-text-secondary: var(--aia-gray-300);
+    /* Dark Mode Color Overrides */
+    --aia-theme-bg-primary: #0f0f0f;
+    --aia-theme-bg-secondary: #1a1a1a;
+    --aia-theme-bg-tertiary: #262626;
+    --aia-theme-text-primary: #fafafa;
+    --aia-theme-text-secondary: #d4d4d4;
+    --aia-theme-text-tertiary: #a3a3a3;
+    --aia-theme-border: #404040;
+    --aia-theme-accent: #60a5fa;
+    --aia-theme-surface: #171717;
+    --aia-theme-elevation: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+    
+    /* Enhanced Dark Mode Specific Colors */
+    --aia-bg-primary: #0f0f0f;
+    --aia-bg-secondary: #1a1a1a;
+    --aia-bg-tertiary: #262626;
+    --aia-text-primary: #fafafa;
+    --aia-text-secondary: #d4d4d4;
+    --aia-text-tertiary: #a3a3a3;
+    --aia-text-inverse: #0f0f0f;
+    --aia-border-light: #404040;
+    --aia-border-medium: #525252;
+    --aia-border-strong: #737373;
+    
+    /* Dark Mode Card Adjustments */
+    --aia-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --aia-shadow-base: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+    --aia-shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+    --aia-shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+    --aia-shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
   }
+}
+
+/* High Contrast Theme */
+@media (prefers-contrast: high) {
+  :root {
+    --aia-theme-bg-primary: #ffffff;
+    --aia-theme-bg-secondary: #f5f5f5;
+    --aia-theme-text-primary: #000000;
+    --aia-theme-text-secondary: #1a1a1a;
+    --aia-theme-border: #000000;
+    --aia-theme-accent: #0000ff;
+  }
+  
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --aia-theme-bg-primary: #000000;
+      --aia-theme-bg-secondary: #1a1a1a;
+      --aia-theme-text-primary: #ffffff;
+      --aia-theme-text-secondary: #f5f5f5;
+      --aia-theme-border: #ffffff;
+      --aia-theme-accent: #00ffff;
+    }
+  }
+}
+
+/* Custom Theme Classes */
+.aia-theme-dark {
+  --aia-theme-bg-primary: #0f0f0f;
+  --aia-theme-bg-secondary: #1a1a1a;
+  --aia-theme-bg-tertiary: #262626;
+  --aia-theme-text-primary: #fafafa;
+  --aia-theme-text-secondary: #d4d4d4;
+  --aia-theme-text-tertiary: #a3a3a3;
+  --aia-theme-border: #404040;
+  --aia-theme-accent: #60a5fa;
+  --aia-theme-surface: #171717;
+}
+
+.aia-theme-blue {
+  --aia-theme-accent: #0ea5e9;
+  --aia-theme-surface: #f0f9ff;
+}
+
+.aia-theme-green {
+  --aia-theme-accent: #10b981;
+  --aia-theme-surface: #f0fdf4;
+}
+
+.aia-theme-purple {
+  --aia-theme-accent: #8b5cf6;
+  --aia-theme-surface: #faf5ff;
 }
 
 /* Utility Classes for Design Tokens */
@@ -346,6 +491,105 @@
 .aia-text-inverse { color: var(--aia-text-inverse); }
 
 /* Background Color Utilities */
-.aia-bg-primary { background-color: var(--aia-bg-primary); }
-.aia-bg-secondary { background-color: var(--aia-bg-secondary); }
-.aia-bg-tertiary { background-color: var(--aia-bg-tertiary); }
+.aia-bg-primary { background-color: var(--aia-theme-bg-primary); }
+.aia-bg-secondary { background-color: var(--aia-theme-bg-secondary); }
+.aia-bg-tertiary { background-color: var(--aia-theme-bg-tertiary); }
+.aia-bg-surface { background-color: var(--aia-theme-surface); }
+
+/* Advanced Typography Utilities */
+.aia-font-feature-settings { font-feature-settings: var(--aia-font-feature-settings); }
+.aia-font-variant-numeric { font-variant-numeric: var(--aia-font-variant-numeric); }
+.aia-font-optical-sizing { font-optical-sizing: var(--aia-font-optical-sizing); }
+
+/* Theme-Aware Color Utilities */
+.aia-text-theme-primary { color: var(--aia-theme-text-primary); }
+.aia-text-theme-secondary { color: var(--aia-theme-text-secondary); }
+.aia-text-theme-tertiary { color: var(--aia-theme-text-tertiary); }
+.aia-text-theme-accent { color: var(--aia-theme-accent); }
+
+.aia-bg-theme-primary { background-color: var(--aia-theme-bg-primary); }
+.aia-bg-theme-secondary { background-color: var(--aia-theme-bg-secondary); }
+.aia-bg-theme-surface { background-color: var(--aia-theme-surface); }
+
+.aia-border-theme { border-color: var(--aia-theme-border); }
+
+/* Advanced Motion Utilities */
+.aia-motion-safe { 
+  transition-duration: var(--aia-motion-normal);
+}
+
+.aia-motion-reduce { 
+  transition-duration: var(--aia-motion-reduce);
+}
+
+/* Premium Animation Classes */
+.aia-animate-bounce-in {
+  animation: bounce-in var(--aia-animation-duration-medium) var(--aia-ease-bounce);
+}
+
+.aia-animate-slide-up {
+  animation: slide-up var(--aia-animation-duration-short) var(--aia-ease-out);
+}
+
+.aia-animate-scale-in {
+  animation: scale-in var(--aia-animation-duration-short) var(--aia-spring-gentle);
+}
+
+.aia-animate-fade-in-up {
+  animation: fade-in-up var(--aia-animation-duration-medium) var(--aia-ease-out);
+}
+
+/* Keyframes for Premium Animations */
+@keyframes bounce-in {
+  0% { transform: scale(0.3); opacity: 0; }
+  50% { transform: scale(1.05); opacity: 0.8; }
+  70% { transform: scale(0.9); opacity: 0.9; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes slide-up {
+  0% { transform: translateY(100%); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes scale-in {
+  0% { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes fade-in-up {
+  0% { transform: translateY(30px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+/* Container Query Utilities */
+@supports (container-type: inline-size) {
+  .aia-container {
+    container-type: inline-size;
+  }
+  
+  .aia-container-normal {
+    container-type: normal;
+  }
+  
+  .aia-container-size {
+    container-type: size;
+  }
+}
+
+/* Advanced Backdrop Utilities */
+.aia-backdrop-blur-sm { backdrop-filter: blur(4px); }
+.aia-backdrop-blur { backdrop-filter: blur(8px); }
+.aia-backdrop-blur-md { backdrop-filter: blur(12px); }
+.aia-backdrop-blur-lg { backdrop-filter: blur(16px); }
+.aia-backdrop-blur-xl { backdrop-filter: blur(24px); }
+
+.aia-backdrop-brightness-50 { backdrop-filter: brightness(0.5); }
+.aia-backdrop-brightness-75 { backdrop-filter: brightness(0.75); }
+.aia-backdrop-brightness-125 { backdrop-filter: brightness(1.25); }
+
+.aia-backdrop-contrast-125 { backdrop-filter: contrast(1.25); }
+.aia-backdrop-contrast-150 { backdrop-filter: contrast(1.5); }
+
+.aia-backdrop-saturate-150 { backdrop-filter: saturate(1.5); }
+.aia-backdrop-saturate-200 { backdrop-filter: saturate(2); }

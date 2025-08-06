@@ -1,17 +1,66 @@
 /**
- * AI Inventory Agent - Data Visualization Components
- * Modern charts, graphs, and data displays
+ * AI Inventory Agent - Advanced Data Visualization System
+ * Enterprise-grade charts, graphs, and interactive data displays
+ * Based on modern dashboard design patterns and accessibility standards
  */
 
 /* ===== Chart Components ===== */
 
-/* Chart Container */
+/* Advanced Chart Container */
 .aia-chart {
   position: relative;
-  background: white;
-  border-radius: var(--aia-radius-xl);
+  background: var(--aia-theme-bg-primary);
+  border: 1px solid var(--aia-theme-border);
+  border-radius: var(--aia-radius-2xl);
   padding: var(--aia-space-6);
-  box-shadow: var(--aia-shadow-sm);
+  box-shadow: var(--aia-theme-elevation);
+  transition: all var(--aia-transition-base) var(--aia-ease-out);
+  overflow: hidden;
+}
+
+.aia-chart:hover {
+  box-shadow: var(--aia-shadow-lg);
+  transform: translateY(-2px);
+}
+
+.aia-chart--interactive {
+  cursor: pointer;
+}
+
+.aia-chart--loading {
+  position: relative;
+  pointer-events: none;
+}
+
+.aia-chart--loading::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--aia-theme-bg-primary);
+  opacity: 0.8;
+  z-index: 1;
+}
+
+.aia-chart--loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 32px;
+  height: 32px;
+  margin: -16px 0 0 -16px;
+  border: 3px solid var(--aia-theme-border);
+  border-top-color: var(--aia-theme-accent);
+  border-radius: 50%;
+  animation: aia-chart-loading 1s linear infinite;
+  z-index: 2;
+}
+
+@keyframes aia-chart-loading {
+  to { transform: rotate(360deg); }
 }
 
 .aia-chart-header {
@@ -399,4 +448,338 @@
 .aia-timeline-description {
   font-size: var(--aia-text-sm);
   color: var(--aia-gray-700);
+}
+
+/* ===== Advanced KPI Cards ===== */
+.aia-kpi-card {
+  background: var(--aia-theme-bg-primary);
+  border: 1px solid var(--aia-theme-border);
+  border-radius: var(--aia-radius-2xl);
+  padding: var(--aia-space-6);
+  position: relative;
+  overflow: hidden;
+  transition: all var(--aia-transition-base) var(--aia-ease-out);
+}
+
+.aia-kpi-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--aia-shadow-xl);
+}
+
+.aia-kpi-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--aia-primary-500), var(--aia-secondary-500));
+}
+
+.aia-kpi-card--success::before {
+  background: linear-gradient(90deg, var(--aia-success-500), var(--aia-success-400));
+}
+
+.aia-kpi-card--warning::before {
+  background: linear-gradient(90deg, var(--aia-warning-500), var(--aia-warning-400));
+}
+
+.aia-kpi-card--danger::before {
+  background: linear-gradient(90deg, var(--aia-danger-500), var(--aia-danger-400));
+}
+
+.aia-kpi-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--aia-space-4);
+}
+
+.aia-kpi-icon {
+  width: 48px;
+  height: 48px;
+  padding: var(--aia-space-3);
+  border-radius: var(--aia-radius-xl);
+  background: var(--aia-primary-100);
+  color: var(--aia-primary-600);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.aia-kpi-card--success .aia-kpi-icon {
+  background: var(--aia-success-100);
+  color: var(--aia-success-600);
+}
+
+.aia-kpi-card--warning .aia-kpi-icon {
+  background: var(--aia-warning-100);
+  color: var(--aia-warning-600);
+}
+
+.aia-kpi-card--danger .aia-kpi-icon {
+  background: var(--aia-danger-100);
+  color: var(--aia-danger-600);
+}
+
+.aia-kpi-trend {
+  display: flex;
+  align-items: center;
+  gap: var(--aia-space-1);
+  font-size: var(--aia-text-sm);
+  font-weight: var(--aia-font-semibold);
+}
+
+.aia-kpi-trend--up {
+  color: var(--aia-success-600);
+}
+
+.aia-kpi-trend--down {
+  color: var(--aia-danger-600);
+}
+
+.aia-kpi-trend--neutral {
+  color: var(--aia-gray-600);
+}
+
+.aia-kpi-value {
+  font-size: var(--aia-text-4xl);
+  font-weight: var(--aia-font-bold);
+  color: var(--aia-theme-text-primary);
+  margin-bottom: var(--aia-space-2);
+  font-variant-numeric: tabular-nums;
+}
+
+.aia-kpi-label {
+  font-size: var(--aia-text-sm);
+  color: var(--aia-theme-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: var(--aia-tracking-wide);
+  font-weight: var(--aia-font-semibold);
+}
+
+.aia-kpi-description {
+  font-size: var(--aia-text-sm);
+  color: var(--aia-theme-text-tertiary);
+  margin-top: var(--aia-space-2);
+}
+
+/* ===== Real-time Data Indicators ===== */
+.aia-realtime-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--aia-space-2);
+  padding: var(--aia-space-2) var(--aia-space-3);
+  background: var(--aia-success-100);
+  color: var(--aia-success-800);
+  border-radius: var(--aia-radius-full);
+  font-size: var(--aia-text-xs);
+  font-weight: var(--aia-font-semibold);
+}
+
+.aia-realtime-indicator::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  background: var(--aia-success-500);
+  border-radius: 50%;
+  animation: aia-pulse 2s infinite;
+}
+
+@keyframes aia-pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.2);
+  }
+}
+
+/* ===== Interactive Chart Tooltips ===== */
+.aia-chart-tooltip {
+  position: absolute;
+  background: var(--aia-gray-900);
+  color: white;
+  padding: var(--aia-space-3);
+  border-radius: var(--aia-radius-lg);
+  font-size: var(--aia-text-sm);
+  pointer-events: none;
+  z-index: var(--aia-z-tooltip);
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all var(--aia-transition-fast) var(--aia-ease-out);
+  max-width: 200px;
+}
+
+.aia-chart-tooltip--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.aia-chart-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: var(--aia-gray-900);
+}
+
+/* ===== Advanced Progress Indicators ===== */
+.aia-progress-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--aia-space-3);
+}
+
+.aia-progress-item {
+  display: flex;
+  align-items: center;
+  gap: var(--aia-space-3);
+}
+
+.aia-progress-label {
+  min-width: 120px;
+  font-size: var(--aia-text-sm);
+  font-weight: var(--aia-font-medium);
+  color: var(--aia-theme-text-primary);
+}
+
+.aia-progress-bar-container {
+  flex: 1;
+  height: 8px;
+  background: var(--aia-theme-surface);
+  border-radius: var(--aia-radius-full);
+  overflow: hidden;
+  position: relative;
+}
+
+.aia-progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--aia-primary-500), var(--aia-primary-400));
+  border-radius: var(--aia-radius-full);
+  transition: width var(--aia-transition-slow) var(--aia-ease-out);
+  position: relative;
+}
+
+.aia-progress-bar-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  animation: aia-progress-shimmer 2s infinite;
+}
+
+@keyframes aia-progress-shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.aia-progress-value {
+  min-width: 40px;
+  text-align: right;
+  font-size: var(--aia-text-sm);
+  font-weight: var(--aia-font-semibold);
+  color: var(--aia-theme-text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ===== Sparklines ===== */
+.aia-sparkline {
+  width: 100%;
+  height: 40px;
+  stroke: var(--aia-primary-500);
+  stroke-width: 2;
+  fill: none;
+}
+
+.aia-sparkline-area {
+  fill: var(--aia-primary-100);
+  opacity: 0.3;
+}
+
+.aia-sparkline-container {
+  position: relative;
+  height: 40px;
+  margin: var(--aia-space-2) 0;
+}
+
+/* ===== Enhanced Data Tables ===== */
+.aia-data-table-enhanced {
+  background: var(--aia-theme-bg-primary);
+  border: 1px solid var(--aia-theme-border);
+  border-radius: var(--aia-radius-2xl);
+  overflow: hidden;
+  box-shadow: var(--aia-theme-elevation);
+}
+
+.aia-data-table-enhanced th {
+  background: var(--aia-theme-surface);
+  color: var(--aia-theme-text-secondary);
+  font-weight: var(--aia-font-semibold);
+  text-transform: uppercase;
+  letter-spacing: var(--aia-tracking-wide);
+  font-size: var(--aia-text-xs);
+  padding: var(--aia-space-4);
+  border-bottom: 2px solid var(--aia-theme-border);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.aia-data-table-enhanced td {
+  padding: var(--aia-space-4);
+  border-bottom: 1px solid var(--aia-theme-border);
+  color: var(--aia-theme-text-primary);
+  font-size: var(--aia-text-sm);
+  vertical-align: middle;
+}
+
+.aia-data-table-enhanced tbody tr:hover {
+  background: var(--aia-theme-surface);
+}
+
+.aia-data-table-enhanced tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* ===== Accessibility Enhancements ===== */
+@media (prefers-reduced-motion: reduce) {
+  .aia-chart,
+  .aia-kpi-card {
+    transition: none;
+    transform: none;
+  }
+  
+  .aia-chart:hover,
+  .aia-kpi-card:hover {
+    transform: none;
+  }
+  
+  .aia-progress-bar-fill::after,
+  .aia-realtime-indicator::before {
+    animation: none;
+  }
+  
+  .aia-chart-tooltip {
+    transition: none;
+  }
+}
+
+/* ===== Dark Mode Adjustments ===== */
+@media (prefers-color-scheme: dark) {
+  .aia-chart-tooltip {
+    background: var(--aia-gray-800);
+    border: 1px solid var(--aia-theme-border);
+  }
+  
+  .aia-chart-tooltip::after {
+    border-top-color: var(--aia-gray-800);
+  }
 }
