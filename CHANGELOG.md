@@ -5,6 +5,33 @@ All notable changes to AI Inventory Agent will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.3] - 2025-01-08
+
+### 🚨 Critical Memory Fix
+
+#### Fixed
+- **Memory Exhaustion Issues**
+  - Fixed fatal error: "Allowed memory size of 1073741824 bytes exhausted" that was causing site freezing
+  - Eliminated circular dependencies in plugin initialization that created infinite loops
+  - Added memory usage monitoring and protection mechanisms (700MB-900MB thresholds)
+  - Fixed circular dependency between Plugin class and ModuleManager
+  - Fixed circular dependency between Plugin class and AdminInterface
+  - Fixed circular dependencies in all module classes (AIChat, Notifications, Reporting, etc.)
+
+#### Technical Details
+- **Plugin.php**: Added recursion prevention and memory checks in `get_instance()` method
+- **ModuleManager.php**: Removed `Plugin::get_instance()` call from `is_module_enabled()` to break circular dependency
+- **AdminInterface.php**: Added `set_plugin_instance()` method to safely set plugin reference after initialization
+- **All Modules**: Moved `Plugin::get_instance()` calls from constructors to `init()` methods
+- **Database.php**: Added memory checks before table creation operations
+- **Main Plugin File**: Added multiple initialization guards and memory monitoring
+
+#### Performance Improvements
+- Plugin initialization now uses significantly less memory
+- Prevented infinite recursion that was exhausting server resources
+- Added proper error handling and logging for debugging
+- Implemented safer module loading sequence
+
 ## [1.0.2] - 2025-01-08
 
 ### 🚨 Critical Bug Fixes

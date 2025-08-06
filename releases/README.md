@@ -1,9 +1,9 @@
 # AI Inventory Agent - Releases
 
-## Latest Version: 1.0.2
+## Latest Version: 1.0.3
 
 ### Download
-- [ai-inventory-agent-v1.0.2.zip](ai-inventory-agent-v1.0.2.zip) - Latest stable release
+- [ai-inventory-agent-v1.0.3.zip](ai-inventory-agent-v1.0.3.zip) - Latest stable release
 
 ### Installation
 1. Download the latest ZIP file
@@ -15,6 +15,13 @@
 Older versions are available in the [archive](archive/) folder.
 
 ### Version History
+
+#### v1.0.3 (2025-01-08) - CRITICAL MEMORY FIX
+- **FIXED**: Fatal memory exhaustion error (1GB limit exceeded) causing site freezing
+- **FIXED**: Circular dependencies in plugin initialization creating infinite loops
+- **ADDED**: Memory usage monitoring and protection mechanisms
+- **IMPROVED**: Plugin initialization performance and stability
+- Plugin now loads without exhausting server memory
 
 #### v1.0.2 (2025-01-08) - CRITICAL BUG FIXES
 - **FIXED**: Fatal error preventing plugin activation (duplicate method declaration)

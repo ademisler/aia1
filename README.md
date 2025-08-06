@@ -329,7 +329,21 @@ The plugin is fully translatable:
 
 ## 📝 Changelog
 
+### Version 1.0.3
+- **CRITICAL MEMORY FIX**: Fixed fatal memory exhaustion error causing site freezing
+- Fixed circular dependencies in plugin initialization
+- Added memory usage monitoring and protection mechanisms
+- Improved plugin initialization performance and stability
+
 ### Version 1.0.2
+- Fixed fatal activation errors and PHP parse errors
+- Plugin activation now works correctly
+
+### Version 1.0.1
+- Enhanced WooCommerce compatibility
+- Improved multisite support
+
+### Version 1.0.0
 - Initial release
 - AI chat interface with OpenAI and Gemini support
 - Comprehensive inventory analysis
