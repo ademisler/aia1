@@ -26,7 +26,7 @@ class Activator {
         }
         
         // Check if WooCommerce is active
-        if (!class_exists('WooCommerce')) {
+        if (!self::is_woocommerce_active()) {
             deactivate_plugins(AIA_PLUGIN_BASENAME);
             wp_die(__('AI Inventory Agent requires WooCommerce to be installed and activated.', 'ai-inventory-agent'));
         }
@@ -37,8 +37,14 @@ class Activator {
         // Set default options
         self::set_default_options();
         
+        // Create user roles and capabilities
+        self::create_roles();
+        
         // Schedule cron events
         self::schedule_events();
+        
+        // Initialize sample data if in debug mode
+        self::init_sample_data();
         
         // Set activation flag
         update_option('aia_activated', true);
@@ -118,6 +124,16 @@ class Activator {
             wp_schedule_event(strtotime('first day of next month 9:00'), 'monthly', 'aia_monthly_report');
         }
         
+        // Generate weekly reports (different from aia_weekly_report)
+        if (!wp_next_scheduled('aia_generate_weekly_report')) {
+            wp_schedule_event(strtotime('next monday 8:00'), 'weekly', 'aia_generate_weekly_report');
+        }
+        
+        // Generate monthly reports (different from aia_monthly_report)
+        if (!wp_next_scheduled('aia_generate_monthly_report')) {
+            wp_schedule_event(strtotime('first day of next month 8:00'), 'monthly', 'aia_generate_monthly_report');
+        }
+        
         // Cache cleanup
         if (!wp_next_scheduled('aia_cache_cleanup')) {
             wp_schedule_event(time(), 'hourly', 'aia_cache_cleanup');
@@ -126,6 +142,31 @@ class Activator {
         // Stock level checks
         if (!wp_next_scheduled('aia_stock_check')) {
             wp_schedule_event(time(), 'twicedaily', 'aia_stock_check');
+        }
+        
+        // Daily forecasting
+        if (!wp_next_scheduled('aia_daily_forecasting')) {
+            wp_schedule_event(time(), 'daily', 'aia_daily_forecasting');
+        }
+        
+        // Weekly forecasting
+        if (!wp_next_scheduled('aia_weekly_forecasting')) {
+            wp_schedule_event(strtotime('next monday 10:00'), 'weekly', 'aia_weekly_forecasting');
+        }
+        
+        // Daily stock analysis
+        if (!wp_next_scheduled('aia_daily_stock_analysis')) {
+            wp_schedule_event(time(), 'daily', 'aia_daily_stock_analysis');
+        }
+        
+        // Weekly supplier analysis
+        if (!wp_next_scheduled('aia_weekly_supplier_analysis')) {
+            wp_schedule_event(strtotime('next sunday 9:00'), 'weekly', 'aia_weekly_supplier_analysis');
+        }
+        
+        // Stock alerts check
+        if (!wp_next_scheduled('aia_check_stock_alerts')) {
+            wp_schedule_event(time(), 'twicedaily', 'aia_check_stock_alerts');
         }
     }
     
@@ -165,6 +206,25 @@ class Activator {
         if (defined('WP_DEBUG') && WP_DEBUG) {
             // Only create sample data in debug mode
             self::create_sample_suppliers();
+        }
+    }
+    
+    /**
+     * Check if WooCommerce is active
+     * 
+     * @return bool
+     */
+    private static function is_woocommerce_active() {
+        if (is_multisite()) {
+            // Check if WooCommerce is network activated
+            if (array_key_exists('woocommerce/woocommerce.php', get_site_option('active_sitewide_plugins', []))) {
+                return true;
+            }
+            // Check if WooCommerce is activated on current site
+            return in_array('woocommerce/woocommerce.php', (array) get_option('active_plugins', []));
+        } else {
+            // Single site check
+            return in_array('woocommerce/woocommerce.php', (array) get_option('active_plugins', []));
         }
     }
     

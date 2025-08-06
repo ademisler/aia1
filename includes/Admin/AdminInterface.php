@@ -403,7 +403,7 @@ class AdminInterface {
         }
         
         // Check for WooCommerce
-        if (!class_exists('WooCommerce')) {
+        if (!$this->is_woocommerce_active()) {
             echo '<div class="notice notice-error">';
             echo '<p><strong>' . __('AI Inventory Agent:', 'ai-inventory-agent') . '</strong> ';
             echo __('WooCommerce is required for this plugin to work properly.', 'ai-inventory-agent');
@@ -577,5 +577,24 @@ class AdminInterface {
     public function is_plugin_admin_page() {
         $screen = get_current_screen();
         return $screen && strpos($screen->id, 'ai-inventory-agent') !== false;
+    }
+    
+    /**
+     * Check if WooCommerce is active
+     * 
+     * @return bool
+     */
+    private function is_woocommerce_active() {
+        if (is_multisite()) {
+            // Check if WooCommerce is network activated
+            if (array_key_exists('woocommerce/woocommerce.php', get_site_option('active_sitewide_plugins', []))) {
+                return true;
+            }
+            // Check if WooCommerce is activated on current site
+            return in_array('woocommerce/woocommerce.php', (array) get_option('active_plugins', []));
+        } else {
+            // Single site check
+            return in_array('woocommerce/woocommerce.php', (array) get_option('active_plugins', []));
+        }
     }
 }
