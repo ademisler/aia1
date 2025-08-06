@@ -5,6 +5,32 @@ All notable changes to AI Inventory Agent will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.7] - 2025-01-08
+
+### Fixed
+- **Header Background Issues**: Fixed white background problems on Chat and Settings pages
+- **CSS Class Conflicts**: Resolved Settings page using incorrect aia-dashboard wrapper class
+- **Template Structure**: Fixed Chat page container nesting and layout hierarchy
+- **Header Color Display**: Ensured proper header colors are displayed on all pages
+
+### Improved
+- **Page Layout Structure**: Added proper container classes for Chat and Settings pages
+- **CSS Specificity**: Fixed CSS rule conflicts that were overriding header styles
+- **Template Consistency**: Standardized wrapper class usage across all admin pages
+- **Visual Design**: Maintained minimal header design with correct color schemes
+
+### Technical
+- **Settings Page**: Changed wrapper from aia-dashboard to aia-settings-light
+- **Chat Page**: Added aia-chat-container for proper layout structure
+- **CSS Architecture**: Added missing container classes to chat.css and settings.css
+- **Template Cleanup**: Removed duplicate and conflicting HTML elements
+
+### Visual Updates
+- **Chat Header**: Now displays proper green background (#10b981)
+- **Settings Header**: Now displays proper indigo background (#6366f1)
+- **All Headers**: Confirmed color consistency across all admin pages
+- **Responsive Design**: Maintained responsive container structure
+
 ## [2.2.6] - 2025-01-08
 
 ### Fixed
