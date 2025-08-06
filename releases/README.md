@@ -1,9 +1,9 @@
 # AI Inventory Agent - Releases
 
-## Latest Version: 2.1.2
+## Latest Version: 2.1.3
 
 ### Download
-- [ai-inventory-agent-v2.1.2.zip](ai-inventory-agent-v2.1.2.zip) - Latest stable release with comprehensive styling and form fixes
+- [ai-inventory-agent-v2.1.3.zip](ai-inventory-agent-v2.1.3.zip) - Latest stable release with comprehensive layout standardization and header unification
 
 ### Installation
 1. Download the latest ZIP file
@@ -15,6 +15,13 @@
 Older versions are available in the [archive](archive/) folder.
 
 ### Version History
+
+#### v2.1.3 (2025-01-08) - COMPREHENSIVE LAYOUT & HEADER STANDARDIZATION
+- **🎨 HEADER UNIFICATION**: Standardized all page headers with consistent `.aia-page-header` component across Dashboard, Analysis, Reports, Settings, Chat, and Alerts
+- **🔧 LAYOUT FIXES**: Applied global `box-sizing: border-box`, enhanced grid containers, and fixed flex alignment issues
+- **📱 RESPONSIVE ENHANCEMENT**: Added comprehensive 1024px tablet breakpoints and improved grid column sizing
+- **🎭 WORDPRESS INTEGRATION**: Hidden disruptive admin footer messages and enhanced theme compatibility
+- **🔧 TECHNICAL**: Maintained modular CSS architecture while ensuring cross-page consistency and accessibility
 
 #### v2.1.2 (2025-01-08) - COMPREHENSIVE STYLING & FORM FIXES
 - **🎨 FORM IMPROVEMENTS**: Fixed box-sizing issues, input group layouts, and grid container overflow
