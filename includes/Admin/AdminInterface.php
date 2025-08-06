@@ -494,15 +494,17 @@ class AdminInterface {
             wp_send_json_error(__('Insufficient permissions.', 'ai-inventory-agent'));
         }
         
-        // Parse the serialized form data
-        $form_data = [];
-        parse_str($_POST['aia_settings'] ?? '', $form_data);
+        // Debug logging - show all POST data
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log('AIA Settings Save: All POST data: ' . print_r($_POST, true));
+        }
         
-        // If aia_settings is not in the parsed data, try to get it directly from POST
-        $settings_data = $form_data['aia_settings'] ?? $_POST['aia_settings'] ?? [];
+        // Handle FormData - directly get aia_settings array from POST
+        $settings_data = $_POST['aia_settings'] ?? [];
         
+        // If still empty, try to extract from individual fields
         if (empty($settings_data)) {
-            // Fallback: try to parse all POST data that starts with aia_settings
+            $settings_data = [];
             foreach ($_POST as $key => $value) {
                 if (strpos($key, 'aia_settings[') === 0) {
                     $setting_key = str_replace(['aia_settings[', ']'], '', $key);
@@ -512,23 +514,44 @@ class AdminInterface {
         }
         
         if (empty($settings_data)) {
-            wp_send_json_error(__('No settings data received.', 'ai-inventory-agent'));
+            wp_send_json_error(__('No settings data received. Please check form data.', 'ai-inventory-agent'));
         }
         
         // Debug logging
         if (defined('WP_DEBUG') && WP_DEBUG) {
-            error_log('AIA Settings Save: Received data: ' . print_r($settings_data, true));
+            error_log('AIA Settings Save: Parsed settings data: ' . print_r($settings_data, true));
         }
         
         $sanitized_settings = $this->sanitize_settings($settings_data);
         
+        // Debug logging
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log('AIA Settings Save: Sanitized settings: ' . print_r($sanitized_settings, true));
+        }
+        
         // Update settings
+        $updated_count = 0;
         foreach ($sanitized_settings as $key => $value) {
-            $this->plugin->update_setting($key, $value);
+            if ($this->plugin->update_setting($key, $value)) {
+                $updated_count++;
+            }
+        }
+        
+        // Debug logging
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log("AIA Settings Save: Updated {$updated_count} settings");
         }
         
         // Force reload settings to ensure AI provider gets updated
         $this->plugin->reload_settings();
+        
+        // Verify settings were saved
+        $saved_api_key = $this->plugin->get_setting('api_key');
+        $saved_provider = $this->plugin->get_setting('ai_provider');
+        
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log("AIA Settings Save: Verification - Provider: {$saved_provider}, API Key Length: " . strlen($saved_api_key ?: ''));
+        }
         
         // Try to reinitialize AI Chat module if it exists
         $module_manager = $this->plugin->get_module_manager();
@@ -539,7 +562,12 @@ class AdminInterface {
             }
         }
         
-        wp_send_json_success(__('Settings saved successfully!', 'ai-inventory-agent'));
+        wp_send_json_success([
+            'message' => __('Settings saved successfully!', 'ai-inventory-agent'),
+            'updated_count' => $updated_count,
+            'provider' => $saved_provider,
+            'api_key_length' => strlen($saved_api_key ?: '')
+        ]);
     }
     
     /**

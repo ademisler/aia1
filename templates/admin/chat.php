@@ -250,74 +250,74 @@ $summary = $inventory_analysis ? $inventory_analysis->get_inventory_summary() : 
 
 <script type="text/javascript">
 jQuery(document).ready(function($) {
-    // Handle suggestion clicks
-    $('.aia-suggestion-chip, .aia-question-item').on('click', function(e) {
-        e.preventDefault();
-        var message = $(this).data('message');
-        if (message) {
-            $('#aia-chat-input').val(message).focus();
-        }
-    });
-    
     // Auto-resize textarea
     $('#aia-chat-input').on('input', function() {
         this.style.height = 'auto';
-        this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+        this.style.height = this.scrollHeight + 'px';
     });
     
     // Handle form submission
     $('#aia-chat-form').on('submit', function(e) {
         e.preventDefault();
+        
         var message = $('#aia-chat-input').val().trim();
-        if (message) {
-            // Add user message to chat
-            addMessageToChat('user', message);
-            $('#aia-chat-input').val('').css('height', 'auto');
-            
-            // Show typing indicator
-            showTypingIndicator();
-            
-            // Send to AI via AJAX
-            $.ajax({
-                url: ajaxurl,
-                type: 'POST',
-                data: {
-                    action: 'aia_chat',
-                    message: message,
-                    session_id: 'chat_' + Date.now(),
-                    nonce: '<?php echo wp_create_nonce('aia_ajax_nonce'); ?>'
-                },
-                success: function(response) {
-                    hideTypingIndicator();
-                    console.log('Chat AJAX Response:', response); // Debug log
-                    if (response.success && response.data) {
-                        var aiMessage = response.data.response || response.data.message || 'AI response received.';
-                        addMessageToChat('ai', aiMessage);
+        if (!message) return;
+        
+        // Add user message to chat
+        addMessageToChat('user', message);
+        
+        // Clear input
+        $('#aia-chat-input').val('').css('height', 'auto');
+        
+        // Show typing indicator
+        showTypingIndicator();
+        
+        // Send to AI via AJAX
+        $.ajax({
+            url: ajaxurl,
+            type: 'POST',
+            data: {
+                action: 'aia_chat',
+                message: message,
+                session_id: 'chat_' + Date.now(),
+                nonce: '<?php echo wp_create_nonce('aia_ajax_nonce'); ?>'
+            },
+            success: function(response) {
+                hideTypingIndicator();
+                console.log('Chat AJAX Response:', response); // Debug log
+                if (response.success && response.data) {
+                    var aiMessage = response.data.response || response.data.message || 'AI response received.';
+                    addMessageToChat('ai', aiMessage);
+                } else {
+                    var errorMsg = '';
+                    if (response.data) {
+                        errorMsg = response.data.error || response.data.message || 'Unknown error occurred.';
                     } else {
-                        var errorMsg = '';
-                        if (response.data) {
-                            errorMsg = response.data.error || response.data.message || 'Unknown error occurred.';
-                        } else {
-                            errorMsg = '<?php esc_js(__('Sorry, I encountered an error. Please try again.', 'ai-inventory-agent')); ?>';
-                        }
-                        addMessageToChat('ai', errorMsg);
-                        console.error('Chat Error Response:', response);
+                        errorMsg = '<?php esc_js(__('Sorry, I encountered an error. Please try again.', 'ai-inventory-agent')); ?>';
                     }
-                },
-                error: function(xhr, status, error) {
-                    hideTypingIndicator();
-                    console.error('Chat AJAX Error:', error, xhr.responseText);
-                    addMessageToChat('ai', '<?php esc_js(__('Connection error. Please check your settings and try again.', 'ai-inventory-agent')); ?>');
+                    addMessageToChat('ai', errorMsg);
+                    console.error('Chat Error Response:', response);
                 }
-            });
-        }
+            },
+            error: function(xhr, status, error) {
+                hideTypingIndicator();
+                console.error('Chat AJAX Error:', error, xhr.responseText);
+                addMessageToChat('ai', '<?php esc_js(__('Connection error. Please check your settings and try again.', 'ai-inventory-agent')); ?>');
+            }
+        });
+    });
+    
+    // Handle suggested questions
+    $('.aia-question-item').on('click', function() {
+        var message = $(this).data('message');
+        $('#aia-chat-input').val(message);
+        $('#aia-chat-form').trigger('submit');
     });
     
     // Clear chat functionality
     $('.aia-clear-chat').on('click', function() {
         if (confirm('<?php esc_js(__('Are you sure you want to clear the chat history?', 'ai-inventory-agent')); ?>')) {
             $('#aia-chat-messages').find('.aia-message:not(:first-child)').remove();
-            $('#aia-chat-messages').find('.aia-capabilities-card').show();
         }
     });
     
@@ -349,11 +349,6 @@ jQuery(document).ready(function($) {
         
         $('#aia-chat-messages').append(messageHtml);
         $('#aia-chat-messages').scrollTop($('#aia-chat-messages')[0].scrollHeight);
-        
-        // Hide capabilities card after first user message
-        if (type === 'user') {
-            $('.aia-capabilities-card').fadeOut();
-        }
     }
     
     function showTypingIndicator() {
