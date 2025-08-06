@@ -329,7 +329,7 @@ The plugin is fully translatable:
 
 ## 📝 Changelog
 
-### Version 1.0.0
+### Version 1.0.2
 - Initial release
 - AI chat interface with OpenAI and Gemini support
 - Comprehensive inventory analysis
@@ -354,7 +354,7 @@ The plugin is fully translatable:
 - [Contributing](CONTRIBUTING.md) - How to contribute
 
 ### Quick Links
-- [Latest Release](releases/ai-inventory-agent-v1.0.0.zip)
+- [Latest Release](releases/ai-inventory-agent-v1.0.2.zip)
 - [Changelog](CHANGELOG.md)
 - [Support Forum](https://wordpress.org/support/plugin/ai-inventory-agent/)
 - [Report Issues](https://github.com/yourusername/ai-inventory-agent/issues)

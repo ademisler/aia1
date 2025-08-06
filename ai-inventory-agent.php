@@ -3,7 +3,7 @@
  * Plugin Name: AI Inventory Agent (AIA)
  * Plugin URI: https://example.com/ai-inventory-agent
  * Description: AI-powered inventory management plugin for WooCommerce stores with intelligent stock analysis, demand forecasting, and automated recommendations.
- * Version: 1.0.1
+ * Version: 1.0.2
  * Author: Your Name
  * Author URI: https://example.com
  * Text Domain: ai-inventory-agent
@@ -26,7 +26,7 @@ if (!defined('ABSPATH')) {
 define('AIA_PLUGIN_FILE', __FILE__);
 define('AIA_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('AIA_PLUGIN_URL', plugin_dir_url(__FILE__));
-define('AIA_PLUGIN_VERSION', '1.0.1');
+define('AIA_PLUGIN_VERSION', '1.0.2');
 define('AIA_PLUGIN_BASENAME', plugin_basename(__FILE__));
 
 // Check if WooCommerce is active

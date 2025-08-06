@@ -1,9 +1,9 @@
 # AI Inventory Agent - Releases
 
-## Latest Version: 1.0.1
+## Latest Version: 1.0.2
 
 ### Download
-- [ai-inventory-agent-v1.0.1.zip](ai-inventory-agent-v1.0.1.zip) - Latest stable release
+- [ai-inventory-agent-v1.0.2.zip](ai-inventory-agent-v1.0.2.zip) - Latest stable release
 
 ### Installation
 1. Download the latest ZIP file
@@ -15,6 +15,12 @@
 Older versions are available in the [archive](archive/) folder.
 
 ### Version History
+
+#### v1.0.2 (2025-01-08) - CRITICAL BUG FIXES
+- **FIXED**: Fatal error preventing plugin activation (duplicate method declaration)
+- **FIXED**: PHP parse error in InventoryContext.php (regex pattern syntax)
+- **RESOLVED**: All PHP syntax errors that prevented plugin activation
+- Plugin now activates successfully without errors
 
 #### v1.0.1 (2025-01-08)
 - WooCommerce compatibility improvements
