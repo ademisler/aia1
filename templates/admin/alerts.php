@@ -1,132 +1,151 @@
 <?php
 /**
- * Admin Alerts Template - Light Theme
+ * Admin Alerts Template - Modern Alert Theme
  * 
  * @package AI_Inventory_Agent
  */
 
-// Prevent direct access
+// Exit if accessed directly
 if (!defined('ABSPATH')) {
     exit;
 }
 
-// Get notifications module
+// Get alerts data
 $plugin_instance = \AIA\Core\Plugin::get_instance();
-$notifications_module = $plugin_instance ? $plugin_instance->get_module_manager()->get_module('notifications') : null;
 $inventory_analysis = $plugin_instance ? $plugin_instance->get_module_manager()->get_module('inventory_analysis') : null;
+$summary = $inventory_analysis ? $inventory_analysis->get_inventory_summary() : [];
 
-// Get current alerts
-$low_stock_products = [];
-$out_of_stock_products = [];
+// Get alert products
+$low_stock_products = $inventory_analysis ? $inventory_analysis->get_low_stock_products() : [];
+$out_of_stock_products = $inventory_analysis ? $inventory_analysis->get_out_of_stock_products() : [];
+
+// Separate critical and low stock
 $critical_stock_products = [];
+$critical_threshold = $this->plugin->get_setting('critical_stock_threshold') ?: 1;
 
-if ($inventory_analysis) {
-    $summary = $inventory_analysis->get_inventory_summary();
-    $low_stock_products = $summary['alerts']['low_stock_products'] ?? [];
-    $out_of_stock_products = $summary['alerts']['out_of_stock_products'] ?? [];
-    
-    // Separate critical from low stock
-    $settings = get_option('aia_settings', []);
-    $critical_threshold = $settings['critical_stock_threshold'] ?? 1;
-    
-    foreach ($low_stock_products as $key => $product) {
-        if ($product->stock_quantity <= $critical_threshold) {
-            $critical_stock_products[] = $product;
-            unset($low_stock_products[$key]);
-        }
+foreach ($low_stock_products as $key => $product) {
+    if ($product['stock_quantity'] <= $critical_threshold) {
+        $critical_stock_products[] = $product;
+        unset($low_stock_products[$key]);
     }
 }
-
-// Alert statistics
-$total_alerts = count($out_of_stock_products) + count($critical_stock_products) + count($low_stock_products);
-$critical_count = count($out_of_stock_products) + count($critical_stock_products);
-$warning_count = count($low_stock_products);
 ?>
 
 <div class="wrap aia-alerts-light">
-    <!-- Standardized Page Header -->
-    <div class="aia-page-header">
-        <div class="aia-page-header-content">
-            <h1 class="aia-page-title">
-                <svg class="aia-icon" aria-hidden="true">
-                    <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#aia-alert-triangle"></use>
-                </svg>
-                <?php esc_html_e('Stock Alerts', 'ai-inventory-agent'); ?>
-            </h1>
-            <p class="aia-page-subtitle">
-                <?php esc_html_e('Monitor and manage inventory alerts and notifications', 'ai-inventory-agent'); ?>
-            </p>
+    <!-- Modern Alerts Header -->
+    <div class="aia-alerts-header">
+        <div class="aia-alerts-header-bg">
+            <div class="aia-alerts-gradient-overlay"></div>
+            <div class="aia-alerts-warning-pattern">
+                <div class="aia-alerts-warning-triangle"></div>
+                <div class="aia-alerts-warning-triangle"></div>
+                <div class="aia-alerts-warning-triangle"></div>
+            </div>
         </div>
         
-        <div class="aia-page-header-actions">
-            <button class="aia-btn aia-btn--light" onclick="location.reload()">
-                <svg class="aia-icon aia-icon--sm" aria-hidden="true">
-                    <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#aia-refresh"></use>
-                </svg>
-                <?php esc_html_e('Refresh Alerts', 'ai-inventory-agent'); ?>
-            </button>
+        <div class="aia-alerts-header-content">
+            <div class="aia-alerts-title-section">
+                <div class="aia-alerts-icon-container">
+                    <div class="aia-alerts-icon-bg">
+                        <svg class="aia-alerts-icon" viewBox="0 0 24 24">
+                            <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
+                        </svg>
+                    </div>
+                    <div class="aia-alerts-icon-glow"></div>
+                </div>
+                
+                <div class="aia-alerts-text-content">
+                    <h1 class="aia-alerts-main-title">
+                        <?php esc_html_e('Stock Alerts', 'ai-inventory-agent'); ?>
+                        <span class="aia-alerts-title-badge">
+                            <svg class="aia-alerts-badge-icon" viewBox="0 0 24 24">
+                                <path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/>
+                            </svg>
+                            <?php 
+                            $total_alerts = count($critical_stock_products) + count($out_of_stock_products) + count($low_stock_products);
+                            echo esc_html($total_alerts);
+                            ?>
+                        </span>
+                    </h1>
+                    <p class="aia-alerts-subtitle">
+                        <?php esc_html_e('Monitor and manage your inventory alerts - Stay ahead of stock issues with real-time notifications', 'ai-inventory-agent'); ?>
+                    </p>
+                </div>
+            </div>
             
-            <button class="aia-btn aia-btn--primary" onclick="exportAlerts()">
-                <svg class="aia-icon aia-icon--sm" aria-hidden="true">
-                    <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#aia-download"></use>
-                </svg>
-                <?php esc_html_e('Export Report', 'ai-inventory-agent'); ?>
-            </button>
-        </div>
-    </div>
-
-    <!-- Alert Statistics -->
-    <div class="aia-alert-stats-section">
-        <div class="aia-alert-stats-grid">
-            <div class="aia-alert-stat-card aia-alert-stat-card--total">
-                <div class="aia-alert-stat-icon">
-                    <svg class="aia-icon aia-icon--xl" aria-hidden="true">
-                        <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#aia-bell"></use>
-                    </svg>
+            <div class="aia-alerts-header-stats">
+                <div class="aia-alerts-stat-card aia-alerts-stat-card--critical">
+                    <div class="aia-alerts-stat-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                        </svg>
+                    </div>
+                    <div class="aia-alerts-stat-content">
+                        <div class="aia-alerts-stat-number"><?php echo esc_html(count($out_of_stock_products)); ?></div>
+                        <div class="aia-alerts-stat-label"><?php esc_html_e('Out of Stock', 'ai-inventory-agent'); ?></div>
+                        <div class="aia-alerts-stat-description"><?php esc_html_e('Urgent action needed', 'ai-inventory-agent'); ?></div>
+                    </div>
                 </div>
-                <div class="aia-alert-stat-content">
-                    <div class="aia-alert-stat-number"><?php echo esc_html(number_format($total_alerts)); ?></div>
-                    <div class="aia-alert-stat-label"><?php esc_html_e('Total Alerts', 'ai-inventory-agent'); ?></div>
-                    <div class="aia-alert-stat-description"><?php esc_html_e('Active stock notifications', 'ai-inventory-agent'); ?></div>
+                
+                <div class="aia-alerts-stat-card aia-alerts-stat-card--warning">
+                    <div class="aia-alerts-stat-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
+                        </svg>
+                    </div>
+                    <div class="aia-alerts-stat-content">
+                        <div class="aia-alerts-stat-number"><?php echo esc_html(count($critical_stock_products)); ?></div>
+                        <div class="aia-alerts-stat-label"><?php esc_html_e('Critical Stock', 'ai-inventory-agent'); ?></div>
+                        <div class="aia-alerts-stat-description"><?php esc_html_e('Require immediate attention', 'ai-inventory-agent'); ?></div>
+                    </div>
                 </div>
-            </div>
-
-            <div class="aia-alert-stat-card aia-alert-stat-card--critical">
-                <div class="aia-alert-stat-icon">
-                    <svg class="aia-icon aia-icon--xl" aria-hidden="true">
-                        <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#aia-alert-circle"></use>
-                    </svg>
-                </div>
-                <div class="aia-alert-stat-content">
-                    <div class="aia-alert-stat-number"><?php echo esc_html(number_format($critical_count)); ?></div>
-                    <div class="aia-alert-stat-label"><?php esc_html_e('Critical Alerts', 'ai-inventory-agent'); ?></div>
-                    <div class="aia-alert-stat-description"><?php esc_html_e('Require immediate attention', 'ai-inventory-agent'); ?></div>
-                </div>
-            </div>
-
-            <div class="aia-alert-stat-card aia-alert-stat-card--warning">
-                <div class="aia-alert-stat-icon">
-                    <svg class="aia-icon aia-icon--xl" aria-hidden="true">
-                        <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#aia-alert-triangle"></use>
-                    </svg>
-                </div>
-                <div class="aia-alert-stat-content">
-                    <div class="aia-alert-stat-number"><?php echo esc_html(number_format($warning_count)); ?></div>
-                    <div class="aia-alert-stat-label"><?php esc_html_e('Warning Alerts', 'ai-inventory-agent'); ?></div>
-                    <div class="aia-alert-stat-description"><?php esc_html_e('Monitor closely', 'ai-inventory-agent'); ?></div>
+                
+                <div class="aia-alerts-stat-card aia-alerts-stat-card--info">
+                    <div class="aia-alerts-stat-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                        </svg>
+                    </div>
+                    <div class="aia-alerts-stat-content">
+                        <div class="aia-alerts-stat-number"><?php echo esc_html(count($low_stock_products)); ?></div>
+                        <div class="aia-alerts-stat-label"><?php esc_html_e('Low Stock', 'ai-inventory-agent'); ?></div>
+                        <div class="aia-alerts-stat-description"><?php esc_html_e('Monitor closely', 'ai-inventory-agent'); ?></div>
+                    </div>
                 </div>
             </div>
-
-            <div class="aia-alert-stat-card aia-alert-stat-card--success">
-                <div class="aia-alert-stat-icon">
-                    <svg class="aia-icon aia-icon--xl" aria-hidden="true">
-                        <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#aia-check-circle"></use>
+            
+            <div class="aia-alerts-header-actions">
+                <button class="aia-alerts-btn aia-alerts-btn--outline" onclick="location.reload()">
+                    <svg class="aia-alerts-btn-icon" viewBox="0 0 24 24">
+                        <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
                     </svg>
-                </div>
-                <div class="aia-alert-stat-content">
-                    <div class="aia-alert-stat-number"><?php echo esc_html(number_format(max(0, 100 - $total_alerts))); ?>%</div>
-                    <div class="aia-alert-stat-label"><?php esc_html_e('Health Score', 'ai-inventory-agent'); ?></div>
-                    <div class="aia-alert-stat-description"><?php esc_html_e('Overall inventory status', 'ai-inventory-agent'); ?></div>
+                    <?php esc_html_e('Refresh Alerts', 'ai-inventory-agent'); ?>
+                </button>
+                
+                <div class="aia-alerts-filter-dropdown">
+                    <button class="aia-alerts-btn aia-alerts-btn--secondary aia-alerts-dropdown-toggle">
+                        <svg class="aia-alerts-btn-icon" viewBox="0 0 24 24">
+                            <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"/>
+                        </svg>
+                        <?php esc_html_e('Filter Alerts', 'ai-inventory-agent'); ?>
+                        <svg class="aia-alerts-dropdown-arrow" viewBox="0 0 24 24">
+                            <path d="M7 10l5 5 5-5z"/>
+                        </svg>
+                    </button>
+                    <div class="aia-alerts-dropdown-menu">
+                        <button class="aia-alerts-dropdown-item" data-filter="all">
+                            <?php esc_html_e('All Alerts', 'ai-inventory-agent'); ?>
+                        </button>
+                        <button class="aia-alerts-dropdown-item" data-filter="critical">
+                            <?php esc_html_e('Critical Only', 'ai-inventory-agent'); ?>
+                        </button>
+                        <button class="aia-alerts-dropdown-item" data-filter="warning">
+                            <?php esc_html_e('Warning Only', 'ai-inventory-agent'); ?>
+                        </button>
+                        <button class="aia-alerts-dropdown-item" data-filter="info">
+                            <?php esc_html_e('Info Only', 'ai-inventory-agent'); ?>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

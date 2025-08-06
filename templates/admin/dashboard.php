@@ -19,35 +19,65 @@ $summary = $inventory_analysis ? $inventory_analysis->get_inventory_summary() : 
     <!-- Skip Link for Accessibility -->
     <a href="#aia-main-content" class="aia-sr-only aia-skip-link"><?php _e('Skip to main content', 'ai-inventory-agent'); ?></a>
     
-    <!-- Standardized Page Header -->
-    <div class="aia-page-header">
-        <div class="aia-page-header-content">
-            <h1 class="aia-page-title">
-                <svg class="aia-icon" aria-hidden="true">
-                    <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#aia-dashboard"></use>
-                </svg>
-                <?php esc_html_e('Inventory Dashboard', 'ai-inventory-agent'); ?>
-            </h1>
-            <p class="aia-page-subtitle">
-                <?php esc_html_e('AI-powered inventory management and insights', 'ai-inventory-agent'); ?>
-            </p>
+    <!-- Modern Dashboard Header -->
+    <div class="aia-dashboard-header">
+        <div class="aia-dashboard-header-bg">
+            <div class="aia-dashboard-gradient-overlay"></div>
+            <div class="aia-dashboard-pattern-overlay"></div>
         </div>
         
-        <div class="aia-page-header-actions">
-            <button class="aia-btn aia-btn--light" onclick="location.reload()" title="<?php esc_attr_e('Refresh data', 'ai-inventory-agent'); ?>">
-                <svg class="aia-icon aia-icon--sm" aria-hidden="true">
-                    <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#aia-refresh"></use>
-                </svg>
-                <?php esc_html_e('Refresh', 'ai-inventory-agent'); ?>
-            </button>
+        <div class="aia-dashboard-header-content">
+            <div class="aia-dashboard-title-section">
+                <div class="aia-dashboard-icon-wrapper">
+                    <div class="aia-dashboard-icon-bg">
+                        <svg class="aia-dashboard-icon" aria-hidden="true" viewBox="0 0 24 24">
+                            <path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/>
+                        </svg>
+                    </div>
+                </div>
+                
+                <div class="aia-dashboard-text-content">
+                    <h1 class="aia-dashboard-main-title">
+                        <?php esc_html_e('Inventory Dashboard', 'ai-inventory-agent'); ?>
+                        <span class="aia-dashboard-title-accent"><?php esc_html_e('AI-Powered', 'ai-inventory-agent'); ?></span>
+                    </h1>
+                    <p class="aia-dashboard-subtitle">
+                        <?php esc_html_e('Real-time insights and intelligent inventory management at your fingertips', 'ai-inventory-agent'); ?>
+                    </p>
+                </div>
+            </div>
             
-            <a href="<?php echo esc_url(admin_url('admin.php?page=aia-chat')); ?>" 
-               class="aia-btn aia-btn--primary">
-                <svg class="aia-icon aia-icon--sm" aria-hidden="true">
-                    <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#aia-chat"></use>
-                </svg>
-                <?php esc_html_e('AI Assistant', 'ai-inventory-agent'); ?>
-            </a>
+            <div class="aia-dashboard-header-actions">
+                <button class="aia-dashboard-btn aia-dashboard-btn--secondary" onclick="location.reload()" 
+                        title="<?php esc_attr_e('Refresh data', 'ai-inventory-agent'); ?>">
+                    <svg class="aia-dashboard-btn-icon" viewBox="0 0 24 24">
+                        <path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/>
+                    </svg>
+                    <?php esc_html_e('Refresh', 'ai-inventory-agent'); ?>
+                </button>
+                
+                <a href="<?php echo esc_url(admin_url('admin.php?page=aia-chat')); ?>" 
+                   class="aia-dashboard-btn aia-dashboard-btn--primary">
+                    <svg class="aia-dashboard-btn-icon" viewBox="0 0 24 24">
+                        <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-3 12H7v-2h10v2zm0-3H7V9h10v2zm0-3H7V6h10v2z"/>
+                    </svg>
+                    <?php esc_html_e('AI Assistant', 'ai-inventory-agent'); ?>
+                </a>
+                
+                <div class="aia-dashboard-quick-stats">
+                    <div class="aia-dashboard-stat-item">
+                        <div class="aia-dashboard-stat-value"><?php echo esc_html($summary['total_products'] ?? '0'); ?></div>
+                        <div class="aia-dashboard-stat-label"><?php esc_html_e('Products', 'ai-inventory-agent'); ?></div>
+                    </div>
+                    <div class="aia-dashboard-stat-divider"></div>
+                    <div class="aia-dashboard-stat-item">
+                        <div class="aia-dashboard-stat-value aia-dashboard-stat-value--warning">
+                            <?php echo esc_html($summary['low_stock_count'] ?? '0'); ?>
+                        </div>
+                        <div class="aia-dashboard-stat-label"><?php esc_html_e('Low Stock', 'ai-inventory-agent'); ?></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
