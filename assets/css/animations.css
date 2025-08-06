@@ -605,3 +605,498 @@
     overflow: visible;
   }
 }
+
+/* ===== Enterprise Level Advanced Animations ===== */
+
+/* Morphing Button Animation */
+@keyframes aia-morph-expand {
+  0% {
+    transform: scale(1);
+    border-radius: var(--aia-radius-lg);
+  }
+  50% {
+    transform: scale(1.05);
+    border-radius: var(--aia-radius-2xl);
+  }
+  100% {
+    transform: scale(1);
+    border-radius: var(--aia-radius-lg);
+  }
+}
+
+.aia-morph-button {
+  animation: aia-morph-expand 0.6s var(--aia-spring-gentle);
+  transition: all var(--aia-transition-base) var(--aia-spring-gentle);
+}
+
+.aia-morph-button:hover {
+  transform: scale(1.02);
+  box-shadow: var(--aia-shadow-xl);
+}
+
+.aia-morph-button:active {
+  transform: scale(0.98);
+  transition-duration: var(--aia-transition-fast);
+}
+
+/* Liquid Loading Animation */
+@keyframes aia-liquid-loading {
+  0%, 100% {
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    transform: rotate(0deg);
+  }
+  25% {
+    border-radius: 60% 40% 60% 40% / 70% 30% 70% 30%;
+    transform: rotate(90deg);
+  }
+  50% {
+    border-radius: 40% 60% 40% 60% / 40% 70% 30% 70%;
+    transform: rotate(180deg);
+  }
+  75% {
+    border-radius: 70% 30% 70% 30% / 50% 50% 50% 50%;
+    transform: rotate(270deg);
+  }
+}
+
+.aia-liquid-loader {
+  width: 40px;
+  height: 40px;
+  background: linear-gradient(45deg, var(--aia-primary-500), var(--aia-secondary-500));
+  animation: aia-liquid-loading 2s ease-in-out infinite;
+}
+
+/* Particle System Animation */
+@keyframes aia-particle-float {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateY(-20px) rotate(180deg);
+    opacity: 1;
+  }
+}
+
+.aia-particle-system {
+  position: relative;
+  overflow: hidden;
+}
+
+.aia-particle-system::before,
+.aia-particle-system::after {
+  content: '';
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: var(--aia-primary-400);
+  border-radius: 50%;
+  animation: aia-particle-float 3s ease-in-out infinite;
+}
+
+.aia-particle-system::before {
+  top: 20%;
+  left: 20%;
+  animation-delay: 0s;
+}
+
+.aia-particle-system::after {
+  top: 60%;
+  right: 30%;
+  animation-delay: 1.5s;
+}
+
+/* Advanced Hover Effects */
+.aia-hover-lift-rotate {
+  transition: all var(--aia-transition-base) var(--aia-spring-gentle);
+}
+
+.aia-hover-lift-rotate:hover {
+  transform: translateY(-8px) rotate(2deg);
+  box-shadow: var(--aia-shadow-2xl);
+}
+
+.aia-hover-tilt {
+  transition: transform var(--aia-transition-base) var(--aia-spring-gentle);
+}
+
+.aia-hover-tilt:hover {
+  transform: perspective(1000px) rotateX(10deg) rotateY(10deg);
+}
+
+.aia-hover-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.aia-hover-shine::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left var(--aia-transition-slow) var(--aia-ease-out);
+}
+
+.aia-hover-shine:hover::before {
+  left: 100%;
+}
+
+/* Magnetic Button Effect */
+.aia-magnetic-button {
+  transition: transform var(--aia-transition-fast) var(--aia-ease-out);
+  cursor: pointer;
+}
+
+.aia-magnetic-button:hover {
+  transform: scale(1.05);
+}
+
+/* Glass Morphism Animation */
+@keyframes aia-glass-shimmer {
+  0% {
+    background-position: -100% 0;
+  }
+  100% {
+    background-position: 100% 0;
+  }
+}
+
+.aia-glass-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.aia-glass-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+  background-size: 200% 100%;
+  animation: aia-glass-shimmer 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Typewriter with Cursor */
+@keyframes aia-cursor-blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+.aia-typewriter-advanced {
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 2px solid var(--aia-primary-500);
+  animation: aia-cursor-blink 1s step-end infinite;
+}
+
+/* Ripple Effect */
+@keyframes aia-ripple {
+  0% {
+    transform: scale(0);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(2);
+    opacity: 0;
+  }
+}
+
+.aia-ripple-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.aia-ripple-effect::after {
+  content: '';
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: scale(0);
+  animation: aia-ripple 0.6s ease-out;
+}
+
+/* Parallax Scroll Effect */
+.aia-parallax-element {
+  transition: transform 0.1s ease-out;
+  will-change: transform;
+}
+
+/* Elastic Scale Animation */
+@keyframes aia-elastic-scale {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  75% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.aia-elastic-entrance {
+  animation: aia-elastic-scale 0.6s var(--aia-spring-wobbly);
+}
+
+/* Breathing Animation */
+@keyframes aia-breathe {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+}
+
+.aia-breathing {
+  animation: aia-breathe 3s ease-in-out infinite;
+}
+
+/* Card Stack Effect */
+.aia-card-stack {
+  position: relative;
+}
+
+.aia-card-stack::before,
+.aia-card-stack::after {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  right: 4px;
+  bottom: 4px;
+  background: var(--aia-theme-bg-secondary);
+  border-radius: inherit;
+  z-index: -1;
+  transition: all var(--aia-transition-base) var(--aia-ease-out);
+}
+
+.aia-card-stack::after {
+  top: 8px;
+  left: 8px;
+  right: 8px;
+  bottom: 8px;
+  background: var(--aia-theme-surface);
+  z-index: -2;
+}
+
+.aia-card-stack:hover::before {
+  top: 2px;
+  left: 2px;
+  right: 2px;
+  bottom: 2px;
+}
+
+.aia-card-stack:hover::after {
+  top: 4px;
+  left: 4px;
+  right: 4px;
+  bottom: 4px;
+}
+
+/* Floating Action Button */
+@keyframes aia-fab-bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-4px);
+  }
+}
+
+.aia-fab {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--aia-primary-500);
+  color: white;
+  border: none;
+  box-shadow: var(--aia-shadow-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all var(--aia-transition-base) var(--aia-spring-gentle);
+  z-index: var(--aia-z-fab);
+}
+
+.aia-fab:hover {
+  transform: scale(1.1);
+  box-shadow: var(--aia-shadow-2xl);
+  animation: aia-fab-bounce 0.6s ease-in-out;
+}
+
+/* Progress Ring Animation */
+@keyframes aia-progress-ring {
+  0% {
+    stroke-dashoffset: 283;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.aia-progress-ring {
+  stroke-dasharray: 283;
+  stroke-dashoffset: 283;
+  animation: aia-progress-ring 2s ease-out forwards;
+}
+
+/* Glow Pulse Effect */
+@keyframes aia-glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 5px var(--aia-primary-500);
+  }
+  50% {
+    box-shadow: 0 0 20px var(--aia-primary-500), 0 0 30px var(--aia-primary-400);
+  }
+}
+
+.aia-glow-pulse {
+  animation: aia-glow-pulse 2s ease-in-out infinite;
+}
+
+/* Text Reveal Animation */
+@keyframes aia-text-reveal {
+  0% {
+    width: 0;
+  }
+  100% {
+    width: 100%;
+  }
+}
+
+.aia-text-reveal {
+  position: relative;
+  overflow: hidden;
+}
+
+.aia-text-reveal::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: var(--aia-theme-bg-primary);
+  animation: aia-text-reveal 1.5s ease-out forwards;
+}
+
+/* Advanced Loading Spinner */
+@keyframes aia-spinner-advanced {
+  0% {
+    transform: rotate(0deg);
+    border-radius: 50%;
+  }
+  50% {
+    transform: rotate(180deg);
+    border-radius: 20%;
+  }
+  100% {
+    transform: rotate(360deg);
+    border-radius: 50%;
+  }
+}
+
+.aia-spinner-advanced {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--aia-theme-surface);
+  border-top: 3px solid var(--aia-primary-500);
+  animation: aia-spinner-advanced 1.5s ease-in-out infinite;
+}
+
+/* Utility Classes for Advanced Animations */
+.aia-animate-on-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all var(--aia-transition-slow) var(--aia-ease-out);
+}
+
+.aia-animate-on-scroll.aia-in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.aia-stagger-children > * {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all var(--aia-transition-base) var(--aia-ease-out);
+}
+
+.aia-stagger-children.aia-in-view > * {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.aia-stagger-children.aia-in-view > *:nth-child(1) { transition-delay: 0.1s; }
+.aia-stagger-children.aia-in-view > *:nth-child(2) { transition-delay: 0.2s; }
+.aia-stagger-children.aia-in-view > *:nth-child(3) { transition-delay: 0.3s; }
+.aia-stagger-children.aia-in-view > *:nth-child(4) { transition-delay: 0.4s; }
+.aia-stagger-children.aia-in-view > *:nth-child(5) { transition-delay: 0.5s; }
+.aia-stagger-children.aia-in-view > *:nth-child(6) { transition-delay: 0.6s; }
+
+/* Performance Optimizations */
+.aia-gpu-accelerated {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+.aia-hardware-accelerated {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Enhanced Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  .aia-morph-button,
+  .aia-liquid-loader,
+  .aia-particle-system::before,
+  .aia-particle-system::after,
+  .aia-glass-card::before,
+  .aia-typewriter-advanced,
+  .aia-ripple-effect::after,
+  .aia-elastic-entrance,
+  .aia-breathing,
+  .aia-fab,
+  .aia-progress-ring,
+  .aia-glow-pulse,
+  .aia-text-reveal::after,
+  .aia-spinner-advanced {
+    animation: none;
+    transition: none;
+  }
+  
+  .aia-hover-lift-rotate:hover,
+  .aia-hover-tilt:hover,
+  .aia-magnetic-button:hover {
+    transform: none;
+  }
+  
+  .aia-animate-on-scroll,
+  .aia-stagger-children > * {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

@@ -1,0 +1,454 @@
+/**
+ * AI Inventory Agent - Performance Optimizations
+ * Advanced CSS performance optimizations and best practices
+ * GPU acceleration, will-change properties, and efficient animations
+ */
+
+/* ===== Critical Performance Optimizations ===== */
+
+/* Force GPU acceleration for frequently animated elements */
+.aia-gpu-accelerated,
+.aia-hover-lift,
+.aia-hover-lift-rotate,
+.aia-morph-button,
+.aia-magnetic-button,
+.aia-card-stack,
+.aia-modal-dialog,
+.aia-notification,
+.aia-command-palette__dialog {
+  transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Optimize will-change for specific animations */
+.aia-animate-on-scroll {
+  will-change: opacity, transform;
+}
+
+.aia-stagger-children > * {
+  will-change: opacity, transform;
+}
+
+.aia-ripple-effect {
+  will-change: transform;
+}
+
+.aia-parallax-element {
+  will-change: transform;
+}
+
+/* Remove will-change after animations complete */
+.aia-animation-complete {
+  will-change: auto;
+}
+
+/* ===== Efficient Scrolling ===== */
+
+/* Use transform instead of changing top/left for better performance */
+.aia-smooth-scroll {
+  scroll-behavior: smooth;
+}
+
+/* Optimize scroll containers */
+.aia-scroll-container {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
+/* Efficient scroll indicators */
+.aia-scroll-indicator {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--aia-primary-500), var(--aia-secondary-500));
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform 0.1s ease-out;
+  z-index: var(--aia-z-sticky);
+  will-change: transform;
+}
+
+/* ===== Optimized Transitions ===== */
+
+/* Use transform and opacity for the smoothest animations */
+.aia-optimized-transition {
+  transition: transform var(--aia-transition-base) var(--aia-ease-out),
+              opacity var(--aia-transition-base) var(--aia-ease-out);
+}
+
+/* Avoid animating expensive properties */
+.aia-avoid-layout-animations {
+  /* Don't animate: width, height, padding, margin, border-width, left, top, right, bottom */
+  /* Instead use: transform, opacity, filter */
+  transition: transform var(--aia-transition-base) var(--aia-ease-out),
+              opacity var(--aia-transition-base) var(--aia-ease-out),
+              filter var(--aia-transition-base) var(--aia-ease-out);
+}
+
+/* ===== Efficient Image Loading ===== */
+
+/* Optimize image containers */
+.aia-image-container {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--aia-theme-surface);
+}
+
+/* Lazy loading placeholder */
+.aia-image-placeholder {
+  background: linear-gradient(90deg, 
+    var(--aia-theme-surface) 25%, 
+    rgba(255,255,255,0.1) 50%, 
+    var(--aia-theme-surface) 75%);
+  background-size: 200% 100%;
+  animation: aia-skeleton-shimmer 1.5s infinite;
+}
+
+/* Optimized image loading */
+.aia-image-optimized {
+  width: 100%;
+  height: auto;
+  display: block;
+  opacity: 0;
+  transition: opacity var(--aia-transition-base) var(--aia-ease-out);
+}
+
+.aia-image-optimized.loaded {
+  opacity: 1;
+}
+
+/* ===== Memory Management ===== */
+
+/* Efficient table rendering for large datasets */
+.aia-virtual-table {
+  height: 400px;
+  overflow-y: auto;
+  contain: layout style paint;
+}
+
+.aia-virtual-row {
+  height: 50px;
+  contain: layout style paint;
+}
+
+/* Optimize large lists */
+.aia-virtual-list {
+  height: 100%;
+  overflow-y: auto;
+  contain: layout style paint;
+}
+
+.aia-virtual-item {
+  contain: layout style paint;
+  will-change: transform;
+}
+
+/* ===== CSS Containment for Performance ===== */
+
+/* Isolate layout calculations */
+.aia-contain-layout {
+  contain: layout;
+}
+
+/* Isolate style calculations */
+.aia-contain-style {
+  contain: style;
+}
+
+/* Isolate paint operations */
+.aia-contain-paint {
+  contain: paint;
+}
+
+/* Full containment for independent components */
+.aia-contain-strict {
+  contain: strict;
+}
+
+/* Containment for cards and widgets */
+.aia-card,
+.aia-widget,
+.aia-kpi-card,
+.aia-analytics-widget,
+.aia-performance-card {
+  contain: layout style paint;
+}
+
+/* ===== Efficient Animations ===== */
+
+/* Use CSS transforms instead of changing layout properties */
+.aia-efficient-slide {
+  transform: translateX(-100%);
+  transition: transform var(--aia-transition-base) var(--aia-ease-out);
+}
+
+.aia-efficient-slide.active {
+  transform: translateX(0);
+}
+
+/* Efficient fade animations */
+.aia-efficient-fade {
+  opacity: 0;
+  transition: opacity var(--aia-transition-base) var(--aia-ease-out);
+}
+
+.aia-efficient-fade.active {
+  opacity: 1;
+}
+
+/* Efficient scale animations */
+.aia-efficient-scale {
+  transform: scale(0.95);
+  opacity: 0;
+  transition: transform var(--aia-transition-base) var(--aia-ease-out),
+              opacity var(--aia-transition-base) var(--aia-ease-out);
+}
+
+.aia-efficient-scale.active {
+  transform: scale(1);
+  opacity: 1;
+}
+
+/* ===== Critical CSS Loading ===== */
+
+/* Above-the-fold content optimization */
+.aia-critical-content {
+  /* Inline critical styles here */
+  font-family: var(--aia-font-primary);
+  line-height: 1.5;
+  color: var(--aia-theme-text-primary);
+}
+
+/* Non-critical content can be loaded later */
+.aia-non-critical {
+  /* These styles can be loaded asynchronously */
+  content-visibility: auto;
+  contain-intrinsic-size: 0 400px;
+}
+
+/* ===== Efficient Grid Layouts ===== */
+
+/* Use CSS Grid efficiently */
+.aia-efficient-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--aia-space-4);
+  contain: layout;
+}
+
+/* Efficient flex layouts */
+.aia-efficient-flex {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--aia-space-4);
+  contain: layout;
+}
+
+/* ===== Reduced Motion Performance ===== */
+
+@media (prefers-reduced-motion: reduce) {
+  /* Remove all animations for better performance on low-end devices */
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  
+  /* Reset will-change to auto */
+  .aia-gpu-accelerated,
+  .aia-animate-on-scroll,
+  .aia-stagger-children > *,
+  .aia-ripple-effect,
+  .aia-parallax-element {
+    will-change: auto;
+  }
+}
+
+/* ===== Font Loading Optimization ===== */
+
+/* Optimize font rendering */
+.aia-font-optimized {
+  font-display: swap;
+  text-rendering: optimizeSpeed;
+}
+
+/* Prevent layout shift during font loading */
+.aia-font-stable {
+  font-display: fallback;
+}
+
+/* ===== Critical Path CSS ===== */
+
+/* Minimize critical CSS */
+.aia-critical-header {
+  display: flex;
+  align-items: center;
+  padding: var(--aia-space-4);
+  background: var(--aia-theme-bg-primary);
+  border-bottom: 1px solid var(--aia-theme-border);
+}
+
+.aia-critical-nav {
+  display: flex;
+  gap: var(--aia-space-4);
+}
+
+/* ===== Content Visibility Optimization ===== */
+
+/* Use content-visibility for off-screen content */
+.aia-content-visibility-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 400px;
+}
+
+/* Hidden content optimization */
+.aia-content-hidden {
+  content-visibility: hidden;
+}
+
+/* Visible content optimization */
+.aia-content-visible {
+  content-visibility: visible;
+}
+
+/* ===== Layer Management ===== */
+
+/* Promote frequently changing elements to their own layers */
+.aia-layer-promotion {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+/* Efficient z-index management */
+.aia-layer-base { z-index: 0; }
+.aia-layer-content { z-index: 1; }
+.aia-layer-navigation { z-index: 10; }
+.aia-layer-dropdown { z-index: 100; }
+.aia-layer-tooltip { z-index: 1000; }
+.aia-layer-modal { z-index: 10000; }
+
+/* ===== Efficient Media Queries ===== */
+
+/* Use efficient breakpoints */
+@media (min-width: 640px) {
+  .aia-responsive-sm {
+    /* Styles for small screens and up */
+    contain: layout style;
+  }
+}
+
+@media (min-width: 768px) {
+  .aia-responsive-md {
+    /* Styles for medium screens and up */
+    contain: layout style;
+  }
+}
+
+@media (min-width: 1024px) {
+  .aia-responsive-lg {
+    /* Styles for large screens and up */
+    contain: layout style;
+  }
+}
+
+/* ===== Print Optimization ===== */
+
+@media print {
+  /* Optimize for printing */
+  .aia-print-hidden {
+    display: none !important;
+  }
+  
+  .aia-print-optimized {
+    -webkit-print-color-adjust: exact;
+    color-adjust: exact;
+    break-inside: avoid;
+  }
+  
+  /* Remove animations and transitions for print */
+  * {
+    animation: none !important;
+    transition: none !important;
+    box-shadow: none !important;
+  }
+}
+
+/* ===== Development Mode Optimizations ===== */
+
+/* Debug performance issues in development */
+.aia-debug-performance {
+  outline: 2px solid red;
+  background: rgba(255, 0, 0, 0.1);
+}
+
+.aia-debug-layout {
+  outline: 2px solid blue;
+  background: rgba(0, 0, 255, 0.1);
+}
+
+.aia-debug-paint {
+  outline: 2px solid green;
+  background: rgba(0, 255, 0, 0.1);
+}
+
+/* ===== Cleanup Utilities ===== */
+
+/* Remove will-change after animations */
+.aia-cleanup-will-change {
+  will-change: auto;
+}
+
+/* Reset transforms */
+.aia-cleanup-transform {
+  transform: none;
+}
+
+/* Reset opacity */
+.aia-cleanup-opacity {
+  opacity: 1;
+}
+
+/* ===== Browser-Specific Optimizations ===== */
+
+/* WebKit optimizations */
+@supports (-webkit-appearance: none) {
+  .aia-webkit-optimized {
+    -webkit-transform: translateZ(0);
+    -webkit-backface-visibility: hidden;
+  }
+}
+
+/* Firefox optimizations */
+@supports (-moz-appearance: none) {
+  .aia-firefox-optimized {
+    transform: translateZ(0);
+  }
+}
+
+/* ===== Performance Monitoring ===== */
+
+/* Add performance markers for debugging */
+.aia-perf-marker::before {
+  content: attr(data-perf-label);
+  position: absolute;
+  top: -20px;
+  left: 0;
+  font-size: 10px;
+  color: red;
+  background: yellow;
+  padding: 2px 4px;
+  z-index: 9999;
+  display: none;
+}
+
+/* Show performance markers in development */
+.aia-debug .aia-perf-marker::before {
+  display: block;
+}

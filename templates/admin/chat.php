@@ -29,29 +29,103 @@ $is_configured = !empty($ai_provider) && !empty($api_key);
             </p>
         </div>
     <?php else: ?>
-        <div class="aia-chat-container">
-            <div class="aia-chat-header">
-                <h2><?php esc_html_e('AI Inventory Assistant', 'ai-inventory-agent'); ?></h2>
+        <!-- Skip Link for Accessibility -->
+        <a href="#main-chat-content" class="aia-skip-link"><?php _e('Skip to chat content', 'ai-inventory-agent'); ?></a>
+        
+        <div class="aia-ai-chat-container" id="main-chat-content">
+            <div class="aia-ai-chat-header">
+                <div class="aia-ai-avatar">
+                    <svg class="aia-icon aia-icon--lg" aria-hidden="true">
+                        <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#aia-bot"></use>
+                    </svg>
+                </div>
+                <div class="aia-ai-info">
+                    <h2><?php esc_html_e('AI Inventory Assistant', 'ai-inventory-agent'); ?></h2>
+                    <div class="aia-ai-status">
+                        <div class="aia-ai-status-indicator"></div>
+                        <span><?php esc_html_e('Online & Ready', 'ai-inventory-agent'); ?></span>
+                    </div>
+                </div>
                 <div class="aia-chat-actions">
-                    <button class="button button-small aia-clear-chat">
-                        <span class="dashicons dashicons-trash"></span>
+                    <button class="aia-button aia-button--secondary aia-button--sm aia-clear-chat">
+                        <svg class="aia-icon aia-icon--xs" aria-hidden="true">
+                            <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#aia-trash"></use>
+                        </svg>
                         <?php esc_html_e('Clear Chat', 'ai-inventory-agent'); ?>
                     </button>
                 </div>
             </div>
             
-            <div class="aia-chat-messages" id="aia-chat-messages">
-                <!-- Chat messages will be loaded here -->
-                <div class="aia-chat-welcome">
-                    <p><?php esc_html_e('Welcome! I\'m your AI inventory assistant. How can I help you manage your inventory today?', 'ai-inventory-agent'); ?></p>
-                    <p><?php esc_html_e('You can ask me about:', 'ai-inventory-agent'); ?></p>
-                    <ul>
-                        <li><?php esc_html_e('Current stock levels and inventory status', 'ai-inventory-agent'); ?></li>
-                        <li><?php esc_html_e('Product recommendations and reorder suggestions', 'ai-inventory-agent'); ?></li>
-                        <li><?php esc_html_e('Sales trends and demand forecasting', 'ai-inventory-agent'); ?></li>
-                        <li><?php esc_html_e('Supplier performance and risk analysis', 'ai-inventory-agent'); ?></li>
-                        <li><?php esc_html_e('Inventory optimization strategies', 'ai-inventory-agent'); ?></li>
-                    </ul>
+            <div class="aia-ai-chat-messages" id="aia-chat-messages">
+                <!-- Welcome Message -->
+                <div class="aia-message aia-message--ai">
+                    <div class="aia-message-avatar">
+                        <svg class="aia-icon aia-icon--sm" aria-hidden="true">
+                            <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#aia-bot"></use>
+                        </svg>
+                    </div>
+                    <div class="aia-message-content">
+                        <p><?php esc_html_e('Welcome! I\'m your AI inventory assistant. How can I help you manage your inventory today?', 'ai-inventory-agent'); ?></p>
+                        <div class="aia-confidence-meter">
+                            <span class="aia-confidence-label"><?php esc_html_e('Confidence:', 'ai-inventory-agent'); ?></span>
+                            <div class="aia-confidence-bar">
+                                <div class="aia-confidence-fill aia-confidence-fill--high" style="width: 95%"></div>
+                            </div>
+                            <span class="aia-confidence-value">95%</span>
+                        </div>
+                        <div class="aia-message-timestamp"><?php echo current_time('H:i'); ?></div>
+                    </div>
+                </div>
+                
+                <!-- AI Insights Card -->
+                <div class="aia-insight-card aia-animate-on-scroll">
+                    <div class="aia-insight-header">
+                        <div class="aia-insight-icon">
+                            <svg class="aia-icon aia-icon--lg" aria-hidden="true">
+                                <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#aia-analytics"></use>
+                            </svg>
+                        </div>
+                        <h3 class="aia-insight-title"><?php esc_html_e('What I Can Help With', 'ai-inventory-agent'); ?></h3>
+                    </div>
+                    <div class="aia-insight-content">
+                        <ul>
+                            <li><?php esc_html_e('Current stock levels and inventory status', 'ai-inventory-agent'); ?></li>
+                            <li><?php esc_html_e('Product recommendations and reorder suggestions', 'ai-inventory-agent'); ?></li>
+                            <li><?php esc_html_e('Sales trends and demand forecasting', 'ai-inventory-agent'); ?></li>
+                            <li><?php esc_html_e('Supplier performance and risk analysis', 'ai-inventory-agent'); ?></li>
+                            <li><?php esc_html_e('Inventory optimization strategies', 'ai-inventory-agent'); ?></li>
+                        </ul>
+                    </div>
+                    <div class="aia-insight-actions">
+                        <button class="aia-button aia-button--primary aia-button--sm" onclick="AIA.Chat.sendSuggestion('Show current stock levels')">
+                            <?php esc_html_e('Check Stock Levels', 'ai-inventory-agent'); ?>
+                        </button>
+                        <button class="aia-button aia-button--secondary aia-button--sm" onclick="AIA.Chat.sendSuggestion('Analyze inventory trends')">
+                            <?php esc_html_e('Analyze Trends', 'ai-inventory-agent'); ?>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- AI Suggestions -->
+            <div class="aia-ai-suggestions" id="aia-suggestions">
+                <div class="aia-suggestion-chip" onclick="AIA.Chat.sendSuggestion('What products need reordering?')">
+                    <svg class="aia-icon aia-icon--xs" aria-hidden="true">
+                        <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#aia-alert"></use>
+                    </svg>
+                    <?php esc_html_e('Reorder Alerts', 'ai-inventory-agent'); ?>
+                </div>
+                <div class="aia-suggestion-chip" onclick="AIA.Chat.sendSuggestion('Show top selling products')">
+                    <svg class="aia-icon aia-icon--xs" aria-hidden="true">
+                        <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#aia-trending-up"></use>
+                    </svg>
+                    <?php esc_html_e('Top Sellers', 'ai-inventory-agent'); ?>
+                </div>
+                <div class="aia-suggestion-chip" onclick="AIA.Chat.sendSuggestion('Inventory optimization tips')">
+                    <svg class="aia-icon aia-icon--xs" aria-hidden="true">
+                        <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#aia-settings"></use>
+                    </svg>
+                    <?php esc_html_e('Optimization Tips', 'ai-inventory-agent'); ?>
                 </div>
             </div>
             

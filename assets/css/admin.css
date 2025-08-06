@@ -10,6 +10,9 @@
 @import url('layout.css');
 @import url('components.css');
 @import url('advanced-components.css');
+@import url('ai-ux-patterns.css');
+@import url('enterprise-features.css');
+@import url('performance-optimizations.css');
 @import url('visual-hierarchy.css');
 @import url('responsive.css');
 @import url('dashboard.css');
