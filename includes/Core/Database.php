@@ -39,7 +39,11 @@ class Database {
         $this->table_prefix = $wpdb->prefix . 'aia_';
         
         $this->define_tables();
-        $this->create_tables();
+        
+        // Only create tables during activation or when needed
+        if (is_admin() && (current_user_can('activate_plugins') || get_option('aia_db_version') !== AIA_PLUGIN_VERSION)) {
+            $this->create_tables();
+        }
     }
     
     /**
@@ -198,8 +202,17 @@ class Database {
         
         foreach ($this->tables as $table_key => $table_info) {
             $sql = "CREATE TABLE {$table_info['name']} ({$table_info['schema']}) {$this->get_charset_collate()};";
-            dbDelta($sql);
+            
+            $result = dbDelta($sql);
+            
+            // Log any table creation issues
+            if (defined('WP_DEBUG') && WP_DEBUG && empty($result)) {
+                error_log("AIA Database: Failed to create/update table {$table_info['name']}");
+            }
         }
+        
+        // Update database version
+        update_option('aia_db_version', AIA_PLUGIN_VERSION);
     }
     
     /**

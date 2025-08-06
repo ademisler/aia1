@@ -42,8 +42,13 @@ class Activator {
             wp_die(__('AI Inventory Agent requires WooCommerce to be installed and activated.', 'ai-inventory-agent'));
         }
         
-        // Initialize database
-        $database = new Database();
+        // Initialize database with error handling
+        try {
+            $database = new Database();
+        } catch (Exception $e) {
+            deactivate_plugins(AIA_PLUGIN_BASENAME);
+            wp_die(sprintf(__('AI Inventory Agent database initialization failed: %s', 'ai-inventory-agent'), $e->getMessage()));
+        }
         
         // Set default options
         self::set_default_options();

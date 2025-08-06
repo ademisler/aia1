@@ -44,16 +44,26 @@ function aia_is_woocommerce_active() {
     }
 }
 
-if (!aia_is_woocommerce_active()) {
-    add_action('admin_notices', function() {
-        echo '<div class="notice notice-error"><p>';
-        echo __('AI Inventory Agent requires WooCommerce to be installed and activated.', 'ai-inventory-agent');
-        echo '</p></div>';
-    });
-    return;
+// Check WooCommerce dependency
+add_action('plugins_loaded', 'aia_check_woocommerce_dependency', 5);
+
+function aia_check_woocommerce_dependency() {
+    if (!aia_is_woocommerce_active()) {
+        add_action('admin_notices', function() {
+            echo '<div class="notice notice-error"><p>';
+            echo __('AI Inventory Agent requires WooCommerce to be installed and activated.', 'ai-inventory-agent');
+            echo '</p></div>';
+        });
+        
+        // Deactivate plugin if WooCommerce is not active
+        add_action('admin_init', function() {
+            deactivate_plugins(AIA_PLUGIN_BASENAME);
+        });
+        return;
+    }
 }
 
-// Autoloader
+// Enhanced Autoloader with error handling
 spl_autoload_register(function ($class) {
     if (strpos($class, 'AIA\\') === 0) {
         $class = str_replace('AIA\\', '', $class);
@@ -62,16 +72,45 @@ spl_autoload_register(function ($class) {
         
         if (file_exists($file)) {
             require_once $file;
+        } else {
+            // Log missing class for debugging
+            if (defined('WP_DEBUG') && WP_DEBUG) {
+                error_log("AIA Autoloader: Class file not found: {$file}");
+            }
         }
     }
 });
 
-// Initialize the plugin
+// Initialize the plugin with safety checks
 add_action('plugins_loaded', function() {
-    if (class_exists('AIA\\Core\\Plugin')) {
-        AIA\Core\Plugin::get_instance();
+    // Double-check WooCommerce is still active
+    if (!aia_is_woocommerce_active()) {
+        return;
     }
-});
+    
+    // Check if core class exists
+    if (!class_exists('AIA\\Core\\Plugin')) {
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log('AIA: Core Plugin class not found during initialization');
+        }
+        return;
+    }
+    
+    try {
+        AIA\Core\Plugin::get_instance();
+    } catch (Exception $e) {
+        if (defined('WP_DEBUG') && WP_DEBUG) {
+            error_log('AIA: Plugin initialization failed: ' . $e->getMessage());
+        }
+        
+        // Show admin notice about initialization failure
+        add_action('admin_notices', function() use ($e) {
+            echo '<div class="notice notice-error"><p>';
+            echo sprintf(__('AI Inventory Agent failed to initialize: %s', 'ai-inventory-agent'), esc_html($e->getMessage()));
+            echo '</p></div>';
+        });
+    }
+}, 20);
 
 // Activation hook
 register_activation_hook(__FILE__, function() {

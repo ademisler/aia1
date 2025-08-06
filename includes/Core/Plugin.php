@@ -5,6 +5,7 @@ namespace AIA\Core;
 use AIA\Core\ModuleManager;
 use AIA\Core\Database;
 use AIA\Admin\AdminInterface;
+use AIA\Utils\RateLimiter;
 
 /**
  * Main Plugin Class
@@ -217,7 +218,7 @@ class Plugin {
         }
         
         // Apply rate limiting - 20 requests per minute
-        \AIA\Utils\RateLimiter::check_ajax_limit('ai_chat', 20, 60);
+        RateLimiter::check_ajax_limit('ai_chat', 20, 60);
         
         $message = sanitize_text_field($_POST['message'] ?? '');
         $session_id = sanitize_text_field($_POST['session_id'] ?? '');
