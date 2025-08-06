@@ -104,14 +104,14 @@ class InventoryAnalysis {
             $total_stock_value = $this->calculate_total_stock_value();
             $low_stock_value = $this->calculate_low_stock_value();
             
-            // Recent activity
-            $recent_stock_changes = $this->get_recent_stock_changes();
-            $recent_sales = $this->get_recent_sales_summary();
-            
-            // Performance metrics
-            $stock_turnover = $this->calculate_stock_turnover();
-            $top_movers = $this->get_top_moving_products();
-            $slow_movers = $this->get_slow_moving_products();
+                    // Recent activity
+        $recent_stock_changes = $this->get_recent_stock_changes(50); // Limit to 50 records
+        $recent_sales = $this->get_recent_sales_summary();
+        
+        // Performance metrics
+        $stock_turnover = $this->calculate_stock_turnover();
+        $top_movers = $this->get_top_moving_products(10); // Limit to top 10
+        $slow_movers = $this->get_slow_moving_products(10); // Limit to 10
             
             $summary = [
                 'counts' => [
@@ -156,12 +156,12 @@ class InventoryAnalysis {
     private function get_total_products() {
         global $wpdb;
         
-        return (int) $wpdb->get_var("
+        return (int) $wpdb->get_var($wpdb->prepare("
             SELECT COUNT(*) 
             FROM {$wpdb->posts} 
-            WHERE post_type = 'product' 
-            AND post_status = 'publish'
-        ");
+            WHERE post_type = %s 
+            AND post_status = %s
+        ", 'product', 'publish'));
     }
     
     /**
@@ -172,15 +172,15 @@ class InventoryAnalysis {
     private function get_in_stock_products() {
         global $wpdb;
         
-        return (int) $wpdb->get_var("
+        return (int) $wpdb->get_var($wpdb->prepare("
             SELECT COUNT(*) 
             FROM {$wpdb->posts} p
             INNER JOIN {$wpdb->postmeta} pm ON p.ID = pm.post_id
-            WHERE p.post_type = 'product' 
-            AND p.post_status = 'publish'
-            AND pm.meta_key = '_stock'
+            WHERE p.post_type = %s 
+            AND p.post_status = %s
+            AND pm.meta_key = %s
             AND CAST(pm.meta_value AS UNSIGNED) > 0
-        ");
+        ", 'product', 'publish', '_stock'));
     }
     
     /**
@@ -281,7 +281,7 @@ class InventoryAnalysis {
      * 
      * @return float Total stock value
      */
-    private function calculate_total_stock_value() {
+    public function calculate_total_stock_value() {
         global $wpdb;
         
         $result = $wpdb->get_var("
@@ -326,10 +326,11 @@ class InventoryAnalysis {
     /**
      * Get recent stock changes
      * 
+     * @param int $limit Maximum number of records to return
      * @param int $days Number of days to look back
      * @return array Recent stock changes
      */
-    private function get_recent_stock_changes($days = 7) {
+    private function get_recent_stock_changes($limit = 50, $days = 7) {
         $database = $this->plugin->get_database();
         $table = $database->get_table_name('inventory_logs');
         
@@ -343,8 +344,8 @@ class InventoryAnalysis {
             INNER JOIN {$wpdb->posts} p ON il.product_id = p.ID
             WHERE il.created_at >= %s
             ORDER BY il.created_at DESC
-            LIMIT 50
-        ", $date_from));
+            LIMIT %d
+        ", $date_from, $limit));
     }
     
     /**

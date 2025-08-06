@@ -107,9 +107,18 @@ class OpenAIProvider {
         $status_code = wp_remote_retrieve_response_code($response);
         $body = wp_remote_retrieve_body($response);
         
-        if ($status_code !== 200) {
+        // Handle different HTTP status codes
+        if ($status_code === 401) {
+            throw new \Exception("Authentication failed. Please check your API key.");
+        } elseif ($status_code === 429) {
             $error_data = json_decode($body, true);
-            $error_message = $error_data['error']['message'] ?? 'Unknown error';
+            $retry_after = wp_remote_retrieve_header($response, 'retry-after');
+            throw new \Exception("Rate limit exceeded. Please try again in {$retry_after} seconds.");
+        } elseif ($status_code === 500 || $status_code === 502 || $status_code === 503) {
+            throw new \Exception("OpenAI API is temporarily unavailable. Please try again later.");
+        } elseif ($status_code !== 200) {
+            $error_data = json_decode($body, true);
+            $error_message = isset($error_data['error']['message']) ? $error_data['error']['message'] : 'Unknown error';
             throw new \Exception("OpenAI API returned status {$status_code}: {$error_message}");
         }
         

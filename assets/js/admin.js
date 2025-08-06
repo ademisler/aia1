@@ -132,7 +132,7 @@
                 url: aia_ajax.ajax_url,
                 type: 'POST',
                 data: {
-                    action: 'aia_send_message',
+                    action: 'aia_chat',
                     nonce: aia_ajax.nonce,
                     message: message,
                     session_id: this.chat.sessionId
