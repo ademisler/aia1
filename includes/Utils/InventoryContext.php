@@ -33,7 +33,7 @@ class InventoryContext {
         '/product\s+([a-zA-Z0-9\s\-_]+)/i',
         '/sku\s*:?\s*([a-zA-Z0-9\-_]+)/i',
         '/"([^"]+)"/i',
-        /'([^']+)'/i'
+        '/\'([^\']+)\'/i'
     ];
     
     /**

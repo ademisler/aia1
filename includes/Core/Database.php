@@ -522,15 +522,7 @@ class Database {
         }
     }
     
-    /**
-     * Get table name by key
-     * 
-     * @param string $table_key Table key
-     * @return string|null Table name or null if not found
-     */
-    public function get_table_name($table_key) {
-        return isset($this->tables[$table_key]) ? $this->tables[$table_key]['name'] : null;
-    }
+
     
     /**
      * Check if table exists
