@@ -19,21 +19,21 @@ $summary = $inventory_analysis ? $inventory_analysis->get_inventory_summary() : 
     <!-- Skip Link for Accessibility -->
     <a href="#aia-main-content" class="aia-sr-only aia-skip-link"><?php _e('Skip to main content', 'ai-inventory-agent'); ?></a>
     
-    <!-- Professional Header -->
-    <div class="aia-dashboard-header">
-        <div class="aia-dashboard-title-section">
-            <h1 class="aia-dashboard-main-title">
-                <svg class="aia-icon aia-icon--lg" aria-hidden="true">
+    <!-- Standardized Page Header -->
+    <div class="aia-page-header">
+        <div class="aia-page-header-content">
+            <h1 class="aia-page-title">
+                <svg class="aia-icon" aria-hidden="true">
                     <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#aia-dashboard"></use>
                 </svg>
                 <?php esc_html_e('Inventory Dashboard', 'ai-inventory-agent'); ?>
             </h1>
-            <p class="aia-dashboard-subtitle">
+            <p class="aia-page-subtitle">
                 <?php esc_html_e('AI-powered inventory management and insights', 'ai-inventory-agent'); ?>
             </p>
         </div>
         
-        <div class="aia-dashboard-actions">
+        <div class="aia-page-header-actions">
             <button class="aia-btn aia-btn--light" onclick="location.reload()" title="<?php esc_attr_e('Refresh data', 'ai-inventory-agent'); ?>">
                 <svg class="aia-icon aia-icon--sm" aria-hidden="true">
                     <use href="<?php echo AIA_PLUGIN_URL; ?>assets/icons/sprite.svg#aia-refresh"></use>

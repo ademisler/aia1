@@ -141,6 +141,7 @@
 .aia-alert-banner {
   background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
   border: 1px solid #f59e0b;
+  border-left: 4px solid #f59e0b;
   border-radius: 16px;
   padding: 20px 24px;
   margin-bottom: 40px;
@@ -148,7 +149,25 @@
   align-items: center;
   justify-content: space-between;
   gap: 20px;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.aia-alert-banner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #f59e0b, #d97706, #f59e0b);
+  animation: alert-pulse 2s ease-in-out infinite;
+}
+
+@keyframes alert-pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
 }
 
 .aia-alert-content {
@@ -254,6 +273,19 @@
   width: 8px;
 }
 
+.aia-metric-card:hover .aia-metric-icon {
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px 0 rgba(0, 0, 0, 0.25);
+}
+
+.aia-metric-card:hover .aia-metric-number {
+  transform: scale(1.02);
+}
+
+.aia-metric-card:active {
+  transform: translateY(-2px);
+}
+
 .aia-metric-card--primary {
   --accent-color: #2563eb;
 }
@@ -352,10 +384,11 @@
 .aia-widget-header {
   padding: 24px 32px;
   border-bottom: 1px solid #f3f4f6;
-  background: #fafbfc;
+  background: linear-gradient(135deg, #fafbfc 0%, #f9fafb 100%);
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
+  gap: 1rem;
 }
 
 .aia-widget-header-content {
@@ -374,9 +407,10 @@
 }
 
 .aia-widget-title .aia-icon {
-  color: #6b7280;
+  color: var(--aia-primary-600, #3b82f6);
   width: 20px;
   height: 20px;
+  flex-shrink: 0;
 }
 
 .aia-widget-subtitle {
@@ -461,6 +495,37 @@
   justify-content: center;
   flex-shrink: 0;
   color: #ffffff;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.aia-activity-icon::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background: inherit;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  animation: activity-pulse 2s infinite;
+}
+
+@keyframes activity-pulse {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.7;
+  }
+  70% {
+    transform: translate(-50%, -50%) scale(1.4);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.4);
+    opacity: 0;
+  }
 }
 
 .aia-activity-icon--info {
