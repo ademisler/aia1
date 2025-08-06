@@ -1,9 +1,9 @@
 # AI Inventory Agent - Releases
 
-## Latest Version: 1.0.0
+## Latest Version: 1.0.1
 
 ### Download
-- [ai-inventory-agent-v1.0.0.zip](ai-inventory-agent-v1.0.0.zip) - Latest stable release
+- [ai-inventory-agent-v1.0.1.zip](ai-inventory-agent-v1.0.1.zip) - Latest stable release
 
 ### Installation
 1. Download the latest ZIP file
@@ -15,6 +15,12 @@
 Older versions are available in the [archive](archive/) folder.
 
 ### Version History
+
+#### v1.0.1 (2025-01-08)
+- WooCommerce compatibility improvements
+- Enhanced multisite support
+- Plugin stability fixes
+- Better error handling
 
 #### v1.0.0 (2024-01-15)
 - Initial public release

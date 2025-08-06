@@ -5,6 +5,31 @@ All notable changes to AI Inventory Agent will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.1] - 2025-01-08
+
+### 🔧 Bug Fixes & Improvements
+
+#### Fixed
+- **WooCommerce Compatibility**
+  - Enhanced WooCommerce dependency checking
+  - Improved multisite support detection
+  - Fixed plugin activation issues on multisite installations
+
+- **Plugin Stability**
+  - Refactored uninstall hook to use separate callback function
+  - Enhanced error handling throughout the plugin
+  - Improved dependency validation
+
+- **Core Improvements**
+  - Updated compatibility for WordPress 6.0+ and WooCommerce 10.0+
+  - Enhanced plugin initialization process
+  - Better error reporting and debugging
+
+#### Changed
+- Updated minimum requirements documentation
+- Improved plugin architecture for better maintainability
+- Enhanced code organization and structure
+
 ## [1.0.0] - 2024-01-15
 
 ### 🎉 Initial Release
