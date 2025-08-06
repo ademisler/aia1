@@ -1,9 +1,9 @@
 # AI Inventory Agent - Releases
 
-## Latest Version: 2.1.0
+## Latest Version: 2.1.1
 
 ### Download
-- [ai-inventory-agent-v2.1.0.zip](ai-inventory-agent-v2.1.0.zip) - Latest stable release with professional light theme redesign
+- [ai-inventory-agent-v2.1.1.zip](ai-inventory-agent-v2.1.1.zip) - Latest stable release with critical fixes and UI improvements
 
 ### Installation
 1. Download the latest ZIP file
@@ -15,6 +15,12 @@
 Older versions are available in the [archive](archive/) folder.
 
 ### Version History
+
+#### v2.1.1 (2025-01-08) - CRITICAL FIXES & UI IMPROVEMENTS
+- **🐛 BUG FIXES**: Fixed chat system JavaScript issues, reports modal problems, and form layout inconsistencies
+- **✨ UI/UX IMPROVEMENTS**: Optimized animations, enhanced modal interactions, improved responsive design
+- **🎨 VISUAL ENHANCEMENTS**: Better form spacing, widget styling, progress bars, and icon consistency
+- **🔧 TECHNICAL IMPROVEMENTS**: Added CSS variables, enhanced error handling, improved code quality
 
 #### v2.1.0 (2025-01-08) - PROFESSIONAL LIGHT THEME REDESIGN
 - **🎨 COMPLETE LIGHT THEME IMPLEMENTATION**: Professional, clean interface across all admin pages

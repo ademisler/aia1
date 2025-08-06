@@ -5,6 +5,33 @@ All notable changes to AI Inventory Agent will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.1] - 2025-01-08
+
+### 🔧 CRITICAL FIXES & UI IMPROVEMENTS
+
+#### 🐛 **Bug Fixes**
+- **Chat System**: Fixed JavaScript scope issues preventing message sending and AI responses
+- **Reports Modal**: Fixed modal display issues and added proper CSS variables support
+- **Form Layouts**: Corrected spacing and alignment issues across all admin pages
+- **JavaScript Errors**: Resolved jQuery aliasing problems and undefined function errors
+
+#### ✨ **UI/UX Improvements**
+- **Animation Optimization**: Reduced aggressive hover animations for better user experience
+- **Form Spacing**: Added consistent spacing between form groups and sections
+- **Modal Interactions**: Enhanced modal overlay click functionality and keyboard navigation
+- **Responsive Design**: Improved mobile layout consistency across all pages
+
+#### 🎨 **Visual Enhancements**
+- **Alert Configuration**: Added background styling for checkbox sections
+- **Settings Layout**: Fixed widget styling and form element alignment
+- **Progress Bars**: Enhanced visual feedback for report generation process
+- **Icon Consistency**: Ensured all icons use the standardized Lucide icon set
+
+#### 🔧 **Technical Improvements**
+- **CSS Variables**: Added comprehensive CSS variable system for consistent theming
+- **Error Handling**: Improved JavaScript error handling with better debugging information
+- **Code Quality**: Enhanced code consistency and maintainability across all components
+
 ## [2.1.0] - 2025-01-08
 
 ### 🎨 LIGHT THEME REDESIGN - Professional Enterprise Interface
