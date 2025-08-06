@@ -1,9 +1,17 @@
 # AI Inventory Agent - Releases
 
-## Latest Version: 1.0.0
+## Latest Version: 1.1.0
 
 ### Download
-- [ai-inventory-agent-v1.0.0.zip](ai-inventory-agent-v1.0.0.zip) - Latest stable release
+- [ai-inventory-agent-v1.1.0.zip](ai-inventory-agent-v1.1.0.zip) - **Latest stable release** 🚀
+- [ai-inventory-agent-v1.0.0.zip](ai-inventory-agent-v1.0.0.zip) - Previous version
+
+### 🆕 What's New in v1.1.0
+- ✅ **WooCommerce 10.0.4 full compatibility**
+- ✅ **HPOS (High-Performance Order Storage) support**
+- ✅ **Block-based Cart & Checkout compatibility**
+- ✅ **PHP 8.0-8.3 support**
+- ✅ **Enhanced security and performance**
 
 ### Installation
 1. Download the latest ZIP file
@@ -16,16 +24,31 @@ Older versions are available in the [archive](archive/) folder.
 
 ### Version History
 
+#### v1.1.0 (2025-08-06) - **Latest**
+- 🚀 **WooCommerce 10.0.4 compatibility**
+- ⚡ **HPOS support** for high-performance stores
+- 🎨 **Block-based checkout** compatibility
+- 🔒 **Enhanced security** measures
+- 🐛 **Critical bug fixes** and stability improvements
+
 #### v1.0.0 (2024-01-15)
 - Initial public release
 - Full feature set
 - Production ready
 
 ### System Requirements
-- WordPress 5.0+
-- PHP 7.4+
-- WooCommerce 5.0+
+
+#### Minimum Requirements
+- WordPress 6.0+
+- PHP 8.0+
+- WooCommerce 8.0+
 - MySQL 5.7+
+
+#### Recommended
+- WordPress 6.6+
+- PHP 8.3+
+- WooCommerce 10.0+
+- Memory: 128MB+
 
 ### Upgrade Instructions
 1. Backup your site before upgrading

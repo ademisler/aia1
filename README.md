@@ -354,7 +354,7 @@ The plugin is fully translatable:
 - [Contributing](CONTRIBUTING.md) - How to contribute
 
 ### Quick Links
-- [Latest Release](releases/ai-inventory-agent-v1.0.0.zip)
+- [Latest Release v1.1.0](releases/ai-inventory-agent-v1.1.0.zip) 🚀
 - [Changelog](CHANGELOG.md)
 - [Support Forum](https://wordpress.org/support/plugin/ai-inventory-agent/)
 - [Report Issues](https://github.com/yourusername/ai-inventory-agent/issues)

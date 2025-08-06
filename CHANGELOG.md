@@ -5,6 +5,59 @@ All notable changes to AI Inventory Agent will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2025-08-06
+
+### 🚀 **WooCommerce 10.0.4 Compatibility Update**
+
+#### Added
+- ✅ **WooCommerce 10.0.4 full compatibility**
+- ✅ **HPOS (High-Performance Order Storage) support**
+- ✅ **Block-based Cart & Checkout compatibility**
+- ✅ **PHP 8.0-8.3 support** with modern error handling
+- ✅ **WordPress 6.0-6.6 compatibility**
+- ✅ **Enhanced security measures** with improved permission checks
+- ✅ **AI Coding Guidelines (AGENTS.md)** - Comprehensive development standards
+- ✅ **New WooCommerce hooks** for better order tracking
+- ✅ **Improved autoloader** with error logging
+- ✅ **Database optimization** with conditional table creation
+- ✅ **Block checkout integration** hooks
+
+#### Changed
+- 🔄 **Minimum requirements updated**: WordPress 6.0+, PHP 8.0+, WooCommerce 8.0+
+- 🔄 **Enhanced error handling** with try-catch blocks throughout
+- 🔄 **Improved WooCommerce dependency checks** with runtime validation
+- 🔄 **Better AJAX security** with enhanced permission validation
+- 🔄 **Modernized codebase** for PHP 8+ compatibility
+
+#### Fixed
+- 🐛 **Critical serialization error** with register_uninstall_hook() 
+- 🐛 **Anonymous function issues** in WordPress hooks
+- 🐛 **Import/namespace conflicts** in AI modules
+- 🐛 **RateLimiter class loading** issues
+- 🐛 **Database initialization** error handling
+- 🐛 **Plugin activation** safety checks
+
+#### Security
+- 🔒 **Enhanced AJAX endpoint security** with proper capability checks
+- 🔒 **Improved data sanitization** throughout the plugin
+- 🔒 **Better error response handling** with appropriate HTTP status codes
+- 🔒 **Secure API key management** recommendations in documentation
+
+#### Performance
+- ⚡ **Optimized plugin initialization** with conditional loading
+- ⚡ **Improved database queries** with better indexing
+- ⚡ **Enhanced caching mechanisms** for context operations
+- ⚡ **Reduced memory usage** through lazy loading
+
+#### Compatibility
+- 🔧 **WooCommerce 10.0+** - Full compatibility with latest features
+- 🔧 **HPOS support** - High-Performance Order Storage ready
+- 🔧 **Block Checkout** - Modern checkout experience support
+- 🔧 **PHP 8.3** - Latest PHP version compatibility
+- 🔧 **WordPress 6.6** - Latest WordPress version support
+
+---
+
 ## [1.0.0] - 2024-01-15
 
 ### 🎉 Initial Release
