@@ -493,4 +493,42 @@ class Database {
     public function get_table_name($table_key) {
         return isset($this->tables[$table_key]) ? $this->tables[$table_key]['name'] : null;
     }
+    
+    /**
+     * Check if table exists
+     * 
+     * @param string $table_key Table key
+     * @return bool
+     */
+    public function table_exists($table_key) {
+        $table_name = $this->get_table_name($table_key);
+        if (!$table_name) {
+            return false;
+        }
+        
+        $result = $this->wpdb->get_var($this->wpdb->prepare(
+            "SHOW TABLES LIKE %s",
+            $table_name
+        ));
+        
+        return $result === $table_name;
+    }
+    
+    /**
+     * Get all plugin tables status
+     * 
+     * @return array
+     */
+    public function get_tables_status() {
+        $status = [];
+        
+        foreach ($this->tables as $key => $table) {
+            $status[$key] = [
+                'name' => $table['name'],
+                'exists' => $this->table_exists($key)
+            ];
+        }
+        
+        return $status;
+    }
 }

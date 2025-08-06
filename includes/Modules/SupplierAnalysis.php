@@ -76,6 +76,7 @@ class SupplierAnalysis {
             FROM {$table_name}
             GROUP BY supplier_id, supplier_name, risk_level
             ORDER BY avg_reliability DESC
+            LIMIT 100
         ");
         
         return $suppliers;

@@ -48,9 +48,25 @@ class OpenAIProvider {
      * @throws Exception
      */
     public function generate_response($conversation, $options = []) {
+        // Validate conversation array
+        if (!is_array($conversation) || empty($conversation)) {
+            throw new \Exception('Invalid conversation format');
+        }
+        
+        // Validate and sanitize options
         $model = $options['model'] ?? $this->default_model;
-        $max_tokens = $options['max_tokens'] ?? 1000;
-        $temperature = $options['temperature'] ?? 0.7;
+        $max_tokens = max(1, min(4000, intval($options['max_tokens'] ?? 1000)));
+        $temperature = max(0, min(2, floatval($options['temperature'] ?? 0.7)));
+        
+        // Validate messages structure
+        foreach ($conversation as $message) {
+            if (!isset($message['role']) || !isset($message['content'])) {
+                throw new \Exception('Invalid message format in conversation');
+            }
+            if (!in_array($message['role'], ['system', 'user', 'assistant'])) {
+                throw new \Exception('Invalid message role: ' . $message['role']);
+            }
+        }
         
         $request_body = [
             'model' => $model,

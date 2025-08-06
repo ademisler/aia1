@@ -25,6 +25,17 @@ class Activator {
             wp_die(__('AI Inventory Agent requires PHP version 7.4 or higher.', 'ai-inventory-agent'));
         }
         
+        // Check memory limit
+        $memory_limit = self::convert_to_bytes(ini_get('memory_limit'));
+        $required_memory = 128 * 1024 * 1024; // 128MB
+        if ($memory_limit < $required_memory && $memory_limit != -1) {
+            add_action('admin_notices', function() {
+                echo '<div class="notice notice-warning"><p>';
+                echo __('AI Inventory Agent: Low PHP memory limit detected. Recommend at least 128MB for optimal performance.', 'ai-inventory-agent');
+                echo '</p></div>';
+            });
+        }
+        
         // Check if WooCommerce is active
         if (!self::is_woocommerce_active()) {
             deactivate_plugins(AIA_PLUGIN_BASENAME);
@@ -279,5 +290,28 @@ class Activator {
         foreach ($sample_suppliers as $supplier) {
             $database->update_supplier_performance($supplier['supplier_id'], $supplier);
         }
+    }
+    
+    /**
+     * Convert memory limit string to bytes
+     * 
+     * @param string $value Memory limit value
+     * @return int Bytes
+     */
+    private static function convert_to_bytes($value) {
+        $value = trim($value);
+        $last = strtolower($value[strlen($value)-1]);
+        $value = (int) $value;
+        
+        switch($last) {
+            case 'g':
+                $value *= 1024;
+            case 'm':
+                $value *= 1024;
+            case 'k':
+                $value *= 1024;
+        }
+        
+        return $value;
     }
 }

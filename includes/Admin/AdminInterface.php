@@ -412,7 +412,7 @@ class AdminInterface {
         }
         
         // Show success message after settings save
-        if (isset($_GET['settings-updated']) && $_GET['settings-updated'] === 'true') {
+        if (isset($_GET['settings-updated']) && sanitize_text_field($_GET['settings-updated']) === 'true') {
             echo '<div class="notice notice-success is-dismissible">';
             echo '<p>' . __('Settings saved successfully!', 'ai-inventory-agent') . '</p>';
             echo '</div>';
@@ -482,7 +482,7 @@ class AdminInterface {
     public function handle_save_settings() {
         check_ajax_referer('aia_ajax_nonce', 'nonce');
         
-        if (!current_user_can('manage_options')) {
+        if (!current_user_can('configure_aia')) {
             wp_send_json_error(__('Insufficient permissions.', 'ai-inventory-agent'));
         }
         
@@ -539,8 +539,8 @@ class AdminInterface {
                 wp_send_json_error($result['message']);
             }
             
-        } catch (Exception $e) {
-            wp_send_json_error($e->getMessage());
+                    } catch (\Exception $e) {
+                wp_send_json_error($e->getMessage());
         }
     }
     
