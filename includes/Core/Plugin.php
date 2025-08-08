@@ -65,6 +65,11 @@ class Plugin {
             'permission_callback' => function() { return current_user_can('manage_woocommerce') || current_user_can('view_woocommerce_reports'); },
             'callback' => [$this, 'rest_inventory'],
         ]);
+        register_rest_route('aia/v1', '/inventory/test-connection', [
+            'methods'  => 'GET',
+            'permission_callback' => function() { return current_user_can('manage_options'); },
+            'callback' => [$this, 'rest_test_connection'],
+        ]);
         register_rest_route('aia/v1', '/chat', [
             'methods'  => 'POST',
             'permission_callback' => function() { return current_user_can('manage_woocommerce') || current_user_can('edit_shop_orders'); },
@@ -82,7 +87,9 @@ class Plugin {
         ]);
     }
 
-    public function rest_inventory(\WP_REST_Request $req) { return new \WP_REST_Response(['counts' => [ 'total_products' => 0, 'low_stock' => 0, 'out_of_stock' => 0 ], 'updated_at' => current_time('mysql')], 200); }
+    public function rest_inventory(\WP_REST_Request $req) { $inv=new Inventory(); return new \WP_REST_Response($inv->get_summary(), 200); }
+
+    public function rest_test_connection(\WP_REST_Request $req) { $res=$this->provider->testConnection(); return new \WP_REST_Response($res, 200); }
 
     public function rest_chat(\WP_REST_Request $req) {
         $message = sanitize_text_field($req->get_param('message'));

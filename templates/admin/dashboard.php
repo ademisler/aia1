@@ -13,9 +13,9 @@
       <div class="aia-card__hd"><?php esc_html_e('Key Metrics','ai-inventory-agent'); ?></div>
       <div class="aia-card__bd">
         <ul>
-          <li><?php esc_html_e('Total products','ai-inventory-agent'); ?>: 0</li>
-          <li><?php esc_html_e('Low stock','ai-inventory-agent'); ?>: 0</li>
-          <li><?php esc_html_e('Out of stock','ai-inventory-agent'); ?>: 0</li>
+          <li><?php esc_html_e('Total products','ai-inventory-agent'); ?>: <strong id="aia-metric-total">0</strong></li>
+          <li><?php esc_html_e('Low stock','ai-inventory-agent'); ?>: <strong id="aia-metric-low">0</strong></li>
+          <li><?php esc_html_e('Out of stock','ai-inventory-agent'); ?>: <strong id="aia-metric-oos">0</strong></li>
         </ul>
       </div>
     </div>
