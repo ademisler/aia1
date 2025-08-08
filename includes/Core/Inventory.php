@@ -50,13 +50,13 @@ class Inventory {
         return $summary;
     }
 
-    public function get_low_stock(int $limit = 10): array {
-        if (!class_exists('WC_Product')) { return []; }
+    public function get_low_stock(int $limit = 10, int $page = 1, ?string $category = null): array {
+        if (!class_exists('WC_Product')) { return ['items'=>[], 'page'=>1, 'has_more'=>false]; }
         $threshold = Settings::get()['low_stock_threshold'] ?? 5;
-        $q = new \WP_Query([
+        $args = [
             'post_type' => 'product',
             'post_status' => 'publish',
-            'posts_per_page' => $limit,
+            'posts_per_page' => max(1,$limit),
             'fields' => 'ids',
             'meta_query' => [
                 'relation' => 'AND',
@@ -67,7 +67,12 @@ class Inventory {
             'orderby' => 'meta_value_num',
             'meta_key' => '_stock',
             'order' => 'ASC',
-        ]);
+            'paged' => max(1,$page),
+        ];
+        if ($category) {
+            $args['tax_query'] = [ [ 'taxonomy'=>'product_cat', 'field'=>'slug', 'terms'=> sanitize_title($category) ] ];
+        }
+        $q = new \WP_Query($args);
         $items = [];
         foreach ($q->posts as $pid) {
             $items[] = [
@@ -77,6 +82,7 @@ class Inventory {
                 'edit_url' => get_edit_post_link($pid, ''),
             ];
         }
-        return $items;
+        $has_more = ($q->max_num_pages > $args['paged']);
+        return [ 'items'=>$items, 'page'=>$args['paged'], 'has_more'=>$has_more ];
     }
 }

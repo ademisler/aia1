@@ -106,7 +106,7 @@ class Plugin {
     }
 
     public function rest_inventory(\WP_REST_Request $req) { $inv=new Inventory(); return new \WP_REST_Response($inv->get_summary(), 200); }
-    public function rest_inventory_low(\WP_REST_Request $req) { $inv=new Inventory(); $limit = absint($req->get_param('limit')); return new \WP_REST_Response($inv->get_low_stock($limit?:10), 200); }
+    public function rest_inventory_low(\WP_REST_Request $req) { $inv=new Inventory(); $limit = absint($req->get_param('limit')); $page = absint($req->get_param('page')); $cat = $req->get_param('category'); return new \WP_REST_Response($inv->get_low_stock($limit?:10, $page?:1, $cat?:null), 200); }
 
     public function rest_provider_test(\WP_REST_Request $req) { $res=$this->provider->testConnection(); return new \WP_REST_Response($res, 200); }
 
