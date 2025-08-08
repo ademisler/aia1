@@ -2,7 +2,7 @@
 /**
  * Plugin Name: AI Inventory Agent (AIA)
  * Description: Clean, modern AI-powered inventory assistant for WooCommerce with professional UI and robust REST API.
- * Version: 3.0.0
+ * Version: 3.1.0
  * Author: AIA Team
  * Text Domain: ai-inventory-agent
  * Requires at least: 6.0
@@ -16,7 +16,7 @@ if (!defined('ABSPATH')) { exit; }
 define('AIA_PLUGIN_FILE', __FILE__);
 define('AIA_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('AIA_PLUGIN_URL', plugin_dir_url(__FILE__));
-define('AIA_PLUGIN_VERSION', '3.0.0');
+define('AIA_PLUGIN_VERSION', '3.1.0');
 
 // Simple autoloader (PSR-4 like)
 spl_autoload_register(function($class) {

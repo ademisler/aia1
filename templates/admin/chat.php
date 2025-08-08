@@ -8,8 +8,15 @@
   </div>
 
   <div class="aia-card">
-    <div class="aia-card__hd"><?php esc_html_e('Conversation','ai-inventory-agent'); ?></div>
+    <div class="aia-card__hd" style="display:flex;justify-content:space-between;align-items:center;">
+      <span><?php esc_html_e('Conversation','ai-inventory-agent'); ?></span>
+      <span style="display:flex;gap:8px;">
+        <button type="button" class="aia-btn" id="aia-chat-copy"><?php esc_html_e('Copy','ai-inventory-agent'); ?></button>
+        <button type="button" class="aia-btn" id="aia-chat-clear"><?php esc_html_e('Clear','ai-inventory-agent'); ?></button>
+      </span>
+    </div>
     <div class="aia-card__bd">
+      <div id="aia-chat-list" style="min-height:160px;border:1px dashed rgba(2,6,23,.12);border-radius:10px;padding:10px 12px;margin-bottom:10px;overflow:auto;max-height:320px;"></div>
       <form id="aia-chat-form" class="aia-form">
         <textarea id="aia-chat-input" class="aia-textarea" placeholder="<?php esc_attr_e('Type your message...','ai-inventory-agent'); ?>"></textarea>
         <p class="description"><?php esc_html_e('AI provider not configured yet. Responses will be generic.','ai-inventory-agent'); ?></p>
