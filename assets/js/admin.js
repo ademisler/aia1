@@ -15,6 +15,9 @@
     // Settings populate
     const $prov=$('#aia-provider'), $key=$('#aia-api-key'), $th=$('#aia-low-th');
     if ($prov.length){ get(AIA.rest+'settings').then(s=>{ if(s){ if(s.ai_provider) $prov.val(s.ai_provider); if(s.api_key) $key.val(s.api_key); if(typeof s.low_stock_threshold!=='undefined') $th.val(s.low_stock_threshold); } }); }
+    // Sample chart
+    const c = document.getElementById('aia-chart');
+    if (c && window.Chart){ const ctx=c.getContext('2d'); new Chart(ctx,{ type:'line', data:{ labels:['Mon','Tue','Wed','Thu','Fri','Sat','Sun'], datasets:[{ label:'Orders', data:[12,19,7,15,9,13,11], borderColor:'#3b82f6', backgroundColor:'rgba(59,130,246,.15)', tension:.35, fill:true }]}, options:{ plugins:{legend:{display:false}}, scales:{ y:{ beginAtZero:true } } }); }
   });
 
   $(document).on('submit', '#aia-chat-form', function(e){ e.preventDefault(); const $input=$('#aia-chat-input'); const msg=$input.val().trim(); if(!msg) return; $input.prop('disabled', true); post(AIA.rest + 'chat', { message: msg }).then(res=>{ alert((res && res.response) || 'OK'); }).catch(()=> alert('Request failed')).finally(()=> $input.prop('disabled', false)); });

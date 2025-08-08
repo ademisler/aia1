@@ -49,9 +49,11 @@ class Plugin {
     public function enqueue_admin_assets($hook): void {
         if (strpos($hook, 'aia') === false) { return; }
         wp_enqueue_style('aia-admin', AIA_PLUGIN_URL . 'assets/css/admin.css', [], AIA_PLUGIN_VERSION);
+        // Chart.js for simple charts
+        wp_enqueue_script('chartjs', 'https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js', [], '4.4.0', true);
         // Lucide icons CDN
         wp_enqueue_script('lucide', 'https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js', [], '0.469.0', true);
-        wp_enqueue_script('aia-admin', AIA_PLUGIN_URL . 'assets/js/admin.js', ['jquery','lucide'], AIA_PLUGIN_VERSION, true);
+        wp_enqueue_script('aia-admin', AIA_PLUGIN_URL . 'assets/js/admin.js', ['jquery','lucide','chartjs'], AIA_PLUGIN_VERSION, true);
         wp_localize_script('aia-admin', 'aia', [
             'ajax' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('aia'),

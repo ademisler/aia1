@@ -26,5 +26,12 @@
         </ul>
       </div>
     </div>
+
+    <div class="aia-card">
+      <div class="aia-card__hd"><?php esc_html_e('Inventory Trend (sample)','ai-inventory-agent'); ?></div>
+      <div class="aia-card__bd">
+        <canvas id="aia-chart" height="120"></canvas>
+      </div>
+    </div>
   </div>
 </div>
