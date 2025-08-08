@@ -11,6 +11,13 @@
     return fetch(url, { method:'POST', body:fd, credentials:'same-origin' }).then(r=>r.json());
   }
 
+  $(function(){
+    // Initialize lucide icons if available
+    if (window.lucide && lucide.createIcons) {
+      lucide.createIcons();
+    }
+  });
+
   $(document).on('submit', '#aia-chat-form', function(e){
     e.preventDefault();
     const $input = $('#aia-chat-input');

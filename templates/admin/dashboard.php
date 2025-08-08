@@ -1,8 +1,8 @@
 <?php if(!defined('ABSPATH')) exit; ?>
 <div class="wrap">
-  <div class="aia-header">
+  <div class="aia-header aia-header--dashboard">
     <div>
-      <h1 class="aia-title"><?php esc_html_e('Inventory Dashboard','ai-inventory-agent'); ?></h1>
+      <h1 class="aia-title"><span class="aia-icon" data-lucide="layout-dashboard"></span> <?php esc_html_e('Inventory Dashboard','ai-inventory-agent'); ?></h1>
       <p class="aia-sub"><?php esc_html_e('Overview of key metrics and recent activity.','ai-inventory-agent'); ?></p>
     </div>
     <a href="<?php echo esc_url(admin_url('admin.php?page=aia-chat')); ?>" class="aia-btn aia-btn--primary"><?php esc_html_e('Open AI Chat','ai-inventory-agent'); ?></a>

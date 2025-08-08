@@ -1,8 +1,8 @@
 <?php if(!defined('ABSPATH')) exit; ?>
 <div class="wrap">
-  <div class="aia-header">
+  <div class="aia-header aia-header--reports">
     <div>
-      <h1 class="aia-title"><?php esc_html_e('Reports','ai-inventory-agent'); ?></h1>
+      <h1 class="aia-title"><span class="aia-icon" data-lucide="bar-chart-3"></span> <?php esc_html_e('Reports','ai-inventory-agent'); ?></h1>
       <p class="aia-sub"><?php esc_html_e('Generate and download inventory reports.','ai-inventory-agent'); ?></p>
     </div>
   </div>

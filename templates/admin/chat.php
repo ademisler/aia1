@@ -1,8 +1,8 @@
 <?php if(!defined('ABSPATH')) exit; ?>
 <div class="wrap">
-  <div class="aia-header">
+  <div class="aia-header aia-header--chat">
     <div>
-      <h1 class="aia-title"><?php esc_html_e('AI Chat','ai-inventory-agent'); ?></h1>
+      <h1 class="aia-title"><span class="aia-icon" data-lucide="message-square"></span> <?php esc_html_e('AI Chat','ai-inventory-agent'); ?></h1>
       <p class="aia-sub"><?php esc_html_e('Ask inventory-related questions and get instant insights.','ai-inventory-agent'); ?></p>
     </div>
   </div>

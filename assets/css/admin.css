@@ -1,18 +1,37 @@
 /* AIA Admin UI (v3) - Clean Professional */
 :root{
-  --aia-primary:#3b82f6;--aia-bg:#0b1220;--aia-card:#ffffff;--aia-text:#0f172a;--aia-muted:#64748b;
+  /* WooCommerce-like palette */
+  --aia-primary-50:#eff6ff; --aia-primary-100:#dbeafe; --aia-primary-200:#bfdbfe; --aia-primary-300:#93c5fd;
+  --aia-primary-400:#60a5fa; --aia-primary-500:#3b82f6; --aia-primary-600:#2563eb; --aia-primary-700:#1d4ed8; --aia-primary-800:#1e40af; --aia-primary-900:#1e3a8a;
+  --aia-accent-500:#8b5cf6; --aia-success-500:#10b981; --aia-warning-500:#f59e0b; --aia-danger-500:#ef4444;
+  --aia-bg:#0b1220; --aia-card:#ffffff; --aia-text:#0f172a; --aia-muted:#64748b;
 }
+
 .wrap{max-width:1280px;margin:24px auto;padding:0 16px;}
-.aia-header{background:var(--aia-primary);color:#fff;border-radius:14px;padding:20px 24px;box-shadow:0 10px 24px rgba(2,6,23,.12);margin:16px 0 24px;display:flex;justify-content:space-between;align-items:center;gap:16px}
-.aia-title{margin:0;font-size:22px;font-weight:700}
-.aia-sub{opacity:.9;margin:6px 0 0}
+.aia-header{background:var(--aia-primary-600);color:#fff;border-radius:14px;padding:20px 24px;box-shadow:0 10px 24px rgba(2,6,23,.12);margin:16px 0 24px;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.aia-title{margin:0;font-size:22px;font-weight:700;color:#fff}
+.aia-sub{opacity:.92;margin:6px 0 0;color:#f8fafc}
+
+/* tone modifiers per page */
+.aia-header--analysis{background:var(--aia-accent-500)}
+.aia-header--chat{background:var(--aia-success-500)}
+.aia-header--reports{background:var(--aia-warning-500)}
+.aia-header--settings{background:var(--aia-primary-700)}
+
 .aia-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
 .aia-card{grid-column:span 12;background:var(--aia-card);border:1px solid rgba(2,6,23,.06);border-radius:14px;box-shadow:0 8px 20px rgba(2,6,23,.06)}
 .aia-card__hd{padding:14px 16px;border-bottom:1px solid rgba(2,6,23,.06);font-weight:700}
 .aia-card__bd{padding:16px}
+
 .aia-btn{display:inline-flex;align-items:center;gap:8px;height:36px;padding:0 14px;border-radius:10px;border:1px solid transparent;background:#111827;color:#fff;font-weight:600;cursor:pointer;text-decoration:none}
-.aia-btn--primary{background:var(--aia-primary)}
+.aia-btn--primary{background:var(--aia-primary-600)}
+
 .aia-input{width:100%;max-width:560px;height:38px;border:1px solid rgba(2,6,23,.12);border-radius:10px;padding:8px 12px}
 .aia-textarea{width:100%;max-width:560px;min-height:96px;border:1px solid rgba(2,6,23,.12);border-radius:10px;padding:8px 12px}
 .aia-form .description{color:var(--aia-muted);margin-top:6px}
+
+/* icon utility */
+.aia-icon{display:inline-flex;vertical-align:middle}
+.aia-icon svg{width:18px;height:18px;stroke:#fff}
+
 @media(max-width:768px){.aia-title{font-size:20px}.aia-grid{grid-template-columns:repeat(6,1fr)}}

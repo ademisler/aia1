@@ -1,8 +1,8 @@
 <?php if(!defined('ABSPATH')) exit; ?>
 <div class="wrap">
-  <div class="aia-header">
+  <div class="aia-header aia-header--settings">
     <div>
-      <h1 class="aia-title"><?php esc_html_e('Settings','ai-inventory-agent'); ?></h1>
+      <h1 class="aia-title"><span class="aia-icon" data-lucide="settings-2"></span> <?php esc_html_e('Settings','ai-inventory-agent'); ?></h1>
       <p class="aia-sub"><?php esc_html_e('Configure AI provider and thresholds.','ai-inventory-agent'); ?></p>
     </div>
   </div>
