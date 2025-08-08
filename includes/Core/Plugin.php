@@ -114,6 +114,11 @@ class Plugin {
             
             // Initialize services via container
             $this->initialize_services();
+
+            // Initialize asset optimizer early
+            if (class_exists('AIA\\Core\\AssetOptimizer')) {
+                \AIA\Core\AssetOptimizer::init();
+            }
             
             // Register WordPress hooks
             $this->register_hooks();
@@ -184,9 +189,9 @@ class Plugin {
      * Register WordPress hooks
      */
     private function register_hooks() {
-        // Enqueue scripts and styles
-        add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_scripts']);
-        add_action('wp_enqueue_scripts', [$this, 'enqueue_frontend_scripts']);
+        // Enqueue scripts and styles (handled by AdminInterface to avoid duplication)
+        // add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_scripts']);
+        // add_action('wp_enqueue_scripts', [$this, 'enqueue_frontend_scripts']);
         
         // WooCommerce Blocks integration
         add_action('woocommerce_blocks_loaded', [$this, 'register_checkout_block_integration']);

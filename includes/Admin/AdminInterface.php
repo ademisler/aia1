@@ -724,7 +724,7 @@ class AdminInterface {
         wp_enqueue_script(
             'aia-optimized-js',
             AIA_PLUGIN_URL . 'assets/js/aia-optimized.js',
-            [],
+            ['jquery'],
             AIA_PLUGIN_VERSION,
             true
         );
@@ -744,6 +744,7 @@ class AdminInterface {
         wp_localize_script('aia-optimized-js', 'aia_ajax', [
             'ajax_url' => admin_url('admin-ajax.php'),
             'nonce' => wp_create_nonce('aia_ajax_nonce'),
+            'plugin_url' => AIA_PLUGIN_URL,
             'strings' => [
                 'loading' => __('Loading...', 'ai-inventory-agent'),
                 'error' => __('An error occurred. Please try again.', 'ai-inventory-agent'),

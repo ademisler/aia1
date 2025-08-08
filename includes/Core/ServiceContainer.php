@@ -88,7 +88,7 @@ class ServiceContainer {
             if (!is_admin()) {
                 return null;
             }
-            return new \AIA\Admin\AdminInterface($container);
+            return new \AIA\Admin\AdminInterface();
         });
         
         $this->register('ai_provider_manager', function($container) {
