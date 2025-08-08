@@ -22,6 +22,9 @@
         <label style="margin-top:12px;display:block;"><?php esc_html_e('API Key','ai-inventory-agent'); ?></label>
         <input class="aia-input" type="password" name="api_key" id="aia-api-key" placeholder="sk-..."/>
 
+        <label style="margin-top:12px;display:block;"><?php esc_html_e('Model (optional)','ai-inventory-agent'); ?></label>
+        <input class="aia-input" type="text" name="model" id="aia-model" placeholder="gpt-3.5-turbo / gemini-pro"/>
+
         <label style="margin-top:12px;display:block;"><?php esc_html_e('Low stock threshold','ai-inventory-agent'); ?></label>
         <input class="aia-input" type="number" name="low_stock_threshold" id="aia-low-th" min="0" value="5"/>
 

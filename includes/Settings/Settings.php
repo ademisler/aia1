@@ -10,6 +10,7 @@ class Settings {
             'ai_provider' => 'dummy',
             'api_key' => '',
             'low_stock_threshold' => 5,
+            'model' => '' ,
         ];
     }
 
@@ -36,6 +37,9 @@ class Settings {
         }
         if (isset($data['low_stock_threshold'])) {
             $out['low_stock_threshold'] = max(0, intval($data['low_stock_threshold']));
+        }
+        if (isset($data['model'])) {
+            $out['model'] = sanitize_text_field($data['model']);
         }
         return $out;
     }

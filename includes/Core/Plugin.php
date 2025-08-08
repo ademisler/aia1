@@ -5,6 +5,8 @@ namespace AIA\Core;
 use AIA\Settings\Settings;
 use AIA\API\DummyProvider;
 use AIA\API\AIProviderInterface;
+use AIA\API\OpenAIProvider;
+use AIA\API\GeminiProvider;
 
 class Plugin {
     private static ?Plugin $instance = null;
@@ -22,8 +24,14 @@ class Plugin {
 
     private function makeProvider(): AIProviderInterface {
         $s = Settings::get();
-        // For now always DummyProvider; extend with real providers later
-        return new DummyProvider($s['api_key']);
+        $prov = $s['ai_provider'] ?? 'dummy';
+        $key = $s['api_key'] ?? '';
+        $model = $s['model'] ?? '';
+        return match($prov){
+            'openai' => new OpenAIProvider($key, $model ?: 'gpt-3.5-turbo'),
+            'gemini' => new GeminiProvider($key, $model ?: 'gemini-pro'),
+            default => new DummyProvider($key),
+        };
     }
 
     private function register_hooks(): void {
