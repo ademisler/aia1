@@ -13,6 +13,7 @@
       <div class="aia-card__hd"><?php esc_html_e('Low Stock','ai-inventory-agent'); ?></div>
       <div class="aia-card__bd">
         <ul id="aia-low-stock-list" style="margin:0;padding-left:16px;"></ul>
+        <p style="margin-top:10px;"><small><?php esc_html_e('Tip: Filter by category to focus on a segment.','ai-inventory-agent'); ?></small></p>
       </div>
     </div>
 

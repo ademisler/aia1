@@ -8,6 +8,10 @@ class Inventory {
     private const CACHE_KEY = 'aia_inv_summary_v1';
     private const CACHE_TTL = 300; // 5 minutes
 
+    public static function clear_cache(): void {
+        delete_transient(self::CACHE_KEY);
+    }
+
     public function get_summary(): array {
         $cached = get_transient(self::CACHE_KEY);
         if ($cached !== false) { return $cached; }
@@ -75,11 +79,15 @@ class Inventory {
         $q = new \WP_Query($args);
         $items = [];
         foreach ($q->posts as $pid) {
+            $product = function_exists('wc_get_product') ? wc_get_product($pid) : null;
             $items[] = [
                 'id' => $pid,
                 'name' => get_the_title($pid),
+                'sku' => $product ? $product->get_sku() : get_post_meta($pid, '_sku', true),
+                'price' => $product ? (float)$product->get_price() : (float)get_post_meta($pid, '_price', true),
                 'stock' => (int) get_post_meta($pid, '_stock', true),
                 'edit_url' => get_edit_post_link($pid, ''),
+                'permalink' => get_permalink($pid),
             ];
         }
         $has_more = ($q->max_num_pages > $args['paged']);
