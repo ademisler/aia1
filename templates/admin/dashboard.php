@@ -10,6 +10,13 @@
 
   <div class="aia-grid">
     <div class="aia-card">
+      <div class="aia-card__hd"><?php esc_html_e('Low Stock','ai-inventory-agent'); ?></div>
+      <div class="aia-card__bd">
+        <ul id="aia-low-stock-list" style="margin:0;padding-left:16px;"></ul>
+      </div>
+    </div>
+
+    <div class="aia-card">
       <div class="aia-card__hd"><?php esc_html_e('Key Metrics','ai-inventory-agent'); ?></div>
       <div class="aia-card__bd">
         <ul>

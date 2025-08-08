@@ -65,10 +65,16 @@ class Plugin {
             'permission_callback' => function() { return current_user_can('manage_woocommerce') || current_user_can('view_woocommerce_reports'); },
             'callback' => [$this, 'rest_inventory'],
         ]);
-        register_rest_route('aia/v1', '/inventory/test-connection', [
+        register_rest_route('aia/v1', '/inventory/low', [
+            'methods'  => 'GET',
+            'permission_callback' => function() { return current_user_can('manage_woocommerce') || current_user_can('view_woocommerce_reports'); },
+            'callback' => [$this, 'rest_inventory_low'],
+            'args' => [ 'limit' => [ 'default' => 10, 'sanitize_callback' => 'absint' ] ],
+        ]);
+        register_rest_route('aia/v1', '/provider/test', [
             'methods'  => 'GET',
             'permission_callback' => function() { return current_user_can('manage_options'); },
-            'callback' => [$this, 'rest_test_connection'],
+            'callback' => [$this, 'rest_provider_test'],
         ]);
         register_rest_route('aia/v1', '/chat', [
             'methods'  => 'POST',
@@ -88,8 +94,9 @@ class Plugin {
     }
 
     public function rest_inventory(\WP_REST_Request $req) { $inv=new Inventory(); return new \WP_REST_Response($inv->get_summary(), 200); }
+    public function rest_inventory_low(\WP_REST_Request $req) { $inv=new Inventory(); $limit = absint($req->get_param('limit')); return new \WP_REST_Response($inv->get_low_stock($limit?:10), 200); }
 
-    public function rest_test_connection(\WP_REST_Request $req) { $res=$this->provider->testConnection(); return new \WP_REST_Response($res, 200); }
+    public function rest_provider_test(\WP_REST_Request $req) { $res=$this->provider->testConnection(); return new \WP_REST_Response($res, 200); }
 
     public function rest_chat(\WP_REST_Request $req) {
         $message = sanitize_text_field($req->get_param('message'));

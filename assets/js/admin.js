@@ -9,6 +9,9 @@
     // Dashboard metrics
     const $total=$('#aia-metric-total'), $low=$('#aia-metric-low'), $oos=$('#aia-metric-oos');
     if ($total.length){ get(AIA.rest+'inventory').then(res=>{ if(res && res.counts){ $total.text(res.counts.total_products||0); $low.text(res.counts.low_stock||0); $oos.text(res.counts.out_of_stock||0); } }); }
+    // Low stock list
+    const $ls = $('#aia-low-stock-list');
+    if ($ls.length){ get(AIA.rest+'inventory/low?limit=10').then(items=>{ if(Array.isArray(items)){$ls.empty(); if(!items.length){ $ls.append('<li>No low stock items 🎉</li>'); return;} items.forEach(it=>{ $ls.append('<li>'+ (it.name||('ID '+it.id)) + ' — '+ (it.stock??'?') +' <a target="_blank" href="'+ (it.edit_url||'#') +'">Edit</a></li>'); }); }}); }
   });
 
   $(document).on('submit', '#aia-chat-form', function(e){ e.preventDefault(); const $input=$('#aia-chat-input'); const msg=$input.val().trim(); if(!msg) return; $input.prop('disabled', true); post(AIA.rest + 'chat', { message: msg }).then(res=>{ alert((res && res.response) || 'OK'); }).catch(()=> alert('Request failed')).finally(()=> $input.prop('disabled', false)); });
