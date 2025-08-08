@@ -1,38 +1,34 @@
 # AI Inventory Agent (AIA) - WordPress Plugin
 
-[![Version](https://img.shields.io/badge/version-2.3.0-blue.svg)](https://github.com/your-repo/ai-inventory-agent)
+[![Version](https://img.shields.io/badge/version-2.4.0-blue.svg)](https://github.com/your-repo/ai-inventory-agent)
 [![WordPress](https://img.shields.io/badge/WordPress-6.0%2B-blue.svg)](https://wordpress.org)
 [![WooCommerce](https://img.shields.io/badge/WooCommerce-8.0%2B-purple.svg)](https://woocommerce.com)
 [![PHP](https://img.shields.io/badge/PHP-8.0%2B-777bb4.svg)](https://php.net)
 [![License](https://img.shields.io/badge/license-GPL%20v2%2B-green.svg)](LICENSE)
 
-## ✨ Version 2.3.0 - Major Frontend Optimization & Template Fixes
+## ✨ Version 2.4.0 - Professional Frontend & API Unification
 
-### 🎯 **Latest Updates - January 2025**
+### 🎯 Latest Updates - January 2025
 
-**🚀 Major Frontend Performance Overhaul**
-- **86% CSS Size Reduction**: From 330KB (21 files) to 46KB (1 file)
-- **95% HTTP Request Reduction**: From 21+ requests to 1-2 optimized requests
-- **Complete Template Fix**: Resolved all biçimsel bozukluklar (styling issues)
-- **Modern Asset Pipeline**: New AssetOptimizer class with bundling, minification, and caching
+- Professional Design System: Unified headers, buttons, cards, forms, focus, responsive, dark mode
+- UX Enhancements: Smooth anchor scroll, header elevation on scroll, subtle click ripples, reduced-motion support
+- A11y: Consistent focus-visible rings, keyboard operability, tooltip roles
+- Feedback: Global progress bar for AJAX/REST lifecycle
+- Asset Optimizer: Initialized at bootstrap for consistent optimization
+- REST API: Added `GET /wp-json/aia/v1/inventory`, `POST /wp-json/aia/v1/chat`, `GET /wp-json/aia/v1/reports`
+- Settings Consistency: Update path via `SettingsManager` to maintain caches
+- Stability: Fixed AdminInterface instantiation and removed duplicate enqueue hooks
 
-**📱 Enhanced Responsive Design**
-- **5-Breakpoint System**: Comprehensive responsive design (1200px+, 992px, 768px, 576px, <480px)
-- **Mobile-First Approach**: iOS zoom prevention, touch scrolling optimization
-- **Cross-Device Compatibility**: Perfect experience on desktop, tablet, and mobile
-- **Landscape Support**: Specialized optimizations for landscape mobile devices
+### REST API Endpoints
+- `GET /wp-json/aia/v1/inventory` – Inventory summary (manage_woocommerce or view_woocommerce_reports)
+- `POST /wp-json/aia/v1/chat` – AI Chat message (manage_woocommerce or edit_shop_orders)
+- `GET /wp-json/aia/v1/reports` – Reports summary (manage_woocommerce or view_woocommerce_reports)
 
-**⚡ Performance & Code Quality**
-- **Modern ES6+ JavaScript**: Classes, async/await, modules, and performance utilities
-- **Debug Code Removal**: All console.log and debug artifacts removed from production
-- **Component Integration**: Complete CSS class coverage for all admin templates
-- **Critical CSS**: Above-the-fold optimization for faster page loads
-
-**🎨 Design System Improvements**
-- **Unified Component Library**: Consistent design tokens and component architecture
-- **Enhanced Animations**: Smooth transitions and micro-interactions
-- **Accessibility**: WCAG-compliant focus management and screen reader support
-- **Browser Compatibility**: Modern browser support with graceful degradation
+### Frontend Highlights
+- Unified page headers with brand colors and WCAG-contrast
+- Button system with variants and size modifiers; elevation hover
+- Card/Widget visual unity; polished forms with clear focus
+- Global progress bar; smooth interactions; dark mode support
 
 ### 📊 **Performance Metrics (v2.3.0)**
 

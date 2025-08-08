@@ -96,6 +96,7 @@
 
             const config = { ...defaults, ...options };
 
+            document.dispatchEvent(new CustomEvent('aia:request:start'));
             try {
                 const response = await fetch(url, config);
                 
@@ -108,6 +109,8 @@
             } catch (error) {
                 console.error('Request failed:', error);
                 throw error;
+            } finally {
+                document.dispatchEvent(new CustomEvent('aia:request:end'));
             }
         }
     };
@@ -681,7 +684,129 @@
             // Initialize settings
             this.initSettings();
 
+            // UI polish hooks
+            this.applyReducedMotionPrefs();
+            this.enableHeaderScrollEffects();
+            this.enableSmoothAnchorScroll();
+            this.enhanceFocusAccessibility();
+            this.attachClickRipples();
+            this.initGlobalProgressBar();
+
             this.performance.endTimer('app_init');
+        }
+
+        initGlobalProgressBar() {
+            let bar = document.getElementById('aia-progressbar');
+            if (!bar) {
+                bar = document.createElement('div');
+                bar.id = 'aia-progressbar';
+                document.body.appendChild(bar);
+            }
+            let active = 0;
+            const start = () => {
+                active += 1;
+                bar.classList.add('aia-progressbar--active');
+                bar.style.width = '12%';
+                // Animate toward 80% while request is in flight
+                let w = 12;
+                bar._timer && clearInterval(bar._timer);
+                bar._timer = setInterval(() => {
+                    w = Math.min(80, w + Math.random() * 8);
+                    bar.style.width = w + '%';
+                }, 180);
+            };
+            const end = () => {
+                active = Math.max(0, active - 1);
+                if (active === 0) {
+                    bar._timer && clearInterval(bar._timer);
+                    bar.style.width = '100%';
+                    setTimeout(() => {
+                        bar.classList.remove('aia-progressbar--active');
+                        bar.style.width = '0%';
+                    }, 240);
+                }
+            };
+            document.addEventListener('aia:request:start', start);
+            document.addEventListener('aia:request:end', end);
+        }
+
+        applyReducedMotionPrefs() {
+            const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+            if (prefersReduced.matches) {
+                document.documentElement.classList.add('aia-reduced-motion');
+            }
+        }
+
+        enableHeaderScrollEffects() {
+            const headers = document.querySelectorAll('.aia-dashboard-header, .aia-analysis-header, .aia-chat-header, .aia-alerts-header, .aia-reports-header, .aia-settings-header');
+            if (!headers.length) return;
+            const handler = () => {
+                const y = window.scrollY || 0;
+                headers.forEach(h => {
+                    h.style.boxShadow = y > 4 ? '0 10px 22px rgba(2, 6, 23, 0.10)' : '0 6px 18px rgba(0, 0, 0, 0.12)';
+                    h.style.transform = y > 4 ? 'translateZ(0)' : 'none';
+                });
+            };
+            window.addEventListener('scroll', handler, { passive: true });
+            handler();
+        }
+
+        enableSmoothAnchorScroll() {
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', (e) => {
+                    const targetId = anchor.getAttribute('href');
+                    if (!targetId || targetId === '#') return;
+                    const el = document.querySelector(targetId);
+                    if (!el) return;
+                    e.preventDefault();
+                    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                });
+            });
+        }
+
+        enhanceFocusAccessibility() {
+            // Add role/button semantics when missing
+            document.querySelectorAll('.aia-btn, .aia-dashboard-btn, .aia-analysis-btn, .aia-chat-btn, .aia-alerts-btn, .aia-reports-btn, .aia-settings-btn')
+                .forEach(btn => {
+                    if (!btn.getAttribute('role')) btn.setAttribute('role', 'button');
+                    if (!btn.getAttribute('tabindex')) btn.setAttribute('tabindex', '0');
+                    btn.addEventListener('keydown', (e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            btn.click();
+                        }
+                    });
+                });
+        }
+
+        attachClickRipples() {
+            const targets = document.querySelectorAll('.aia-btn, .aia-dashboard-btn, .aia-analysis-btn, .aia-chat-btn, .aia-alerts-btn, .aia-reports-btn, .aia-settings-btn');
+            targets.forEach(el => {
+                el.style.position = el.style.position || 'relative';
+                el.style.overflow = el.style.overflow || 'hidden';
+                el.addEventListener('click', (e) => {
+                    const ripple = document.createElement('span');
+                    const rect = el.getBoundingClientRect();
+                    const size = Math.max(rect.width, rect.height);
+                    const x = e.clientX - rect.left - size / 2;
+                    const y = e.clientY - rect.top - size / 2;
+                    ripple.style.position = 'absolute';
+                    ripple.style.left = x + 'px';
+                    ripple.style.top = y + 'px';
+                    ripple.style.width = ripple.style.height = size + 'px';
+                    ripple.style.borderRadius = '50%';
+                    ripple.style.background = 'rgba(255,255,255,0.35)';
+                    ripple.style.transform = 'scale(0)';
+                    ripple.style.transition = 'transform 350ms ease, opacity 500ms ease';
+                    ripple.style.pointerEvents = 'none';
+                    el.appendChild(ripple);
+                    requestAnimationFrame(() => {
+                        ripple.style.transform = 'scale(1)';
+                        ripple.style.opacity = '0';
+                    });
+                    setTimeout(() => ripple.remove(), 520);
+                });
+            });
         }
 
         initChat() {
@@ -779,6 +904,19 @@
                         role: 'tooltip'
                     }, text);
 
+                    // Basic styling for professional look
+                    Object.assign(tooltip.style, {
+                        position: 'fixed',
+                        zIndex: 9999,
+                        background: 'rgba(17,24,39,0.92)',
+                        color: '#fff',
+                        padding: '6px 8px',
+                        borderRadius: '8px',
+                        fontSize: '12px',
+                        lineHeight: '1',
+                        boxShadow: '0 6px 16px rgba(0,0,0,0.25)'
+                    });
+
                     document.body.appendChild(tooltip);
                     this.positionTooltip(element, tooltip, position);
                 });
@@ -790,6 +928,19 @@
                     }
                 });
             });
+        }
+
+        positionTooltip(element, tooltip, position) {
+            const rect = element.getBoundingClientRect();
+            const tRect = tooltip.getBoundingClientRect();
+            const gap = 8;
+            let left = rect.left + rect.width/2 - tRect.width/2;
+            let top = rect.top - tRect.height - gap;
+            if (position === 'bottom') top = rect.bottom + gap;
+            if (position === 'left') { left = rect.left - tRect.width - gap; top = rect.top + rect.height/2 - tRect.height/2; }
+            if (position === 'right') { left = rect.right + gap; top = rect.top + rect.height/2 - tRect.height/2; }
+            tooltip.style.left = Math.max(8, Math.min(left, window.innerWidth - tRect.width - 8)) + 'px';
+            tooltip.style.top = Math.max(8, Math.min(top, window.innerHeight - tRect.height - 8)) + 'px';
         }
 
         initSettings() {
@@ -874,39 +1025,6 @@
             } catch (error) {
                 // Silently fail for auto-save
             }
-        }
-
-        positionTooltip(element, tooltip, position) {
-            const elementRect = element.getBoundingClientRect();
-            const tooltipRect = tooltip.getBoundingClientRect();
-
-            let top, left;
-
-            switch (position) {
-                case 'top':
-                    top = elementRect.top - tooltipRect.height - 8;
-                    left = elementRect.left + (elementRect.width - tooltipRect.width) / 2;
-                    break;
-                case 'bottom':
-                    top = elementRect.bottom + 8;
-                    left = elementRect.left + (elementRect.width - tooltipRect.width) / 2;
-                    break;
-                case 'left':
-                    top = elementRect.top + (elementRect.height - tooltipRect.height) / 2;
-                    left = elementRect.left - tooltipRect.width - 8;
-                    break;
-                case 'right':
-                    top = elementRect.top + (elementRect.height - tooltipRect.height) / 2;
-                    left = elementRect.right + 8;
-                    break;
-                default:
-                    top = elementRect.top - tooltipRect.height - 8;
-                    left = elementRect.left + (elementRect.width - tooltipRect.width) / 2;
-            }
-
-            tooltip.style.position = 'fixed';
-            tooltip.style.top = Math.max(8, top) + 'px';
-            tooltip.style.left = Math.max(8, Math.min(window.innerWidth - tooltipRect.width - 8, left)) + 'px';
         }
 
         showNotice(type, message) {

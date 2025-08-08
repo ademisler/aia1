@@ -114,6 +114,11 @@ class Plugin {
             
             // Initialize services via container
             $this->initialize_services();
+
+            // Initialize asset optimizer early
+            if (class_exists('AIA\\Core\\AssetOptimizer')) {
+                \AIA\Core\AssetOptimizer::init();
+            }
             
             // Register WordPress hooks
             $this->register_hooks();
@@ -184,9 +189,9 @@ class Plugin {
      * Register WordPress hooks
      */
     private function register_hooks() {
-        // Enqueue scripts and styles
-        add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_scripts']);
-        add_action('wp_enqueue_scripts', [$this, 'enqueue_frontend_scripts']);
+        // Enqueue scripts and styles (handled by AdminInterface to avoid duplication)
+        // add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_scripts']);
+        // add_action('wp_enqueue_scripts', [$this, 'enqueue_frontend_scripts']);
         
         // WooCommerce Blocks integration
         add_action('woocommerce_blocks_loaded', [$this, 'register_checkout_block_integration']);
@@ -210,6 +215,76 @@ class Plugin {
         add_action('aia_daily_analysis', [$this, 'run_daily_analysis']);
         add_action('aia_weekly_report', [$this, 'generate_weekly_report']);
         add_action('aia_monthly_report', [$this, 'generate_monthly_report']);
+        
+        // REST API routes for consistent backend across frontend/admin
+        add_action('rest_api_init', function() {
+            register_rest_route('aia/v1', '/inventory', [
+                'methods' => 'GET',
+                'callback' => function(\WP_REST_Request $request) {
+                    if (!current_user_can('manage_woocommerce') && !current_user_can('view_woocommerce_reports')) {
+                        return new \WP_Error('forbidden', __('Insufficient permissions.', 'ai-inventory-agent'), ['status' => 403]);
+                    }
+                    $inventory_analysis = $this->module_manager->get_module('inventory_analysis');
+                    if (!$inventory_analysis) {
+                        return new \WP_Error('not_available', __('Inventory Analysis module not available.', 'ai-inventory-agent'), ['status' => 500]);
+                    }
+                    return rest_ensure_response($inventory_analysis->get_inventory_summary());
+                },
+                'permission_callback' => '__return_true'
+            ]);
+            
+            register_rest_route('aia/v1', '/chat', [
+                'methods' => 'POST',
+                'callback' => function(\WP_REST_Request $request) {
+                    if (!current_user_can('manage_woocommerce') && !current_user_can('edit_shop_orders')) {
+                        return new \WP_Error('forbidden', __('Insufficient permissions.', 'ai-inventory-agent'), ['status' => 403]);
+                    }
+                    $message = sanitize_text_field($request->get_param('message'));
+                    $session_id = sanitize_text_field($request->get_param('session_id'));
+                    if (empty($message)) {
+                        return new \WP_Error('bad_request', __('Message cannot be empty.', 'ai-inventory-agent'), ['status' => 400]);
+                    }
+                    $this->ensure_chat_module_enabled();
+                    $ai_chat = $this->module_manager->get_module('ai_chat');
+                    if (!$ai_chat) {
+                        $this->module_manager->init_module('ai_chat');
+                        $ai_chat = $this->module_manager->get_module('ai_chat');
+                    }
+                    if (!$ai_chat) {
+                        return new \WP_Error('not_available', __('AI Chat module not available.', 'ai-inventory-agent'), ['status' => 500]);
+                    }
+                    $response = $ai_chat->process_message($message, $session_id);
+                    if (isset($response['success']) && $response['success']) {
+                        return rest_ensure_response([
+                            'response' => $response['response'] ?? '',
+                            'session_id' => $response['session_id'] ?? $session_id,
+                            'processing_time' => $response['processing_time'] ?? 0,
+                        ]);
+                    }
+                    return new \WP_Error('chat_failed', $response['error'] ?? __('Failed to process message', 'ai-inventory-agent'), ['status' => 500]);
+                },
+                'permission_callback' => '__return_true'
+            ]);
+            
+            register_rest_route('aia/v1', '/reports', [
+                'methods' => 'GET',
+                'callback' => function(\WP_REST_Request $request) {
+                    if (!current_user_can('manage_woocommerce') && !current_user_can('view_woocommerce_reports')) {
+                        return new \WP_Error('forbidden', __('Insufficient permissions.', 'ai-inventory-agent'), ['status' => 403]);
+                    }
+                    $reporting = $this->module_manager->get_module('reporting');
+                    if (!$reporting) {
+                        return new \WP_Error('not_available', __('Reporting module not available.', 'ai-inventory-agent'), ['status' => 500]);
+                    }
+                    // Provide a lightweight reports list/summary endpoint
+                    if (method_exists($reporting, 'get_recent_reports')) {
+                        return rest_ensure_response($reporting->get_recent_reports());
+                    }
+                    return rest_ensure_response(['message' => __('Reporting endpoint ready', 'ai-inventory-agent')]);
+                },
+                'permission_callback' => '__return_true'
+            ]);
+        });
     }
     
     /**
@@ -508,8 +583,8 @@ class Plugin {
      * @return bool
      */
     public function update_setting($key, $value) {
-        $this->settings[$key] = $value;
-        return update_option('aia_settings', $this->settings);
+        // Delegate to SettingsManager to ensure cache consistency
+        return SettingsManager::update_setting($key, $value);
     }
     
     /**
