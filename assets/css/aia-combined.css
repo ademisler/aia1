@@ -2496,3 +2496,87 @@
   .aia-section-description { color: #a8b1c7; }
   .aia-btn--light { background: #111827; color: #f9fafb; border-color: rgba(255,255,255,.12); }
 }
+
+/* Micro-interactions support */
+.aia-btn span,
+.aia-dashboard-btn span,
+.aia-analysis-btn span,
+.aia-chat-btn span,
+.aia-alerts-btn span,
+.aia-reports-btn span,
+.aia-settings-btn span {
+  pointer-events: none;
+}
+
+/* Ripple element (injected via JS) */
+.aia-btn > span[data-ripple],
+.aia-dashboard-btn > span[data-ripple],
+.aia-analysis-btn > span[data-ripple],
+.aia-chat-btn > span[data-ripple],
+.aia-alerts-btn > span[data-ripple],
+.aia-reports-btn > span[data-ripple],
+.aia-settings-btn > span[data-ripple] {
+  position: absolute;
+  border-radius: 50%;
+  transform: scale(0);
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* Reduced motion class */
+.aia-reduced-motion * { transition: none !important; animation: none !important; }
+
+/* Polished form system */
+.aia-form input[type="text"],
+.aia-form input[type="email"],
+.aia-form input[type="number"],
+.aia-form input[type="password"],
+.aia-form select,
+.aia-form textarea,
+#settings_api_key,
+#settings_system_prompt,
+#settings_low_stock_threshold,
+#settings_critical_stock_threshold {
+  display: block;
+  width: 100%;
+  max-width: 640px;
+  height: 38px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(2, 6, 23, 0.12);
+  background: #ffffff;
+  color: #0f172a;
+  outline: none;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+
+.aia-form textarea,
+#settings_system_prompt { min-height: 92px; height: auto; resize: vertical; }
+
+.aia-form input:focus,
+.aia-form select:focus,
+.aia-form textarea:focus,
+#settings_api_key:focus,
+#settings_system_prompt:focus,
+#settings_low_stock_threshold:focus,
+#settings_critical_stock_threshold:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 4px rgba(59,130,246,0.12);
+}
+
+/* Inline help text */
+.aia-form .description { color: #64748b; margin-top: 6px; }
+
+/* Global request progress bar */
+#aia-progressbar {
+  position: fixed;
+  left: 0; top: 0;
+  width: 0; height: 3px;
+  background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+  box-shadow: 0 2px 6px rgba(59,130,246,.35);
+  transition: width .35s ease, opacity .25s ease;
+  z-index: 99999;
+  opacity: 0;
+}
+
+.aia-progressbar--active { opacity: 1; }
