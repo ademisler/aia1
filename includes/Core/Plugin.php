@@ -2,8 +2,13 @@
 
 namespace AIA\Core;
 
+use AIA\Settings\Settings;
+use AIA\API\DummyProvider;
+use AIA\API\AIProviderInterface;
+
 class Plugin {
     private static ?Plugin $instance = null;
+    private AIProviderInterface $provider;
 
     public static function instance(): Plugin {
         if (!self::$instance) { self::$instance = new self(); }
@@ -11,7 +16,14 @@ class Plugin {
     }
 
     private function __construct() {
+        $this->provider = $this->makeProvider();
         $this->register_hooks();
+    }
+
+    private function makeProvider(): AIProviderInterface {
+        $s = Settings::get();
+        // For now always DummyProvider; extend with real providers later
+        return new DummyProvider($s['api_key']);
     }
 
     private function register_hooks(): void {
@@ -19,6 +31,7 @@ class Plugin {
         add_action('admin_menu', [$this, 'admin_menu']);
         add_action('admin_enqueue_scripts', [$this, 'enqueue_admin_assets']);
         add_action('rest_api_init', [$this, 'register_rest']);
+        add_action('wp_ajax_aia_save_settings', [$this, 'ajax_save_settings']);
     }
 
     public function i18n(): void {
@@ -26,15 +39,7 @@ class Plugin {
     }
 
     public function admin_menu(): void {
-        add_menu_page(
-            __('AI Inventory', 'ai-inventory-agent'),
-            __('AI Inventory', 'ai-inventory-agent'),
-            'manage_woocommerce',
-            'aia',
-            [$this, 'render_dashboard'],
-            'dashicons-chart-area',
-            56
-        );
+        add_menu_page(__('AI Inventory', 'ai-inventory-agent'), __('AI Inventory', 'ai-inventory-agent'), 'manage_woocommerce', 'aia', [$this, 'render_dashboard'], 'dashicons-chart-area', 56);
         add_submenu_page('aia', __('Dashboard','ai-inventory-agent'), __('Dashboard','ai-inventory-agent'), 'manage_woocommerce', 'aia', [$this,'render_dashboard']);
         add_submenu_page('aia', __('Chat','ai-inventory-agent'), __('Chat','ai-inventory-agent'), 'manage_woocommerce', 'aia-chat', [$this,'render_chat']);
         add_submenu_page('aia', __('Reports','ai-inventory-agent'), __('Reports','ai-inventory-agent'), 'manage_woocommerce', 'aia-reports', [$this,'render_reports']);
@@ -70,28 +75,38 @@ class Plugin {
             'permission_callback' => function() { return current_user_can('manage_woocommerce') || current_user_can('view_woocommerce_reports'); },
             'callback' => [$this, 'rest_reports'],
         ]);
+        register_rest_route('aia/v1', '/settings', [
+            'methods'  => 'GET',
+            'permission_callback' => function() { return current_user_can('manage_options'); },
+            'callback' => function(){ return new \WP_REST_Response(Settings::get(), 200); },
+        ]);
     }
 
-    public function rest_inventory(\WP_REST_Request $req) {
-        return new \WP_REST_Response([
-            'counts' => [ 'total_products' => 0, 'low_stock' => 0, 'out_of_stock' => 0 ],
-            'updated_at' => current_time('mysql')
-        ], 200);
-    }
+    public function rest_inventory(\WP_REST_Request $req) { return new \WP_REST_Response(['counts' => [ 'total_products' => 0, 'low_stock' => 0, 'out_of_stock' => 0 ], 'updated_at' => current_time('mysql')], 200); }
 
     public function rest_chat(\WP_REST_Request $req) {
         $message = sanitize_text_field($req->get_param('message'));
         if (!$message) { return new \WP_Error('invalid', __('Message required', 'ai-inventory-agent'), ['status'=>400]); }
-        return new \WP_REST_Response([
-            'response' => __('AI is not configured yet. Set your provider and API key in Settings.', 'ai-inventory-agent')
-        ], 200);
+        $conv = [ ['role'=>'user','content'=>$message] ];
+        $res = $this->provider->chat($conv);
+        if (!($res['success'] ?? false)) { return new \WP_Error('chat_failed', __('AI request failed','ai-inventory-agent'), ['status'=>500]); }
+        return new \WP_REST_Response(['response' => $res['response']], 200);
     }
 
-    public function rest_reports(\WP_REST_Request $req) {
-        return new \WP_REST_Response([
-            'reports' => [],
-            'message' => __('Reporting service ready', 'ai-inventory-agent')
-        ], 200);
+    public function rest_reports(\WP_REST_Request $req) { return new \WP_REST_Response(['reports' => [], 'message' => __('Reporting service ready', 'ai-inventory-agent')], 200); }
+
+    public function ajax_save_settings(): void {
+        check_ajax_referer('aia', 'nonce');
+        if (!current_user_can('manage_options')) { wp_send_json_error(['message'=>'forbidden'], 403); }
+        $data = [
+            'ai_provider' => $_POST['ai_provider'] ?? null,
+            'api_key' => $_POST['api_key'] ?? null,
+            'low_stock_threshold' => $_POST['low_stock_threshold'] ?? null,
+        ];
+        Settings::update(array_filter($data, fn($v)=> $v!==null));
+        // refresh provider
+        $this->provider = $this->makeProvider();
+        wp_send_json_success(Settings::get());
     }
 
     // Renderers

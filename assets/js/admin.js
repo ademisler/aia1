@@ -32,4 +32,13 @@
       .finally(()=> $input.prop('disabled', false));
   });
 
+  $(document).on('submit', '#aia-settings-form', function(e){
+    e.preventDefault();
+    const form = e.currentTarget;
+    const data = Object.fromEntries(new FormData(form).entries());
+    post(AIA.ajax, { action:'aia_save_settings', nonce:AIA.nonce, ...data }).then(res=>{
+      if(res && res.success){ alert('Settings saved'); } else { alert('Save failed'); }
+    }).catch(()=> alert('Save failed'));
+  });
+
 })(jQuery);
