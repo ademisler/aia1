@@ -12,19 +12,24 @@
     <div class="aia-card__bd">
       <form class="aia-form" id="aia-settings-form">
         <label><?php esc_html_e('AI Provider','ai-inventory-agent'); ?></label>
-        <select class="aia-input" name="ai_provider">
-          <option>OpenAI</option>
-          <option>Gemini</option>
+        <select class="aia-input" name="ai_provider" id="aia-provider">
+          <option value="openai">OpenAI</option>
+          <option value="gemini">Gemini</option>
+          <option value="dummy">Dummy</option>
         </select>
         <p class="description"><?php esc_html_e('Select your provider and enter API key.','ai-inventory-agent'); ?></p>
 
         <label style="margin-top:12px;display:block;"><?php esc_html_e('API Key','ai-inventory-agent'); ?></label>
-        <input class="aia-input" type="password" name="api_key" placeholder="sk-..."/>
+        <input class="aia-input" type="password" name="api_key" id="aia-api-key" placeholder="sk-..."/>
 
         <label style="margin-top:12px;display:block;"><?php esc_html_e('Low stock threshold','ai-inventory-agent'); ?></label>
-        <input class="aia-input" type="number" name="low_stock_threshold" min="0" value="5"/>
+        <input class="aia-input" type="number" name="low_stock_threshold" id="aia-low-th" min="0" value="5"/>
 
-        <p style="margin-top:12px;"><button type="submit" class="aia-btn aia-btn--primary"><?php esc_html_e('Save Settings','ai-inventory-agent'); ?></button></p>
+        <div style="margin-top:12px; display:flex; gap:8px; align-items:center;">
+          <button type="submit" class="aia-btn aia-btn--primary"><?php esc_html_e('Save Settings','ai-inventory-agent'); ?></button>
+          <button type="button" class="aia-btn" id="aia-test-connection"><?php esc_html_e('Test Connection','ai-inventory-agent'); ?></button>
+          <span id="aia-test-result" class="description" aria-live="polite"></span>
+        </div>
       </form>
     </div>
   </div>
