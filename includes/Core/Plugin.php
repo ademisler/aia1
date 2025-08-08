@@ -86,6 +86,16 @@ class Plugin {
             'permission_callback' => function() { return current_user_can('manage_woocommerce') || current_user_can('view_woocommerce_reports'); },
             'callback' => [$this, 'rest_reports'],
         ]);
+        register_rest_route('aia/v1', '/reports/summary.json', [
+            'methods'  => 'GET',
+            'permission_callback' => function() { return current_user_can('manage_woocommerce') || current_user_can('view_woocommerce_reports'); },
+            'callback' => [$this, 'rest_report_summary_json'],
+        ]);
+        register_rest_route('aia/v1', '/reports/lowstock.csv', [
+            'methods'  => 'GET',
+            'permission_callback' => function() { return current_user_can('manage_woocommerce') || current_user_can('view_woocommerce_reports'); },
+            'callback' => [$this, 'rest_report_lowstock_csv'],
+        ]);
         register_rest_route('aia/v1', '/settings', [
             'methods'  => 'GET',
             'permission_callback' => function() { return current_user_can('manage_options'); },
@@ -108,6 +118,25 @@ class Plugin {
     }
 
     public function rest_reports(\WP_REST_Request $req) { return new \WP_REST_Response(['reports' => [], 'message' => __('Reporting service ready', 'ai-inventory-agent')], 200); }
+
+    public function rest_report_summary_json(\WP_REST_Request $req) {
+        $inv=new Inventory();
+        $data = [ 'summary'=>$inv->get_summary(), 'generated_at'=> current_time('mysql') ];
+        return new \WP_REST_Response($data, 200, [ 'Content-Type' => 'application/json; charset=utf-8' ]);
+    }
+
+    public function rest_report_lowstock_csv(\WP_REST_Request $req) {
+        $inv=new Inventory();
+        $rows = $inv->get_low_stock(100);
+        $csv = "id,name,stock,edit_url\n";
+        foreach ($rows as $r) {
+            $csv .= sprintf("%d,\"%s\",%d,%s\n", (int)$r['id'], str_replace('"','""',$r['name']??''), (int)($r['stock']??0), $r['edit_url']??'');
+        }
+        return new \WP_REST_Response($csv, 200, [
+            'Content-Type' => 'text/csv; charset=utf-8',
+            'Content-Disposition' => 'attachment; filename="low-stock.csv"'
+        ]);
+    }
 
     public function ajax_save_settings(): void {
         check_ajax_referer('aia', 'nonce');
