@@ -1,3 +1,17 @@
+## 2.4.0 - 2025-01- (Professional Frontend & API Unification)
+
+- Frontend: Professional Design System Overrides added (headers, buttons, cards, forms, focus, responsive, dark mode)
+- UX: Smooth anchor scroll, header scroll elevation, click ripples, reduced-motion support
+- A11y: Consistent focus-visible rings, keyboard operability on buttons, tooltip roles
+- Feedback: Global progress bar tied to request lifecycle events
+- Assets: AssetOptimizer initialization moved into plugin bootstrap for consistent optimization
+- API: Added REST routes (GET /aia/v1/inventory, POST /aia/v1/chat, GET /aia/v1/reports) with unified permission checks
+- Settings: `Plugin::update_setting` now delegates to `SettingsManager` to keep caches consistent
+- Stability: Fixed AdminInterface construction via ServiceContainer, removed duplicate enqueue hooks
+- JS/CSS: Minor polish on tooltips and micro-interactions
+
+---
+
 # Changelog
 
 All notable changes to AI Inventory Agent will be documented in this file.
